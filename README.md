@@ -1,4 +1,4 @@
-# Flutter-learning-Nhóm 13
+# Nhóm 13 - INT 3120 40
 
 ## README    
 
@@ -6,24 +6,19 @@
 
 Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course-in-english-by-desi-programmer-59583
 
-# Introductions
-   Khoá Học Learning cơ bản
-
-
-
+# Thành viên
+   Nguyễn Duy Cao - 19021227
+   Đỗ Quang Huy - 19021300
+   Đỗ Mạnh Quân - 19021350
 
 ----
 
 # Learning process
 
-## Week 1
+## Week 2
 
 * #### Cài đặt Android Studio, Flutter, Dart
 * #### App đầu tiên. HelloWorld
-
-* 
-
-
 
 
 
