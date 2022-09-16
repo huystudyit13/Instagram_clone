@@ -7,9 +7,9 @@
 Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course-in-english-by-desi-programmer-59583
 
 # Thành viên
-   Nguyễn Duy Cao - 19021227
-   Đỗ Quang Huy - 19021300
-   Đỗ Mạnh Quân - 19021350
+  Nguyễn Duy Cao - 19021227
+* Đỗ Quang Huy - 19021300
+* Đỗ Mạnh Quân - 19021350
 
 ----
 
