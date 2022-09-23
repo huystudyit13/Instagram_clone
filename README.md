@@ -25,8 +25,8 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 ## Week 3
 
-* #### Code được giao diện màn hình khởi động và đăng nhập.
+* #### Code được giao diện màn hình khởi động và đăng nhập với các widget: Row, Column, DropdownButton, TextField...
 * #### Có tính năng chuyển đổi ngôn ngữ giữa tiếng Anh và tiếng Việt, chuyển đổi màn hình.
-![Video_2022-09-23_113440](https://user-images.githubusercontent.com/62604651/191893604-b4701c35-cdc7-4df3-9996-9587508f9528.gif)
+![Example](https://user-images.githubusercontent.com/62604651/191893604-b4701c35-cdc7-4df3-9996-9587508f9528.gif)
 
 
