@@ -17,10 +17,16 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 ## Week 2
 
-* #### Cài đặt Android Studio, Flutter, Dart
-* #### App đầu tiên. HelloWorld
+* #### Cài đặt Android Studio, Flutter, Dart.
+* #### App đầu tiên. HelloWorld.
 ![image](https://user-images.githubusercontent.com/62604651/190574707-e042865e-e81d-4731-99a1-db13015de313.png)
 
-
 ----
+
+## Week 3
+
+* #### Code được giao diện màn hình khởi động và đăng nhập.
+* #### Có tính năng chuyển đổi ngôn ngữ giữa tiếng Anh và tiếng Việt, chuyển đổi màn hình.
+![Video_2022-09-23_113440](https://user-images.githubusercontent.com/62604651/191893604-b4701c35-cdc7-4df3-9996-9587508f9528.gif)
+
 
