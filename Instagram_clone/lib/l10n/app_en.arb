@@ -1,0 +1,13 @@
+{
+  "language": "English",
+  "create_account": "Create an account",
+  "log_in": "Log in",
+  "name_input_field": "Phone number, email or username",
+  "pass_input_field": "Password",
+  "forgot_login": "Forgot your login details?",
+  "get_help": " Get help logging in.",
+  "or": "or",
+  "log_in_with_fb": " Log in with Facebook",
+  "dont_have_acc": "Don't have an account",
+  "sign_up": " Sign up."
+}

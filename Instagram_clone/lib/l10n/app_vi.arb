@@ -1,0 +1,13 @@
+{
+  "language": "Tiếng Việt",
+  "create_account": "Tạo tài khoản mới",
+  "log_in": "Đăng nhập",
+  "name_input_field": "Số điện thoại, email hoặc tên người dùng",
+  "pass_input_field": "Mật khẩu",
+  "forgot_login": "Bạn quên thông tin đăng nhập ư?",
+  "get_help": " Nhận trợ giúp đăng nhập.",
+  "or": "hoặc",
+  "log_in_with_fb": " Đăng nhập bằng Facebook",
+  "dont_have_acc": "Bạn chưa có tài khoản ư?",
+  "sign_up": " Đăng ký."
+}
