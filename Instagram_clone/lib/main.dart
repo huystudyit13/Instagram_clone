@@ -54,21 +54,3 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Instagram clone',
-//       localizationsDelegates: AppLocalizations.localizationsDelegates,
-//       supportedLocales: AppLocalizations.supportedLocales,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       locale: Locale('vi', ''),
-//       home: StartingUp(),
-//     );
-//   }
-// }

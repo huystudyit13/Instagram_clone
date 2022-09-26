@@ -9,6 +9,34 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final username = TextEditingController();
+  final password = TextEditingController();
+  bool user_check = false;
+  bool pass_check = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    username.addListener(() {
+      setState(() {
+        user_check = username.text.isNotEmpty;
+      });
+    });
+    password.addListener(() {
+      setState(() {
+        pass_check = password.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    username.dispose();
+    password.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +106,7 @@ class _LoginState extends State<Login> {
         ),
         const SizedBox(height: 24),
         TextField(
+          controller: username,
           decoration: InputDecoration(
             labelText: translation(context).name_input_field,
             border: OutlineInputBorder(
@@ -96,6 +125,7 @@ class _LoginState extends State<Login> {
         const SizedBox(height: 24),
         TextField(
           obscureText: _isObscure,
+          controller: password,
           decoration: InputDecoration(
             labelText: translation(context).pass_input_field,
             border: OutlineInputBorder(
@@ -123,16 +153,25 @@ class _LoginState extends State<Login> {
         SizedBox(
           height: 48,
           width: double.infinity,
-          child: MaterialButton(
-            onPressed: () {},
-            splashColor: Colors.red,
+          child: ElevatedButton(
+            // style: ElevatedButton.styleFrom(
+            //   color: Colors.blue,
+            // ),
+            onPressed: user_check && pass_check ? () => {} : null,
             child: Text(
               translation(context).log_in,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            color: Colors.blue,
-          ),
+            //color: Colors.blue,
+          )
         ),
+        // ElevatedButton(
+        //   onPressed: null,
+        //   child: Text(
+        //     'Submit',
+        //     style: TextStyle(fontSize: 24),
+        //   ),
+        // ),
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
