@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/screen/login.dart';
+import 'package:instagram_clone/screen/sign_up_options.dart';
 import 'package:instagram_clone/screen/starting_up.dart';
 
 

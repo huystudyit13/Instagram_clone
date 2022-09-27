@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/main.dart';
 import 'package:instagram_clone/screen/login.dart';
-import 'package:instagram_clone/screen/sign_up_options.dart';
 
-
-class StartingUp extends StatefulWidget {
+class SignUpOptions extends StatefulWidget {
   @override
-  State<StartingUp> createState() => _StartingUpState();
+  State<SignUpOptions> createState() => _SignUpOptionsState();
 }
 
-class _StartingUpState extends State<StartingUp> {
+class _SignUpOptionsState extends State<SignUpOptions> {
   @override
   Widget build(BuildContext context) {
-    //context.watch<LanguageController>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -27,9 +24,11 @@ class _StartingUpState extends State<StartingUp> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _centerWidget(),
             ),
-            Flexible(child: Container(), flex: 2),
+            Flexible(child: Container(), flex: 1),
+            const Divider(thickness: 2),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
+              child: _bottomWidget(),
             ),
           ],
         ),
@@ -38,7 +37,6 @@ class _StartingUpState extends State<StartingUp> {
   }
 
   var items = ['English (United States)', 'Tiếng Việt (Việt Nam)'];
-  //String dropdownValue = translation(context).create_account;
 
   Widget _topWidget() {
     return DropdownButton<String>(
@@ -51,7 +49,6 @@ class _StartingUpState extends State<StartingUp> {
       }).toList(),
       onChanged: (String? newValue) {
         setState(() async {
-          //dropdownValue = newValue!;
           Locale _locale;
           if (newValue == "Tiếng Việt (Việt Nam)") {
             _locale = await setLocale('vi');
@@ -65,6 +62,8 @@ class _StartingUpState extends State<StartingUp> {
     );
   }
 
+  bool _isObscure = true;
+
   Widget _centerWidget() {
     return Column(
       children: [
@@ -77,36 +76,55 @@ class _StartingUpState extends State<StartingUp> {
           'assets/images/instagram_icon.png',
           height: 64,
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 96),
         SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            child: InkWell(
-                child: Text(translation(context).create_account,
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpOptions()),
-                  );
-                }
-            )
-          ),
+            height: 48,
+            width: double.infinity,
+            child: ElevatedButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.facebook, size: 24, color: Colors.white),
+                    Text(
+                      translation(context).log_in_with_fb,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ))),
+        const SizedBox(height: 48),
+        Row(
+          children: [
+            Flexible(child: Divider(thickness: 2)),
+            Text(translation(context).or),
+            Flexible(child: Divider(thickness: 2)),
+          ],
         ),
         const SizedBox(height: 24),
+        Text(
+          translation(context).sign_up_option,
+          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  Widget _bottomWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(translation(context).alredy_have_acc),
         InkWell(
-          child: Text(
-            translation(context).log_in,
-            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-          ),
+            child: Text(translation(context).sign_up_log_in,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
             onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Login()),
-            );
-          }
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Login()),
+              );
+            }
         )
       ],
     );

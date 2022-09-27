@@ -6,8 +6,11 @@
   "pass_input_field": "Password",
   "forgot_login": "Forgot your login details?",
   "get_help": " Get help logging in.",
-  "or": "or",
+  "or": "  OR  ",
   "log_in_with_fb": " Log in with Facebook",
   "dont_have_acc": "Don't have an account",
-  "sign_up": " Sign up."
+  "sign_up": " Sign up.",
+  "sign_up_option": "Sign up with email or phone number",
+  "alredy_have_acc": "Already have an account?",
+  "sign_up_log_in": " Log in."
 }

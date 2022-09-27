@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/main.dart';
+import 'package:instagram_clone/screen/sign_up_options.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -165,13 +166,6 @@ class _LoginState extends State<Login> {
             //color: Colors.blue,
           )
         ),
-        // ElevatedButton(
-        //   onPressed: null,
-        //   child: Text(
-        //     'Submit',
-        //     style: TextStyle(fontSize: 24),
-        //   ),
-        // ),
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +187,7 @@ class _LoginState extends State<Login> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/fb_icon.png", height: 32),
+            Icon(Icons.facebook, size: 24, color: Colors.blue),
             Text(
               translation(context).log_in_with_fb,
               style: TextStyle(color: Colors.blue),
@@ -209,8 +203,16 @@ class _LoginState extends State<Login> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(translation(context).dont_have_acc),
-        Text(translation(context).sign_up,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+        InkWell(
+            child: Text(translation(context).sign_up,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpOptions()),
+              );
+            }
+        )
       ],
     );
   }
