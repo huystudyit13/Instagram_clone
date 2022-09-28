@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/language_controller.dart';
@@ -14,6 +15,7 @@ class _LoginState extends State<Login> {
   final password = TextEditingController();
   bool user_check = false;
   bool pass_check = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -46,7 +48,10 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _topWidget(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: _topWidget(),
+            ),
             Flexible(child: Container(), flex: 2),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -64,30 +69,34 @@ class _LoginState extends State<Login> {
     );
   }
 
-  var items = ['English (United States)', 'Tiếng Việt (Việt Nam)'];
-
   Widget _topWidget() {
-    return DropdownButton<String>(
-      hint: Text(translation(context).language),
-      items: items.map((String items) {
-        return DropdownMenuItem(
-          value: items,
-          child: Text(items),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() async {
-          //dropdownValue = newValue!;
-          Locale _locale;
-          if (newValue == "Tiếng Việt (Việt Nam)") {
-            _locale = await setLocale('vi');
-            MyApp.setLocale(context, _locale);
-          } else if (newValue == "English (United States)") {
-            _locale = await setLocale('en');
-            MyApp.setLocale(context, _locale);
-          }
-        });
-      },
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String>(
+        hint: Text(translation(context).language),
+        alignment: Alignment.center,
+        items: [
+          DropdownMenuItem<String>(
+            value: 'English',
+            child: Text(translation(context).first_language),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Tiếng Việt',
+            child: Text(translation(context).second_language),
+          ),
+        ],
+        onChanged: (String? newValue) {
+          setState(() async {
+            Locale _locale;
+            if (newValue == "Tiếng Việt") {
+              _locale = await setLocale('vi');
+              MyApp.setLocale(context, _locale);
+            } else if (newValue == "English") {
+              _locale = await setLocale('en');
+              MyApp.setLocale(context, _locale);
+            }
+          });
+        },
+      ),
     );
   }
 
@@ -152,28 +161,47 @@ class _LoginState extends State<Login> {
         ),
         const SizedBox(height: 24),
         SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: ElevatedButton(
-            // style: ElevatedButton.styleFrom(
-            //   color: Colors.blue,
-            // ),
-            onPressed: user_check && pass_check ? () => {} : null,
-            child: Text(
-              translation(context).log_in,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            //color: Colors.blue,
-          )
-        ),
+            height: 48,
+            width: double.infinity,
+            child: ElevatedButton(
+              // style: ElevatedButton.styleFrom(
+              //   color: Colors.blue,
+              // ),
+              onPressed: user_check && pass_check ? () => {} : null,
+              child: Text(
+                translation(context).log_in,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              //color: Colors.blue,
+            )),
         const SizedBox(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(translation(context).forgot_login),
-            Text(translation(context).get_help,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-          ],
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Text(translation(context).forgot_login),
+        //     Flexible(
+        //       child: Text(translation(context).get_help,
+        //           style: TextStyle(fontWeight: FontWeight.bold)),
+        //     ),
+        //   ],
+        // ),
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            text: translation(context).forgot_login,
+            style: TextStyle(
+            color: Colors.black,
+            ),
+            children: [
+              TextSpan(
+                text: translation(context).get_help,
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                recognizer: TapGestureRecognizer()..onTap = () {
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOptions()),);
+                },
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 24),
         Row(
@@ -199,21 +227,26 @@ class _LoginState extends State<Login> {
   }
 
   Widget _bottomWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(translation(context).dont_have_acc),
-        InkWell(
-            child: Text(translation(context).sign_up,
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignUpOptions()),
-              );
-            }
-        )
-      ],
+    return RichText(
+      text: TextSpan(
+        text: translation(context).dont_have_acc,
+        style: TextStyle(
+          color: Colors.black,
+        ),
+        children: [
+          TextSpan(
+            text: translation(context).sign_up,
+            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpOptions()),
+                );
+              },
+          ),
+        ],
+      ),
     );
   }
 }

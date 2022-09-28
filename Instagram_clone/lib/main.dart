@@ -6,11 +6,9 @@ import 'package:instagram_clone/screen/login.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
 import 'package:instagram_clone/screen/starting_up.dart';
 
-
 void main() {
   runApp(MyApp());
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -54,4 +52,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-

@@ -1,5 +1,7 @@
 {
-  "language": "Tiếng Việt (Việt Nam)",
+  "language": "Tiếng Việt",
+  "first_language": "English (Tiếng Anh)",
+  "second_language": "Tiếng Việt",
   "create_account": "Tạo tài khoản mới",
   "log_in": "Đăng nhập",
   "name_input_field": "Số điện thoại, email hoặc tên người dùng",
@@ -12,5 +14,8 @@
   "sign_up": " Đăng ký.",
   "sign_up_option": "Đăng ký bằng email hoặc số điện thoại",
   "alredy_have_acc": "Bạn đã có tài khoản?",
-  "sign_up_log_in": " Hãy đăng nhập."
+  "sign_up_log_in": " Hãy đăng nhập.",
+  "phone": "SỐ ĐIỆN THOẠI",
+  "email": "EMAIL",
+  "next": "Tiếp"
 }

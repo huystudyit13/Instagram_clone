@@ -1,5 +1,7 @@
 {
-  "language": "English (United States)",
+  "language": "English",
+  "first_language": "English",
+  "second_language": "Tiếng Việt (Vietnamese)",
   "create_account": "Create an account",
   "log_in": "Log in",
   "name_input_field": "Phone number, email or username",
@@ -12,5 +14,8 @@
   "sign_up": " Sign up.",
   "sign_up_option": "Sign up with email or phone number",
   "alredy_have_acc": "Already have an account?",
-  "sign_up_log_in": " Log in."
+  "sign_up_log_in": " Log in.",
+  "phone": "PHONE",
+  "email": "EMAIL",
+  "next": "NEXT"
 }

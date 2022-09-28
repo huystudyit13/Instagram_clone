@@ -5,7 +5,6 @@ import 'package:instagram_clone/main.dart';
 import 'package:instagram_clone/screen/login.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
 
-
 class StartingUp extends StatefulWidget {
   @override
   State<StartingUp> createState() => _StartingUpState();
@@ -21,13 +20,16 @@ class _StartingUpState extends State<StartingUp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _topWidget(),
-            Flexible(child: Container(), flex: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: _topWidget(),
+            ),
+            Flexible(child: Container(), flex: 1),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _centerWidget(),
             ),
-            Flexible(child: Container(), flex: 2),
+            Flexible(child: Container(), flex: 1),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
@@ -37,31 +39,34 @@ class _StartingUpState extends State<StartingUp> {
     );
   }
 
-  var items = ['English (United States)', 'Tiếng Việt (Việt Nam)'];
-  //String dropdownValue = translation(context).create_account;
-
   Widget _topWidget() {
-    return DropdownButton<String>(
-      hint: Text(translation(context).language),
-      items: items.map((String items) {
-        return DropdownMenuItem(
-          value: items,
-          child: Text(items),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() async {
-          //dropdownValue = newValue!;
-          Locale _locale;
-          if (newValue == "Tiếng Việt (Việt Nam)") {
-            _locale = await setLocale('vi');
-            MyApp.setLocale(context, _locale);
-          } else if (newValue == "English (United States)") {
-            _locale = await setLocale('en');
-            MyApp.setLocale(context, _locale);
-          }
-        });
-      },
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String>(
+        hint: Text(translation(context).language),
+        alignment: Alignment.center,
+        items: [
+          DropdownMenuItem<String>(
+            value: 'English',
+            child: Text(translation(context).first_language),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Tiếng Việt',
+            child: Text(translation(context).second_language),
+          ),
+        ],
+        onChanged: (String? newValue) {
+          setState(() async {
+            Locale _locale;
+            if (newValue == "Tiếng Việt") {
+              _locale = await setLocale('vi');
+              MyApp.setLocale(context, _locale);
+            } else if (newValue == "English") {
+              _locale = await setLocale('en');
+              MyApp.setLocale(context, _locale);
+            }
+          });
+        },
+      ),
     );
   }
 
@@ -82,32 +87,30 @@ class _StartingUpState extends State<StartingUp> {
           height: 48,
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {},
-            child: InkWell(
-                child: Text(translation(context).create_account,
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpOptions()),
-                  );
-                }
-            )
-          ),
+              onPressed: () {},
+              child: InkWell(
+                  child: Text(translation(context).create_account,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpOptions()),
+                    );
+                  })),
         ),
         const SizedBox(height: 24),
         InkWell(
-          child: Text(
-            translation(context).log_in,
-            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-          ),
+            child: Text(
+              translation(context).log_in,
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
             onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Login()),
-            );
-          }
-        )
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Login()),
+              );
+            })
       ],
     );
   }
