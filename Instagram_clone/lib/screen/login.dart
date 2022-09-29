@@ -164,9 +164,9 @@ class _LoginState extends State<Login> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
-              // style: ElevatedButton.styleFrom(
-              //   color: Colors.blue,
-              // ),
+              style: ElevatedButton.styleFrom(
+                onSurface: Colors.blue,
+              ),
               onPressed: user_check && pass_check ? () => {} : null,
               child: Text(
                 translation(context).log_in,
@@ -175,16 +175,6 @@ class _LoginState extends State<Login> {
               //color: Colors.blue,
             )),
         const SizedBox(height: 24),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     Text(translation(context).forgot_login),
-        //     Flexible(
-        //       child: Text(translation(context).get_help,
-        //           style: TextStyle(fontWeight: FontWeight.bold)),
-        //     ),
-        //   ],
-        // ),
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(

@@ -1,10 +1,8 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/language_controller.dart';
-import 'package:instagram_clone/main.dart';
 import 'package:instagram_clone/screen/login.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpMethods extends StatefulWidget {
   @override
@@ -16,19 +14,23 @@ class _SignUpMethodsState extends State<SignUpMethods>
   late TabController _tabController = TabController(length: 2, vsync: this);
   final email = TextEditingController();
   final phone = TextEditingController();
+  bool check_phone = false;
+  bool check_mail = false;
+  //String initialCountry = 'VN';
+  PhoneNumber number = PhoneNumber(isoCode: 'VN');
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // phone.addListener(() {
-    //   setState(() {
-    //     user_check = username.text.isNotEmpty;
-    //   });
-    // });
+    phone.addListener(() {
+      setState(() {
+        check_phone = phone.text.isNotEmpty;
+      });
+    });
     email.addListener(() {
       setState(() {
-        //pass_check = password.text.isNotEmpty;
+        check_mail = email.text.isNotEmpty;
       });
     });
   }
@@ -49,12 +51,13 @@ class _SignUpMethodsState extends State<SignUpMethods>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(child: Container(), flex: 2),
+            Flexible(child: Container(), flex: 1),
+            _topWidget(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _centerWidget(),
             ),
-            Flexible(child: Container(), flex: 3),
+            Flexible(child: Container(), flex: 2),
             const Divider(thickness: 2),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -66,14 +69,18 @@ class _SignUpMethodsState extends State<SignUpMethods>
     );
   }
 
+  Widget _topWidget() {
+    return Icon(
+      Icons.person,
+      size: 120,
+    );
+  }
+
   Widget _centerWidget() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          Icons.person,
-          size: 120,
-        ),
         Container(
           child: TabBar(
             controller: _tabController,
@@ -88,23 +95,77 @@ class _SignUpMethodsState extends State<SignUpMethods>
         ),
         Container(
           width: double.infinity,
-          height: 150,
+          height: 210,
           child: TabBarView(
             controller: _tabController,
             children: [
               Column(
                 children: [
                   Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: IntlPhoneField(
-                        decoration: InputDecoration(
-                          labelText: translation(context).phone,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Stack(
+                      children: [
+                        InternationalPhoneNumberInput(
+                          onInputChanged: (PhoneNumber number) {
+                            //print(number.phoneNumber);
+                          },
+                          selectorConfig: SelectorConfig(
+                            selectorType: PhoneInputSelectorType.DIALOG,
+                          ),
+                          ignoreBlank: false,
+                          autoValidateMode: AutovalidateMode.disabled,
+                          selectorTextStyle: TextStyle(color: Colors.black),
+                          textFieldController: phone,
+                          initialValue: number,
+                          formatInput: false,
+                          spaceBetweenSelectorAndTextField: 0,
+                          keyboardType: TextInputType.numberWithOptions(
+                              signed: true, decimal: true),
+                          cursorColor: Colors.black,
+                          inputDecoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.only(bottom: 15, left: 0),
+                            //border: InputBorder.none,
+                            hintText: translation(context).phone,
+                            hintStyle: TextStyle(
+                                color: Colors.grey.shade500, fontSize: 16),
                           ),
                         ),
-                        initialCountryCode: 'VN',
-                      )),
+                        Positioned(
+                          left: 90,
+                          top: 8,
+                          bottom: 8,
+                          child: Container(
+                            height: 40,
+                            width: 1,
+                            color: Colors.black.withOpacity(0.13),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        text: translation(context).sign_up_info,
+                        style: TextStyle(color: Colors.black)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: SizedBox(
+                        height: 48,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            onSurface: Colors.blue,
+                          ),
+                          onPressed: check_phone ? () => {} : null,
+                          child: Text(
+                            translation(context).next,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  ),
                 ],
               ),
               Column(
@@ -129,25 +190,24 @@ class _SignUpMethodsState extends State<SignUpMethods>
                       ),
                     ),
                   ),
+                  SizedBox(
+                      height: 48,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          onSurface: Colors.blue,
+                        ),
+                        onPressed: check_mail ? () => {} : null,
+                        child: Text(
+                          translation(context).next,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      )),
                 ],
               )
             ],
           ),
         ),
-        SizedBox(
-            height: 48,
-            width: double.infinity,
-            child: ElevatedButton(
-              // style: ElevatedButton.styleFrom(
-              //   color: Colors.blue,
-              // ),
-              onPressed: null,
-              child: Text(
-                translation(context).next,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              //color: Colors.blue,
-            )),
       ],
     );
   }

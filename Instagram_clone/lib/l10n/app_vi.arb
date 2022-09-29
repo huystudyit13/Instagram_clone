@@ -17,5 +17,6 @@
   "sign_up_log_in": " Hãy đăng nhập.",
   "phone": "SỐ ĐIỆN THOẠI",
   "email": "EMAIL",
-  "next": "Tiếp"
+  "next": "Tiếp",
+  "sign_up_info": "Chúng tôi có thể gửi thông báo cho bạn qua SMS vì mục đích bảo mật và đăng nhập."
 }
