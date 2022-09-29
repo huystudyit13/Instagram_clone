@@ -172,7 +172,6 @@ class _LoginState extends State<Login> {
                 translation(context).log_in,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              //color: Colors.blue,
             )),
         const SizedBox(height: 24),
         RichText(
@@ -180,15 +179,17 @@ class _LoginState extends State<Login> {
           text: TextSpan(
             text: translation(context).forgot_login,
             style: TextStyle(
-            color: Colors.black,
+              color: Colors.black,
             ),
             children: [
               TextSpan(
                 text: translation(context).get_help,
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                recognizer: TapGestureRecognizer()..onTap = () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOptions()),);
-                },
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOptions()),);
+                  },
               ),
             ],
           ),

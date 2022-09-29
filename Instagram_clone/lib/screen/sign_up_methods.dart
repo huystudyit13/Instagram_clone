@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/screen/login.dart';
+import 'package:instagram_clone/screen/sign_up_form.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpMethods extends StatefulWidget {
@@ -16,7 +17,6 @@ class _SignUpMethodsState extends State<SignUpMethods>
   final phone = TextEditingController();
   bool check_phone = false;
   bool check_mail = false;
-  //String initialCountry = 'VN';
   PhoneNumber number = PhoneNumber(isoCode: 'VN');
 
   @override
@@ -46,7 +46,6 @@ class _SignUpMethodsState extends State<SignUpMethods>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +124,6 @@ class _SignUpMethodsState extends State<SignUpMethods>
                           inputDecoration: InputDecoration(
                             contentPadding:
                                 EdgeInsets.only(bottom: 15, left: 0),
-                            //border: InputBorder.none,
                             hintText: translation(context).phone,
                             hintStyle: TextStyle(
                                 color: Colors.grey.shade500, fontSize: 16),
@@ -159,7 +157,15 @@ class _SignUpMethodsState extends State<SignUpMethods>
                           style: ElevatedButton.styleFrom(
                             onSurface: Colors.blue,
                           ),
-                          onPressed: check_phone ? () => {} : null,
+                          onPressed: check_phone
+                              ? () => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUpForm()),
+                                    ),
+                                  }
+                              : null,
                           child: Text(
                             translation(context).next,
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -197,7 +203,15 @@ class _SignUpMethodsState extends State<SignUpMethods>
                         style: ElevatedButton.styleFrom(
                           onSurface: Colors.blue,
                         ),
-                        onPressed: check_mail ? () => {} : null,
+                        onPressed: check_mail
+                            ? () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpForm()),
+                                  ),
+                                }
+                            : null,
                         child: Text(
                           translation(context).next,
                           style: TextStyle(fontWeight: FontWeight.bold),

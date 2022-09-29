@@ -12,7 +12,6 @@ class StartingUp extends StatefulWidget {
 class _StartingUpState extends State<StartingUp> {
   @override
   Widget build(BuildContext context) {
-    //context.watch<LanguageController>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -83,21 +82,23 @@ class _StartingUpState extends State<StartingUp> {
         ),
         const SizedBox(height: 24),
         SizedBox(
-          height: 48,
-          width: double.infinity,
-          child: ElevatedButton(
-              onPressed: () {},
-              child: InkWell(
-                  child: Text(translation(context).create_account,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white)),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpOptions()),
-                    );
-                  })),
-        ),
+            height: 48,
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                onSurface: Colors.blue,
+              ),
+              onPressed:() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpOptions()),
+                );
+              },
+              child: Text(
+                translation(context).create_account,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            )),
         const SizedBox(height: 24),
         InkWell(
             child: Text(

@@ -18,5 +18,8 @@
   "phone": "SỐ ĐIỆN THOẠI",
   "email": "EMAIL",
   "next": "Tiếp",
-  "sign_up_info": "Chúng tôi có thể gửi thông báo cho bạn qua SMS vì mục đích bảo mật và đăng nhập."
+  "sign_up_info": "Chúng tôi có thể gửi thông báo cho bạn qua SMS vì mục đích bảo mật và đăng nhập.",
+  "username": "Tên người sử dụng",
+  "pass_cf": "Xác nhận mật khẩu",
+  "sign_up_btn": "Đăng ký tài khoản"
 }
