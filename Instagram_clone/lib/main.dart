@@ -66,7 +66,7 @@ class Start extends StatefulWidget {
 
 class _StartState extends State<Start> {
   void initState() {
-    Timer(Duration(seconds: 3), openLoginPage);
+    Timer(Duration(seconds: 3), openStartingUpPage);
   }
   @override
   Widget build(BuildContext context) {
@@ -75,13 +75,13 @@ class _StartState extends State<Start> {
         child:
           SvgPicture.asset(
             'assets/images/insta_icon.svg',
-            height: 200.0,
-            width: 200.0,
+            height: 160.0,
+            width: 160.0,
         ),
       ),
     );
   }
-  void openLoginPage() {
+  void openStartingUpPage() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => StartingUp()));
   }
 }

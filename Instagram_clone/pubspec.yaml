@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: any
+  flutter_svg: ^1.1.5
   flutter_localizations: # Add this line
     sdk: flutter # Add this line
   intl: ^0.17.0
@@ -44,6 +44,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.10.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -52,6 +53,12 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+flutter_icons:
+  image_path: "assets/images/play_store_512.png"
+  android: "launcher_icon"
+  ios: true
+  adaptive_icon_foreground: "assets/images/download.jpg"
+  adaptive_icon_background: "#ffffff"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
