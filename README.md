@@ -29,4 +29,9 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 * #### Có tính năng chuyển đổi ngôn ngữ giữa tiếng Anh và tiếng Việt, chuyển đổi màn hình.
 ![Example](https://user-images.githubusercontent.com/62604651/191893604-b4701c35-cdc7-4df3-9996-9587508f9528.gif)
 
+----
 
+## Week 4
+
+* #### Thêm được các màn hình đăng ký tài khoản, thay đổi logo của ứng dụng. 
+![Video_2022-09-30_111448](https://user-images.githubusercontent.com/63287129/193190851-6f0e2a8a-5ef9-4313-9d36-79d3168ddbca.gif)
