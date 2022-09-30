@@ -105,14 +105,10 @@ class _LoginState extends State<Login> {
   Widget _centerWidget() {
     return Column(
       children: [
-        // SvgPicture.asset(
-        //   'assets/logo_insta.svg',
-        //   color: Theme.of(context).colorScheme.onBackground,
-        //   height: 32.0,
-        // ),
-        Image.asset(
-          'assets/images/instagram_icon.png',
-          height: 64,
+        SvgPicture.asset(
+          'assets/images/logo_insta.svg',
+          color: Colors.black,
+          height: 52.0,
         ),
         const SizedBox(height: 24),
         TextField(
