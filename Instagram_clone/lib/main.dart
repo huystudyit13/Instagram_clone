@@ -1,18 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/language_controller.dart';
-import 'package:instagram_clone/screen/login.dart';
-import 'package:instagram_clone/screen/sign_up_form.dart';
-import 'package:instagram_clone/screen/sign_up_methods.dart';
-import 'package:instagram_clone/screen/sign_up_options.dart';
 import 'package:instagram_clone/screen/starting_up.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -52,36 +47,41 @@ class _MyAppState extends State<MyApp> {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Start(),
+      home: const Start(),
       locale: _locale,
     );
   }
 }
 
 class Start extends StatefulWidget {
+  const Start({super.key});
 
   @override
   State<Start> createState() => _StartState();
 }
 
 class _StartState extends State<Start> {
+  @override
   void initState() {
-    Timer(Duration(seconds: 3), openStartingUpPage);
+    super.initState();
+    Timer(const Duration(seconds: 3), openStartingUpPage);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child:
-          SvgPicture.asset(
-            'assets/images/insta_icon.svg',
-            height: 160.0,
-            width: 160.0,
+        child: SvgPicture.asset(
+          'assets/images/insta_icon.svg',
+          height: 160.0,
+          width: 160.0,
         ),
       ),
     );
   }
+
   void openStartingUpPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => StartingUp()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const StartingUp()));
   }
 }

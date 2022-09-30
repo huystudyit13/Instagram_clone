@@ -6,6 +6,8 @@ import 'package:instagram_clone/screen/login.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
 
 class StartingUp extends StatefulWidget {
+  const StartingUp({super.key});
+
   @override
   State<StartingUp> createState() => _StartingUpState();
 }
@@ -23,14 +25,14 @@ class _StartingUpState extends State<StartingUp> {
               padding: const EdgeInsets.symmetric(vertical: 6),
               child: _topWidget(),
             ),
-            Flexible(child: Container(), flex: 1),
+            Flexible(flex: 1, child: Container()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _centerWidget(),
             ),
-            Flexible(child: Container(), flex: 1),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
+            Flexible(flex: 1, child: Container()),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 12),
             ),
           ],
         ),
@@ -55,13 +57,15 @@ class _StartingUpState extends State<StartingUp> {
         ],
         onChanged: (String? newValue) {
           setState(() async {
-            Locale _locale;
+            Locale locale;
             if (newValue == "Tiếng Việt") {
-              _locale = await setLocale('vi');
-              MyApp.setLocale(context, _locale);
+              locale = await setLocale('vi');
+              if (!mounted) return;
+              MyApp.setLocale(context, locale);
             } else if (newValue == "English") {
-              _locale = await setLocale('en');
-              MyApp.setLocale(context, _locale);
+              locale = await setLocale('en');
+              if (!mounted) return;
+              MyApp.setLocale(context, locale);
             }
           });
         },
@@ -82,30 +86,27 @@ class _StartingUpState extends State<StartingUp> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                onSurface: Colors.blue,
-              ),
-              onPressed:() {
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpOptions()),
+                  MaterialPageRoute(builder: (context) => const SignUpOptions()),
                 );
               },
               child: Text(
                 translation(context).create_account,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             )),
         const SizedBox(height: 24),
         InkWell(
             child: Text(
               translation(context).log_in,
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
             ),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Login()),
+                MaterialPageRoute(builder: (context) => const Login()),
               );
             })
       ],

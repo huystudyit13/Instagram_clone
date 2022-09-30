@@ -6,6 +6,8 @@ import 'package:instagram_clone/main.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
@@ -13,28 +15,26 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final username = TextEditingController();
   final password = TextEditingController();
-  bool user_check = false;
-  bool pass_check = false;
+  bool userCheck = false;
+  bool passCheck = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     username.addListener(() {
       setState(() {
-        user_check = username.text.isNotEmpty;
+        userCheck = username.text.isNotEmpty;
       });
     });
     password.addListener(() {
       setState(() {
-        pass_check = password.text.isNotEmpty;
+        passCheck = password.text.isNotEmpty;
       });
     });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     username.dispose();
     password.dispose();
@@ -52,12 +52,12 @@ class _LoginState extends State<Login> {
               padding: const EdgeInsets.symmetric(vertical: 6),
               child: _topWidget(),
             ),
-            Flexible(child: Container(), flex: 2),
+            Flexible(flex: 2, child: Container()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: _centerWidget(),
             ),
-            Flexible(child: Container(), flex: 2),
+            Flexible(flex: 2, child: Container()),
             const Divider(thickness: 2),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -86,13 +86,15 @@ class _LoginState extends State<Login> {
         ],
         onChanged: (String? newValue) {
           setState(() async {
-            Locale _locale;
+            Locale locale;
             if (newValue == "Tiếng Việt") {
-              _locale = await setLocale('vi');
-              MyApp.setLocale(context, _locale);
+              locale = await setLocale('vi');
+              if (!mounted) return;
+              MyApp.setLocale(context, locale);
             } else if (newValue == "English") {
-              _locale = await setLocale('en');
-              MyApp.setLocale(context, _locale);
+              locale = await setLocale('en');
+              if (!mounted) return;
+              MyApp.setLocale(context, locale);
             }
           });
         },
@@ -160,13 +162,10 @@ class _LoginState extends State<Login> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                onSurface: Colors.blue,
-              ),
-              onPressed: user_check && pass_check ? () => {} : null,
+              onPressed: userCheck && passCheck ? () => {} : null,
               child: Text(
                 translation(context).log_in,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             )),
         const SizedBox(height: 24),
@@ -174,14 +173,14 @@ class _LoginState extends State<Login> {
           textAlign: TextAlign.center,
           text: TextSpan(
             text: translation(context).forgot_login,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
             ),
             children: [
               TextSpan(
                 text: translation(context).get_help,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOptions()),);
@@ -193,19 +192,19 @@ class _LoginState extends State<Login> {
         const SizedBox(height: 24),
         Row(
           children: [
-            Flexible(child: Divider(thickness: 2)),
+            const Flexible(child: Divider(thickness: 2)),
             Text(translation(context).or),
-            Flexible(child: Divider(thickness: 2)),
+            const Flexible(child: Divider(thickness: 2)),
           ],
         ),
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.facebook, size: 24, color: Colors.blue),
+            const Icon(Icons.facebook, size: 24, color: Colors.blue),
             Text(
               translation(context).log_in_with_fb,
-              style: TextStyle(color: Colors.blue),
+              style: const TextStyle(color: Colors.blue),
             ),
           ],
         )
@@ -217,18 +216,18 @@ class _LoginState extends State<Login> {
     return RichText(
       text: TextSpan(
         text: translation(context).dont_have_acc,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
         ),
         children: [
           TextSpan(
             text: translation(context).sign_up,
-            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpOptions()),
+                  MaterialPageRoute(builder: (context) => const SignUpOptions()),
                 );
               },
           ),

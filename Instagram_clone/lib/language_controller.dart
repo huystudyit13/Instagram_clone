@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-const String LAGUAGE_CODE = 'languageCode';
+const String languageCode = 'languageCode';
 
 //languages code
-const String ENGLISH = 'en';
-const String VIETNAM = 'vi';
+const String english = 'en';
+const String vietnam = 'vi';
 
 Future<Locale> setLocale(String languageCode) async {
-  SharedPreferences _prefs = await SharedPreferences.getInstance();
-  await _prefs.setString(LAGUAGE_CODE, languageCode);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString(languageCode, languageCode);
   return _locale(languageCode);
 }
 
 Future<Locale> getLocale() async {
-  SharedPreferences _prefs = await SharedPreferences.getInstance();
-  String languageCode = _prefs.getString(LAGUAGE_CODE) ?? ENGLISH;
-  return _locale(languageCode);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String code = prefs.getString(languageCode) ?? english;
+  return _locale(code);
 }
 
 Locale _locale(String languageCode) {
   switch (languageCode) {
-    case ENGLISH:
-      return const Locale(ENGLISH, '');
-    case VIETNAM:
-      return const Locale(VIETNAM, "");
+    case english:
+      return const Locale(english, '');
+    case vietnam:
+      return const Locale(vietnam, "");
     default:
-      return const Locale(ENGLISH, '');
+      return const Locale(english, '');
   }
 }
 

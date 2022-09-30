@@ -7,20 +7,22 @@ import '../language_controller.dart';
 import '../utils.dart';
 
 class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
+
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  SignUpFormState createState() => SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class SignUpFormState extends State<SignUpForm> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordCfController = TextEditingController();
   Uint8List? _image;
   bool _isObscure = true;
   bool _isObscureCF = true;
-  bool user_check = false;
-  bool pass_check = false;
-  bool passCF_check = false;
+  bool userCheck = false;
+  bool passCheck = false;
+  bool passCfCheck = false;
 
   @override
   void dispose() {
@@ -36,17 +38,17 @@ class _SignUpFormState extends State<SignUpForm> {
     super.initState();
     _usernameController.addListener(() {
       setState(() {
-        user_check = _usernameController.text.isNotEmpty;
+        userCheck = _usernameController.text.isNotEmpty;
       });
     });
     _passwordController.addListener(() {
       setState(() {
-        pass_check = _passwordController.text.isNotEmpty;
+        passCheck = _passwordController.text.isNotEmpty;
       });
     });
     _passwordCfController.addListener(() {
       setState(() {
-        passCF_check = _passwordCfController.text.isNotEmpty;
+        passCfCheck = _passwordCfController.text.isNotEmpty;
       });
     });
   }
@@ -62,7 +64,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -71,29 +73,29 @@ class _SignUpFormState extends State<SignUpForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
-                child: Container(),
                 flex: 1,
+                child: Container(),
               ),
               const SizedBox(
-                height: 64,
+                height: 32,
               ),
               Stack(
                 children: [
                   _image != null
                       ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(_image!),
-                          backgroundColor: Colors.white,
-                        )
+                    radius: 64,
+                    backgroundImage: MemoryImage(_image!),
+                    backgroundColor: Colors.white,
+                  )
                       : const CircleAvatar(
-                          radius: 64,
-                          child: Icon(
-                            Icons.person,
-                            size: 100,
-                            color: Colors.grey,
-                          ),
-                          backgroundColor: Colors.white,
-                        ),
+                    radius: 64,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.person,
+                      size: 100,
+                      color: Colors.grey,
+                    ),
+                  ),
                   Positioned(
                     bottom: -10,
                     left: 80,
@@ -193,20 +195,17 @@ class _SignUpFormState extends State<SignUpForm> {
                   height: 48,
                   width: double.infinity,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      onSurface: Colors.blue,
-                    ),
-                    onPressed: user_check && pass_check && passCF_check
+                    onPressed: userCheck && passCheck && passCfCheck
                         ? () => {}
                         : null,
                     child: Text(
                       translation(context).sign_up_btn,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )),
               Flexible(
-                child: Container(),
                 flex: 2,
+                child: Container(),
               ),
             ],
           ),
