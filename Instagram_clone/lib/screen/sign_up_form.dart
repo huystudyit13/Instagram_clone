@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,6 +25,7 @@ class SignUpFormState extends State<SignUpForm> {
   bool passCheck = false;
   bool passCfCheck = false;
 
+
   @override
   void dispose() {
     super.dispose();
@@ -36,6 +38,7 @@ class SignUpFormState extends State<SignUpForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _usernameController.addListener(() {
       setState(() {
         userCheck = _usernameController.text.isNotEmpty;
@@ -53,7 +56,9 @@ class SignUpFormState extends State<SignUpForm> {
     });
   }
 
-  selectImage() async {
+
+
+  void selectImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     // set state because we need to display the image we selected on the circle avatar
     setState(() {
@@ -195,6 +200,10 @@ class SignUpFormState extends State<SignUpForm> {
                   height: 48,
                   width: double.infinity,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      disabledBackgroundColor: Colors.lightBlueAccent,
+                      disabledForegroundColor: Colors.white70,
+                    ),
                     onPressed: userCheck && passCheck && passCfCheck
                         ? () => {}
                         : null,

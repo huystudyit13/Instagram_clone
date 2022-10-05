@@ -162,6 +162,10 @@ class _LoginState extends State<Login> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                disabledBackgroundColor: Colors.lightBlueAccent,
+                disabledForegroundColor: Colors.white70,
+              ),
               onPressed: userCheck && passCheck ? () => {} : null,
               child: Text(
                 translation(context).log_in,

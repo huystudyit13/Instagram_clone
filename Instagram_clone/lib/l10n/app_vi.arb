@@ -21,5 +21,11 @@
   "sign_up_info": "Chúng tôi có thể gửi thông báo cho bạn qua SMS vì mục đích bảo mật và đăng nhập.",
   "username": "Tên người sử dụng",
   "pass_cf": "Xác nhận mật khẩu",
-  "sign_up_btn": "Đăng ký tài khoản"
+  "sign_up_btn": "Đăng ký tài khoản",
+  "cf_code": "Mã xác nhận",
+  "verify_title": "NHẬP MÃ XÁC NHẬN",
+  "verify_title_1": "Hãy nhập mã xác nhận mà chúng tôi đã gửi đến",
+  "resend": "Gửi lại mã",
+  "validate_fail": "Sai mã xác nhận",
+  "resend_inform": "Đã gửi lại mã xác nhận"
 }

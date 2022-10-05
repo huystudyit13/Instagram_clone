@@ -1,8 +1,10 @@
+import 'package:email_auth/email_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/screen/login.dart';
 import 'package:instagram_clone/screen/sign_up_form.dart';
+import 'package:instagram_clone/screen/verify.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpMethods extends StatefulWidget {
@@ -20,11 +22,15 @@ class _SignUpMethodsState extends State<SignUpMethods>
   bool checkPhone = false;
   bool checkMail = false;
   PhoneNumber number = PhoneNumber(isoCode: 'VN');
+  late EmailAuth emailAuth;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    emailAuth = EmailAuth(
+      sessionName: "Instagram_clone",
+    );
     phone.addListener(() {
       setState(() {
         checkPhone = phone.text.isNotEmpty;
@@ -43,6 +49,11 @@ class _SignUpMethodsState extends State<SignUpMethods>
     super.dispose();
     phone.dispose();
     email.dispose();
+  }
+
+  void sendOTP() async {
+    bool result = await emailAuth.sendOtp(
+        recipientMail: email.value.text);
   }
 
   @override
@@ -154,12 +165,17 @@ class _SignUpMethodsState extends State<SignUpMethods>
                         height: 48,
                         width: double.infinity,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            disabledBackgroundColor: Colors.lightBlueAccent,
+                            disabledForegroundColor: Colors.white70,
+                          ),
                           onPressed: checkPhone
                               ? () => {
+                                    sendOTP(),
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => const SignUpForm()),
+                                          builder: (context) => SignUpForm()),
                                     ),
                                   }
                               : null,
@@ -197,13 +213,18 @@ class _SignUpMethodsState extends State<SignUpMethods>
                       height: 48,
                       width: double.infinity,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          disabledBackgroundColor: Colors.lightBlueAccent,
+                          disabledForegroundColor: Colors.white70,
+                        ),
                         onPressed: checkMail
                             ? () => {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const SignUpForm()),
-                                  ),
+                          sendOTP(),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Verify(mail: email.value.text, emailAuth: emailAuth)),
+                          ),
                                 }
                             : null,
                         child: Text(

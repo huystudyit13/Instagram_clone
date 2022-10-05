@@ -21,5 +21,11 @@
   "sign_up_info": "You may receive SMS notifications from us for security and login purposes.",
   "username": "Username",
   "pass_cf": "Confirm Password",
-  "sign_up_btn": "Sign up"
+  "sign_up_btn": "Sign up",
+  "cf_code": "Confirmation code",
+  "verify_title": "ENTER CONFIRMATION CODE",
+  "verify_title_1": "Enter the confirmation code we sent to",
+  "resend": "Resend code",
+  "validate_fail": "Validation failure",
+  "resend_inform": "Resend confirmation code"
 }
