@@ -37,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       style: optionStyle,
     ),
     Text(
-      'Index 2: Pót',
+      'Index 2: Post',
       style: optionStyle,
     ),
     Text(
@@ -65,18 +65,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Image.asset('assets/images/camera.png', height: 40),
+                Icon(
+                  Icons.camera_alt_rounded,
+                  color: Colors.black,
+                  size: 35,
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                  padding: const EdgeInsets.only(left: 8.0, top: 2.0),
                   child: Image.asset(
                     'assets/images/title.png',
                     fit: BoxFit.cover,
-                    height: 55,
+                    height: 60,
                   ),
                 ),
               ],
             ),
-            Image.asset('assets/images/message.png', height: 40),
+            Icon(
+              Icons.send_rounded,
+              color: Colors.black,
+              size: 35,
+            ),
           ],
         ),
         backgroundColor: Colors.white,
@@ -87,24 +95,47 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/home.png')),
-            activeIcon: ImageIcon(AssetImage('assets/images/home_active.png')),
+            icon: Icon(
+              Icons.home,
+              color: Colors.black38,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/search.png')),
-            activeIcon:
-                ImageIcon(AssetImage('assets/images/search_active.png')),
+            icon: Icon(
+              Icons.search,
+              color: Colors.black38,
+            ),
+            activeIcon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/post.png')),
-            activeIcon: ImageIcon(AssetImage('assets/images/post_active.png')),
+            icon: Icon(
+              Icons.add_box_outlined,
+              color: Colors.black38,
+            ),
+            activeIcon: Icon(
+              Icons.add_box,
+              color: Colors.black,
+            ),
             label: 'Post',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/heart.png')),
-            activeIcon: ImageIcon(AssetImage('assets/images/heart_active.png')),
+            icon: Icon(
+              Icons.favorite_outline,
+              color: Colors.black38,
+            ),
+            activeIcon: Icon(
+              Icons.favorite,
+              color: Colors.black,
+            ),
             label: 'Activity',
           ),
           BottomNavigationBarItem(
@@ -128,8 +159,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 0, 0, 0),
-        unselectedItemColor: Color.fromARGB(255, 0, 0, 0),
         iconSize: 30.0,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
