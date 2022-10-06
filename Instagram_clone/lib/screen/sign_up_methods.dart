@@ -1,4 +1,5 @@
 import 'package:email_auth/email_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/language_controller.dart';
@@ -16,13 +17,47 @@ class SignUpMethods extends StatefulWidget {
 
 class _SignUpMethodsState extends State<SignUpMethods>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController = TabController(length: 2, vsync: this);
+  late final TabController _tabController =
+      TabController(length: 2, vsync: this);
   final email = TextEditingController();
   final phone = TextEditingController();
   bool checkPhone = false;
   bool checkMail = false;
   PhoneNumber number = PhoneNumber(isoCode: 'VN');
   late EmailAuth emailAuth;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void showMess(String content) {
+    final snackBar = SnackBar(
+      content: Text(
+        content,
+        style: const TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.blue,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<bool> checkEmail({
+    required String email,
+    required String password,
+  }) async {
+    bool check = true;
+    try {
+      UserCredential cred = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (error) {
+      check = false;
+      if (error.code == "email-already-in-use") {
+        showMess(translation(context).email_already_in_use);
+      } else if (error.code == "invalid-email") {
+        showMess(translation(context).invalid_email);
+      }
+    }
+    return check;
+  }
 
   @override
   void initState() {
@@ -52,8 +87,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
   }
 
   void sendOTP() async {
-    bool result = await emailAuth.sendOtp(
-        recipientMail: email.value.text);
+    bool result = await emailAuth.sendOtp(recipientMail: email.value.text);
   }
 
   @override
@@ -124,7 +158,8 @@ class _SignUpMethodsState extends State<SignUpMethods>
                           ),
                           ignoreBlank: false,
                           autoValidateMode: AutovalidateMode.disabled,
-                          selectorTextStyle: const TextStyle(color: Colors.black),
+                          selectorTextStyle:
+                              const TextStyle(color: Colors.black),
                           textFieldController: phone,
                           initialValue: number,
                           formatInput: false,
@@ -170,14 +205,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
                             disabledForegroundColor: Colors.white70,
                           ),
                           onPressed: checkPhone
-                              ? () => {
-                                    sendOTP(),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUpForm()),
-                                    ),
-                                  }
+                              ? () => {}
                               : null,
                           child: Text(
                             translation(context).next,
@@ -218,13 +246,20 @@ class _SignUpMethodsState extends State<SignUpMethods>
                           disabledForegroundColor: Colors.white70,
                         ),
                         onPressed: checkMail
-                            ? () => {
-                          sendOTP(),
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Verify(mail: email.value.text, emailAuth: emailAuth)),
-                          ),
+                            ? () async => {
+                                  if (await checkEmail(
+                                      email: email.value.text,
+                                      password: "123456"))
+                                    {
+                                      sendOTP(),
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Verify(
+                                                mail: email.value.text,
+                                                emailAuth: emailAuth, auth: auth,)),
+                                      ),
+                                    }
                                 }
                             : null,
                         child: Text(
@@ -251,7 +286,8 @@ class _SignUpMethodsState extends State<SignUpMethods>
         children: [
           TextSpan(
             text: translation(context).sign_up_log_in,
-            style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.blue, fontWeight: FontWeight.bold),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.push(

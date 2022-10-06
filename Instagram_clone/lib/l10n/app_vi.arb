@@ -27,5 +27,7 @@
   "verify_title_1": "Hãy nhập mã xác nhận mà chúng tôi đã gửi đến",
   "resend": "Gửi lại mã",
   "validate_fail": "Sai mã xác nhận",
-  "resend_inform": "Đã gửi lại mã xác nhận"
+  "resend_inform": "Đã gửi lại mã xác nhận",
+  "email_already_in_use": "Địa chỉ email này đã tồn tại.",
+  "invalid_email": "Địa chỉ email này không đúng định dạng."
 }

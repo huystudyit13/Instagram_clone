@@ -27,5 +27,7 @@
   "verify_title_1": "Enter the confirmation code we sent to",
   "resend": "Resend code",
   "validate_fail": "Validation failure",
-  "resend_inform": "Resend confirmation code"
+  "resend_inform": "Resend confirmation code",
+  "email_already_in_use": "This email address already exists.",
+  "invalid_email": "This email address is not valid."
 }

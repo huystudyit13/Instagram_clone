@@ -1,4 +1,5 @@
 import 'package:email_auth/email_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,16 +9,22 @@ import 'package:instagram_clone/screen/sign_up_form.dart';
 class Verify extends StatefulWidget {
   final String mail;
   final EmailAuth emailAuth;
-  const Verify({super.key, required this.mail, required this.emailAuth});
+  final FirebaseAuth auth;
+  const Verify(
+      {super.key,
+      required this.mail,
+      required this.emailAuth,
+      required this.auth});
   @override
   State<Verify> createState() => _VerifyState();
 }
 
-class _VerifyState extends State<Verify> {
+class _VerifyState extends State<Verify> with WidgetsBindingObserver{
   final code = TextEditingController();
   bool checkCode = false;
 
-  bool verify() {
+  Future<bool> verify() async {
+    await widget.auth.currentUser?.delete();
     return widget.emailAuth
         .validateOtp(recipientMail: widget.mail, userOtp: code.value.text);
   }
@@ -28,10 +35,22 @@ class _VerifyState extends State<Verify> {
 
   void showMess(String content) {
     final snackBar = SnackBar(
-      content: Text(content, style: const TextStyle(color: Colors.white),),
+      content: Text(
+        content,
+        style: const TextStyle(color: Colors.white),
+      ),
       backgroundColor: Colors.blue,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  Future<void> dispose() async {
+    // TODO: implement dispose
+    super.dispose();
+    code.dispose();
+    await widget.auth.currentUser?.delete();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
@@ -43,6 +62,15 @@ class _VerifyState extends State<Verify> {
         checkCode = code.text.isNotEmpty;
       });
     });
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      await widget.auth.currentUser?.delete();
+    }
   }
 
   @override
@@ -143,16 +171,20 @@ class _VerifyState extends State<Verify> {
                 disabledForegroundColor: Colors.white70,
               ),
               onPressed: checkCode
-                  ? () => {
-                        if(verify()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpForm()),
-                          ),
-                        } else {
-                          showMess(translation(context).validate_fail),
-                        }
+                  ? () async => {
+                        if (await verify())
+                          {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SignUpForm(mail: widget.mail)),
+                            ),
+                          }
+                        else
+                          {
+                            showMess(translation(context).validate_fail),
+                          }
                       }
                   : null,
               child: Text(

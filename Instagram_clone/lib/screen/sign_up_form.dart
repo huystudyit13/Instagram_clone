@@ -8,7 +8,8 @@ import '../language_controller.dart';
 import '../utils.dart';
 
 class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
+  final String mail;
+  const SignUpForm({super.key, required this.mail});
 
   @override
   SignUpFormState createState() => SignUpFormState();
