@@ -35,3 +35,12 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 * #### Thêm được các màn hình đăng ký tài khoản, thay đổi logo của ứng dụng. 
 ![Video_2022-09-30_111448](https://user-images.githubusercontent.com/63287129/193190851-6f0e2a8a-5ef9-4313-9d36-79d3168ddbca.gif)
+
+----
+
+## Week 5
+
+* #### Thêm các phương thức đăng ký tài khoản bằng email, đăng nhập, đăng xuất, màn hình home demo.
+![Video_2022-10-07_114037](https://user-images.githubusercontent.com/63287129/194478485-d92c73ab-d3d0-4725-873e-e86ba486fb6b.gif)
+
+
