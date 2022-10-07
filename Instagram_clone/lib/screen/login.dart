@@ -1,9 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/auth_methods.dart';
 import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/main.dart';
+import 'package:instagram_clone/screen/homeUI.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
+import 'package:instagram_clone/screen/starting_up.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +20,7 @@ class _LoginState extends State<Login> {
   final password = TextEditingController();
   bool userCheck = false;
   bool passCheck = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -38,6 +42,40 @@ class _LoginState extends State<Login> {
     super.dispose();
     username.dispose();
     password.dispose();
+  }
+
+  void showMess(String content) {
+    final snackBar = SnackBar(
+      content: Text(
+        content,
+        style: const TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.blue,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void loginUser() async {
+    _isLoading = true;
+    String res = await AuthMethods().loginUser(
+        email: username.text, password: password.text);
+    if (res == 'success') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Home()),
+      );
+      _isLoading = false;
+    } else {
+      _isLoading = false;
+      if (res == "wrong-password") {
+        res = translation(context).wrong_password;
+      } else if (res == "invalid-email") {
+        res = translation(context).invalid_email;
+      } else if (res == "user-not-found") {
+        res = translation(context).user_not_found;
+      }
+      showMess(res);
+    }
   }
 
   @override
@@ -146,14 +184,14 @@ class _LoginState extends State<Login> {
               borderSide: Divider.createBorderSide(context),
             ),
             filled: true,
-            suffixIcon: IconButton(
+            suffixIcon: passCheck ?  IconButton(
                 icon:
-                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
                 onPressed: () {
                   setState(() {
                     _isObscure = !_isObscure;
                   });
-                }),
+                }) : null,
             contentPadding: const EdgeInsets.all(8),
           ),
         ),
@@ -166,10 +204,16 @@ class _LoginState extends State<Login> {
                 disabledBackgroundColor: Colors.lightBlueAccent,
                 disabledForegroundColor: Colors.white70,
               ),
-              onPressed: userCheck && passCheck ? () => {} : null,
-              child: Text(
-                translation(context).log_in,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+              onPressed: userCheck && passCheck ? () => {
+                loginUser(),
+              } : null,
+              child: !_isLoading
+                  ? Text(
+    translation(context).log_in,
+    style: const TextStyle(fontWeight: FontWeight.bold),
+    )
+                  : const CircularProgressIndicator(
+                color: Colors.white,
               ),
             )),
         const SizedBox(height: 24),

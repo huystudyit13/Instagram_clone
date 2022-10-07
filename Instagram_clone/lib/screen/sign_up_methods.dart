@@ -87,6 +87,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
   }
 
   void sendOTP() async {
+    await auth.currentUser?.delete();
     bool result = await emailAuth.sendOtp(recipientMail: email.value.text);
   }
 
@@ -204,9 +205,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
                             disabledBackgroundColor: Colors.lightBlueAccent,
                             disabledForegroundColor: Colors.white70,
                           ),
-                          onPressed: checkPhone
-                              ? () => {}
-                              : null,
+                          onPressed: checkPhone ? () => {} : null,
                           child: Text(
                             translation(context).next,
                             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -256,8 +255,9 @@ class _SignUpMethodsState extends State<SignUpMethods>
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Verify(
-                                                mail: email.value.text,
-                                                emailAuth: emailAuth, auth: auth,)),
+                                                  mail: email.value.text,
+                                                  emailAuth: emailAuth,
+                                                )),
                                       ),
                                     }
                                 }

@@ -13,6 +13,7 @@ class StartingUp extends StatefulWidget {
 }
 
 class _StartingUpState extends State<StartingUp> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

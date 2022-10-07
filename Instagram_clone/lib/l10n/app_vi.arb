@@ -29,5 +29,10 @@
   "validate_fail": "Sai mã xác nhận",
   "resend_inform": "Đã gửi lại mã xác nhận",
   "email_already_in_use": "Địa chỉ email này đã tồn tại.",
-  "invalid_email": "Địa chỉ email này không đúng định dạng."
+  "invalid_email": "Địa chỉ email này không đúng định dạng.",
+  "weak_password": "Mật khẩu của bạn cần ít nhất 6 ký tự.",
+  "wrong_password": "Mật khẩu bạn nhập không chính xác.",
+  "user_not_found": "Địa chỉ email này không tồn tại người dùng",
+  "wrong_cf_pass": "Mật khẩu xác nhận của bạn đã bị sai.",
+  "sign_out": "Đăng xuất"
 }

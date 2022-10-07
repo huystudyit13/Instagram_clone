@@ -29,5 +29,10 @@
   "validate_fail": "Validation failure",
   "resend_inform": "Resend confirmation code",
   "email_already_in_use": "This email address already exists.",
-  "invalid_email": "This email address is not valid."
+  "invalid_email": "This email address is not valid.",
+  "weak_password": "Your password needs at least 6 characters.",
+  "wrong_password": "Your password is incorrect",
+  "user_not_found": "No user corresponding to the given email.",
+  "wrong_cf_pass": "Your confirm password is incorrect",
+  "sign_out": "Sign_out"
 }

@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone/auth_methods.dart';
+import 'package:instagram_clone/screen/starting_up.dart';
 
 import '../language_controller.dart';
 import '../utils.dart';
@@ -25,7 +28,7 @@ class SignUpFormState extends State<SignUpForm> {
   bool userCheck = false;
   bool passCheck = false;
   bool passCfCheck = false;
-
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -57,7 +60,12 @@ class SignUpFormState extends State<SignUpForm> {
     });
   }
 
-
+  Future<void> convert() async {
+    final ByteData bytes =
+        await rootBundle.load('assets/images/default_profile.jpg');
+    final Uint8List list = bytes.buffer.asUint8List();
+    _image = list;
+  }
 
   void selectImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
@@ -67,41 +75,78 @@ class SignUpFormState extends State<SignUpForm> {
     });
   }
 
+  void showMess(String content) {
+    final snackBar = SnackBar(
+      content: Text(
+        content,
+        style: const TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.blue,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void signUpUser() async {
+    // set loading to true
+    setState(() {
+      _isLoading = true;
+    });
+
+    // signup user using our authmethodds
+    String res = await AuthMethods().signUpUser(
+        email: widget.mail,
+        password: _passwordController.text,
+        username: _usernameController.text,
+        file: _image!);
+    // if string returned is sucess, user has been created
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+      // navigate to the home screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => StartingUp()),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show the error
+      showMess(translation(context).weak_password);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(
-                flex: 1,
-                child: Container(),
-              ),
               const SizedBox(
-                height: 32,
+                height: 48,
               ),
               Stack(
                 children: [
                   _image != null
                       ? CircleAvatar(
-                    radius: 64,
-                    backgroundImage: MemoryImage(_image!),
-                    backgroundColor: Colors.white,
-                  )
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                          backgroundColor: Colors.white,
+                        )
                       : const CircleAvatar(
-                    radius: 64,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 100,
-                      color: Colors.grey,
-                    ),
-                  ),
+                          radius: 64,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            size: 100,
+                            color: Colors.grey,
+                          ),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 80,
@@ -153,14 +198,14 @@ class SignUpFormState extends State<SignUpForm> {
                     borderSide: Divider.createBorderSide(context),
                   ),
                   filled: true,
-                  suffixIcon: IconButton(
+                  suffixIcon: passCheck ? IconButton(
                       icon: Icon(
                           _isObscure ? Icons.visibility : Icons.visibility_off),
                       onPressed: () {
                         setState(() {
                           _isObscure = !_isObscure;
                         });
-                      }),
+                      }) : null,
                   contentPadding: const EdgeInsets.all(8),
                 ),
               ),
@@ -182,7 +227,7 @@ class SignUpFormState extends State<SignUpForm> {
                     borderSide: Divider.createBorderSide(context),
                   ),
                   filled: true,
-                  suffixIcon: IconButton(
+                  suffixIcon: passCfCheck ? IconButton(
                       icon: Icon(_isObscureCF
                           ? Icons.visibility
                           : Icons.visibility_off),
@@ -190,7 +235,7 @@ class SignUpFormState extends State<SignUpForm> {
                         setState(() {
                           _isObscureCF = !_isObscureCF;
                         });
-                      }),
+                      }) : null,
                   contentPadding: const EdgeInsets.all(8),
                 ),
               ),
@@ -206,12 +251,26 @@ class SignUpFormState extends State<SignUpForm> {
                       disabledForegroundColor: Colors.white70,
                     ),
                     onPressed: userCheck && passCheck && passCfCheck
-                        ? () => {}
+                        ? () => {
+                              // if (_image == null) {
+                              //   convert(),
+                              // },
+                              if (_passwordCfController.text == _passwordController.text) {
+                                signUpUser(),
+                              }
+                              else {
+                                showMess(translation(context).wrong_cf_pass),
+                              }
+                            }
                         : null,
-                    child: Text(
-                      translation(context).sign_up_btn,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    child: !_isLoading
+                        ? Text(
+                            translation(context).sign_up_btn,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        : const CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
                   )),
               Flexible(
                 flex: 2,

@@ -1,5 +1,4 @@
 import 'package:email_auth/email_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,22 +8,20 @@ import 'package:instagram_clone/screen/sign_up_form.dart';
 class Verify extends StatefulWidget {
   final String mail;
   final EmailAuth emailAuth;
-  final FirebaseAuth auth;
-  const Verify(
-      {super.key,
-      required this.mail,
-      required this.emailAuth,
-      required this.auth});
+  const Verify({
+    super.key,
+    required this.mail,
+    required this.emailAuth,
+  });
   @override
   State<Verify> createState() => _VerifyState();
 }
 
-class _VerifyState extends State<Verify> with WidgetsBindingObserver{
+class _VerifyState extends State<Verify> {
   final code = TextEditingController();
   bool checkCode = false;
 
-  Future<bool> verify() async {
-    await widget.auth.currentUser?.delete();
+  bool verify() {
     return widget.emailAuth
         .validateOtp(recipientMail: widget.mail, userOtp: code.value.text);
   }
@@ -49,8 +46,6 @@ class _VerifyState extends State<Verify> with WidgetsBindingObserver{
     // TODO: implement dispose
     super.dispose();
     code.dispose();
-    await widget.auth.currentUser?.delete();
-    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
@@ -62,15 +57,6 @@ class _VerifyState extends State<Verify> with WidgetsBindingObserver{
         checkCode = code.text.isNotEmpty;
       });
     });
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.paused) {
-      await widget.auth.currentUser?.delete();
-    }
   }
 
   @override
@@ -172,7 +158,7 @@ class _VerifyState extends State<Verify> with WidgetsBindingObserver{
               ),
               onPressed: checkCode
                   ? () async => {
-                        if (await verify())
+                        if (verify())
                           {
                             Navigator.pushReplacement(
                               context,

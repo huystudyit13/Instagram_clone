@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/storage_methods.dart';
 import 'package:instagram_clone/model/user.dart' as model;
 
@@ -25,21 +26,15 @@ class AuthMethods {
     required String email,
     required String password,
     required String username,
-    required String bio,
     required Uint8List file,
   }) async {
     String res = "Some error Occurred";
     try {
-      if (email.isNotEmpty ||
-          password.isNotEmpty ||
-          username.isNotEmpty ||
-          file != null) {
         // registering user in auth with email and password
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
-
         String photoUrl =
         await StorageMethods().uploadImageToStorage('profilePics', file, false);
 
@@ -60,11 +55,10 @@ class AuthMethods {
             .set(_user.toJson());
 
         res = "success";
-      } else {
-        res = "Please enter all the fields";
+    } on FirebaseAuthException catch (err) {
+      if (err.code == "weak-password") {
+        res = "weak-password";
       }
-    } catch (err) {
-      return err.toString();
     }
     return res;
   }
@@ -74,20 +68,22 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
-    String res = "Some error Occurred";
+    String res = "Some error occurred";
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
         // logging in user with email and password
         await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
         res = "success";
-      } else {
-        res = "Please enter all the fields";
+    } on FirebaseAuthException catch (err) {
+      if (err.code == "wrong-password") {
+        res = "wrong-password";
+      } else if (err.code == "invalid-email") {
+        res = "invalid-email";
+      } else if (err.code == "user-not-found") {
+        res = "user-not-found";
       }
-    } catch (err) {
-      return err.toString();
     }
     return res;
   }
