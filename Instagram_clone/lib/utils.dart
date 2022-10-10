@@ -1,4 +1,8 @@
+
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone/language_controller.dart';
+import 'package:instagram_clone/main.dart';
 
 // for picking up image from gallery
 pickImage(ImageSource source) async {
@@ -7,4 +11,11 @@ pickImage(ImageSource source) async {
   if (file != null) {
     return await file.readAsBytes();
   }
+}
+
+Future<void> changeLanguage(BuildContext context, String newValue) async {
+  Locale locale;
+  locale = await setLocale(newValue);
+  //if (!mounted) return;
+  MyApp.setLocale(context, locale);
 }

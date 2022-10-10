@@ -5,6 +5,7 @@ import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/main.dart';
 import 'package:instagram_clone/screen/login.dart';
 import 'package:instagram_clone/screen/sign_up_methods.dart';
+import 'package:instagram_clone/utils.dart';
 
 class SignUpOptions extends StatefulWidget {
   const SignUpOptions({super.key});
@@ -50,28 +51,18 @@ class _SignUpOptionsState extends State<SignUpOptions> {
       underline: null,
       items: [
         DropdownMenuItem<String>(
-          value: 'English',
+          value: 'en',
           child: Text(translation(context).first_language),
         ),
         DropdownMenuItem<String>(
-          value: 'Tiếng Việt',
+          value: 'vi',
           child: Text(translation(context).second_language),
         ),
       ],
       onChanged: (String? newValue) {
-        setState(() async {
-          //dropdownValue = newValue!;
-          Locale locale;
-          if (newValue == "Tiếng Việt") {
-            locale = await setLocale('vi');
-            if (!mounted) return;
-            MyApp.setLocale(context, locale);
-          } else if (newValue == "English") {
-            locale = await setLocale('en');
-            if (!mounted) return;
-            MyApp.setLocale(context, locale);
-          }
+        setState(()  {
         });
+        changeLanguage(context, newValue!);
       },
     );
   }

@@ -8,6 +8,8 @@ import 'package:instagram_clone/screen/homeUI.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
 import 'package:instagram_clone/screen/starting_up.dart';
 
+import '../utils.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -57,8 +59,8 @@ class _LoginState extends State<Login> {
 
   void loginUser() async {
     _isLoading = true;
-    String res = await AuthMethods().loginUser(
-        email: username.text, password: password.text);
+    String res = await AuthMethods()
+        .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
       Navigator.pushReplacement(
         context,
@@ -108,35 +110,24 @@ class _LoginState extends State<Login> {
   }
 
   Widget _topWidget() {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<String>(
-        hint: Text(translation(context).language),
-        alignment: Alignment.center,
-        items: [
-          DropdownMenuItem<String>(
-            value: 'English',
-            child: Text(translation(context).first_language),
-          ),
-          DropdownMenuItem<String>(
-            value: 'Tiếng Việt',
-            child: Text(translation(context).second_language),
-          ),
-        ],
-        onChanged: (String? newValue) {
-          setState(() async {
-            Locale locale;
-            if (newValue == "Tiếng Việt") {
-              locale = await setLocale('vi');
-              if (!mounted) return;
-              MyApp.setLocale(context, locale);
-            } else if (newValue == "English") {
-              locale = await setLocale('en');
-              if (!mounted) return;
-              MyApp.setLocale(context, locale);
-            }
-          });
-        },
-      ),
+    return DropdownButton<String>(
+      hint: Text(translation(context).language),
+      alignment: Alignment.center,
+      underline: null,
+      items: [
+        DropdownMenuItem<String>(
+          value: 'en',
+          child: Text(translation(context).first_language),
+        ),
+        DropdownMenuItem<String>(
+          value: 'vi',
+          child: Text(translation(context).second_language),
+        ),
+      ],
+      onChanged: (String? newValue) {
+        setState(() {});
+        changeLanguage(context, newValue!);
+      },
     );
   }
 
@@ -184,14 +175,16 @@ class _LoginState extends State<Login> {
               borderSide: Divider.createBorderSide(context),
             ),
             filled: true,
-            suffixIcon: passCheck ?  IconButton(
-                icon:
-                Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-                onPressed: () {
-                  setState(() {
-                    _isObscure = !_isObscure;
-                  });
-                }) : null,
+            suffixIcon: passCheck
+                ? IconButton(
+                    icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    })
+                : null,
             contentPadding: const EdgeInsets.all(8),
           ),
         ),
@@ -204,17 +197,19 @@ class _LoginState extends State<Login> {
                 disabledBackgroundColor: Colors.lightBlueAccent,
                 disabledForegroundColor: Colors.white70,
               ),
-              onPressed: userCheck && passCheck ? () => {
-                loginUser(),
-              } : null,
+              onPressed: userCheck && passCheck
+                  ? () => {
+                        loginUser(),
+                      }
+                  : null,
               child: !_isLoading
                   ? Text(
-    translation(context).log_in,
-    style: const TextStyle(fontWeight: FontWeight.bold),
-    )
+                      translation(context).log_in,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    )
                   : const CircularProgressIndicator(
-                color: Colors.white,
-              ),
+                      color: Colors.white,
+                    ),
             )),
         const SizedBox(height: 24),
         RichText(
@@ -227,8 +222,8 @@ class _LoginState extends State<Login> {
             children: [
               TextSpan(
                 text: translation(context).get_help,
-                style:
-                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     //Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOptions()),);
@@ -270,12 +265,14 @@ class _LoginState extends State<Login> {
         children: [
           TextSpan(
             text: translation(context).sign_up,
-            style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.blue, fontWeight: FontWeight.bold),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignUpOptions()),
+                  MaterialPageRoute(
+                      builder: (context) => const SignUpOptions()),
                 );
               },
           ),

@@ -4,6 +4,7 @@ import 'package:instagram_clone/language_controller.dart';
 import 'package:instagram_clone/main.dart';
 import 'package:instagram_clone/screen/login.dart';
 import 'package:instagram_clone/screen/sign_up_options.dart';
+import 'package:instagram_clone/utils.dart';
 
 class StartingUp extends StatefulWidget {
   const StartingUp({super.key});
@@ -41,36 +42,27 @@ class _StartingUpState extends State<StartingUp> {
     );
   }
 
+
   Widget _topWidget() {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<String>(
-        hint: Text(translation(context).language),
-        alignment: Alignment.center,
-        items: [
-          DropdownMenuItem<String>(
-            value: 'English',
-            child: Text(translation(context).first_language),
-          ),
-          DropdownMenuItem<String>(
-            value: 'Tiếng Việt',
-            child: Text(translation(context).second_language),
-          ),
-        ],
-        onChanged: (String? newValue) {
-          setState(() async {
-            Locale locale;
-            if (newValue == "Tiếng Việt") {
-              locale = await setLocale('vi');
-              if (!mounted) return;
-              MyApp.setLocale(context, locale);
-            } else if (newValue == "English") {
-              locale = await setLocale('en');
-              if (!mounted) return;
-              MyApp.setLocale(context, locale);
-            }
-          });
-        },
-      ),
+    return DropdownButton<String>(
+      hint: Text(translation(context).language),
+      alignment: Alignment.center,
+      underline: null,
+      items: [
+        DropdownMenuItem<String>(
+          value: 'en',
+          child: Text(translation(context).first_language),
+        ),
+        DropdownMenuItem<String>(
+          value: 'vi',
+          child: Text(translation(context).second_language),
+        ),
+      ],
+      onChanged: (String? newValue) {
+        setState(()  {
+        });
+        changeLanguage(context, newValue!);
+      },
     );
   }
 
