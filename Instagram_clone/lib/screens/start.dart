@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone/language_controller.dart';
-import 'package:instagram_clone/screens/login.dart';
-import 'package:instagram_clone/screens/sign_up_options.dart';
-import 'package:instagram_clone/utils.dart';
+import 'package:instagram_clone/resources/language_controller.dart';
+import 'package:instagram_clone/screens/login/login.dart';
+import 'package:instagram_clone/screens/sign_up/sign_up_options.dart';
+import 'package:instagram_clone/resources/utils.dart';
 
 class Start extends StatefulWidget {
   const Start({super.key});

@@ -34,5 +34,9 @@
   "wrong_password": "Mật khẩu bạn nhập không chính xác.",
   "user_not_found": "Địa chỉ email này không tồn tại người dùng",
   "wrong_cf_pass": "Mật khẩu xác nhận của bạn đã bị sai.",
-  "sign_out": "Đăng xuất"
+  "sign_out": "Đăng xuất",
+  "forgot_pass_title": "Trợ giúp đăng nhập",
+  "forgot_pass_title1": "Tìm tài khoản",
+  "forgot_pass_subtitle": "Nhập email liên kết với tài khoản của ban.",
+  "password_reset_inform": "Email để đặt lại mật khẩu đã được gửi"
 }
