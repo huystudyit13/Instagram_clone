@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/language_controller.dart';
-import 'package:instagram_clone/screen/homeUI.dart';
-import 'package:instagram_clone/screen/sign_up_form.dart';
-import 'package:instagram_clone/screen/sign_up_methods.dart';
-import 'package:instagram_clone/screen/starting_up.dart';
+import 'package:instagram_clone/screens/homeUI.dart';
+import 'package:instagram_clone/screens/start.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,55 +45,31 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Localization',
+      //title: 'Localization',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            // Checking if the snapshot has any data or not
-            if (snapshot.hasData) {
-              // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-              return const Home();
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
-              );
-            }
-          }
-
-          // means connection to future hasnt been made yet
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          return const StartingUp();
-        },
-      ),
+      home: const StartingUp(),
       locale: _locale,
     );
   }
 }
 
-class Start extends StatefulWidget {
-  const Start({super.key});
+class StartingUp extends StatefulWidget {
+  const StartingUp({super.key});
 
   @override
-  State<Start> createState() => _StartState();
+  State<StartingUp> createState() => _StartingUpState();
 }
 
-class _StartState extends State<Start> {
+class _StartingUpState extends State<StartingUp> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), openStartingUpPage);
+    Timer(const Duration(seconds: 3), checkState);
   }
 
   @override
@@ -111,8 +85,52 @@ class _StartState extends State<Start> {
     );
   }
 
-  void openStartingUpPage() {
+  void checkState() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const StartingUp()));
+        context, MaterialPageRoute(builder: (context) => const Check()));
+  }
+}
+
+class Check extends StatefulWidget {
+  const Check({super.key});
+
+  @override
+  State<Check> createState() => _CheckState();
+}
+
+class _CheckState extends State<Check> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            // Checking if the snapshot has any data or not
+            if (snapshot.hasData) {
+              // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
+              return const Home();
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            }
+          }
+          // means connection to future hasnt been made yet
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return const Start();
+        },
+      ),
+    );
   }
 }
