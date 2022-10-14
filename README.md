@@ -47,5 +47,5 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 ## Week 6
 
-* #### Sửa lỗi thay đổi ngôn ngữ sau khi tắt app và bật lại, sửa màn hình splash khi bật app, thêm phương thức quên mật khảu và bottom navigator bar.
+* #### Sửa lỗi thay đổi ngôn ngữ sau khi tắt app và bật lại, sửa màn hình splash khi bật app, thêm phương thức quên mật khẩu và bottom navigator bar.
 ![Video_2022-10-14_112212](https://user-images.githubusercontent.com/63287129/195762135-6ad43933-72f9-4948-949c-f40c8a2fd9a0.gif)
