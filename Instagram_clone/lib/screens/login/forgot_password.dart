@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/utils.dart';
-import 'package:instagram_clone/screens/login/login.dart';
-
 
 class ForgotPass extends StatefulWidget {
   const ForgotPass({super.key});

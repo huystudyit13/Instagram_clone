@@ -28,7 +28,7 @@ class _VerifyState extends State<Verify> {
   }
 
   void resendOTP() async {
-    bool result = await widget.emailAuth.sendOtp(recipientMail: widget.mail);
+    await widget.emailAuth.sendOtp(recipientMail: widget.mail);
   }
 
   @override

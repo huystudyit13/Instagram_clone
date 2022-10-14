@@ -7,8 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/screens/homeUI.dart';
-import 'package:instagram_clone/screens/login/forgot_password.dart';
-import 'package:instagram_clone/screens/login/login.dart';
 import 'package:instagram_clone/screens/start.dart';
 
 void main() async {
@@ -54,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const Login(),
+      home: const StartingUp(),
       locale: _locale,
     );
   }

@@ -16,6 +16,7 @@ Future<void> changeLanguage(BuildContext context, String newValue) async {
   Locale locale;
   locale = await setLocale(newValue);
   //if (!mounted) return;
+  // ignore: use_build_context_synchronously
   MyApp.setLocale(context, locale);
 }
 

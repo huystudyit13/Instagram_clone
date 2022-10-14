@@ -78,7 +78,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
 
   void sendOTP() async {
     await auth.currentUser?.delete();
-    bool result = await emailAuth.sendOtp(recipientMail: email.value.text);
+    await emailAuth.sendOtp(recipientMail: email.value.text);
   }
 
   @override

@@ -52,6 +52,7 @@ class _LoginState extends State<Login> {
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Home()),
@@ -60,12 +61,16 @@ class _LoginState extends State<Login> {
     } else {
       _isLoading = false;
       if (res == "wrong-password") {
+        if (!mounted) return;
         res = translation(context).wrong_password;
       } else if (res == "invalid-email") {
+        if (!mounted) return;
         res = translation(context).invalid_email;
       } else if (res == "user-not-found") {
+        if (!mounted) return;
         res = translation(context).user_not_found;
       }
+      if (!mounted) return;
       showMess(context, res);
     }
   }

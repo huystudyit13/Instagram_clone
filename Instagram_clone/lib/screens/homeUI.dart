@@ -13,21 +13,21 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Text(
+    const Text(
       'Index 1: Search',
       style: optionStyle,
     ),
-    Text(
+    const Text(
       'Index 2: Post',
       style: optionStyle,
     ),
-    Text(
+    const Text(
       'Index 3: Activity',
       style: optionStyle,
     ),
-    Text(
+    const Text(
       'Index 4: Profile',
     )
   ];
@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
 
   Future<void> signOut() async {
     await AuthMethods().signOut();
+    if (!mounted) return;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const Start()),
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-                Icon(
+                const Icon(
                   Icons.camera_alt_rounded,
                   color: Colors.black,
                   size: 35,
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
             IconButton(
-              icon: Icon(Icons.send_rounded),
+              icon: const Icon(Icons.send_rounded),
               color: Colors.black,
               onPressed: signOut,
               //size: 35,
@@ -171,7 +172,7 @@ Widget HomeScreen() {
                 child: Column(
                   children: <Widget>[
                     Stack(
-                      children: <Widget>[
+                      children: const <Widget>[
                         CircleAvatar(
                           radius: 35,
                           backgroundImage: AssetImage('assets/images/UET.png'),
@@ -189,8 +190,8 @@ Widget HomeScreen() {
                                 )))
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Text('Your Story'),
                     ),
                   ],
@@ -201,7 +202,7 @@ Widget HomeScreen() {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     CircleAvatar(
                       radius: 39,
                       backgroundImage:
@@ -217,8 +218,8 @@ Widget HomeScreen() {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SizedBox(
                           width: 100,
                           child: Center(
                               child: Text(
@@ -234,7 +235,7 @@ Widget HomeScreen() {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     CircleAvatar(
                       radius: 39,
                       backgroundImage:
@@ -250,8 +251,8 @@ Widget HomeScreen() {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SizedBox(
                           width: 100,
                           child: Center(
                               child: Text(
@@ -267,7 +268,7 @@ Widget HomeScreen() {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     CircleAvatar(
                       radius: 39,
                       backgroundImage:
@@ -283,8 +284,8 @@ Widget HomeScreen() {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SizedBox(
                           width: 100,
                           child: Center(
                               child: Text(
@@ -300,7 +301,7 @@ Widget HomeScreen() {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     CircleAvatar(
                       radius: 39,
                       backgroundImage:
@@ -316,8 +317,8 @@ Widget HomeScreen() {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SizedBox(
                           width: 100,
                           child: Center(
                               child: Text(
@@ -333,15 +334,15 @@ Widget HomeScreen() {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     CircleAvatar(
                       radius: 35,
                       backgroundImage:
                           AssetImage('assets/images/instagrammer5.png'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SizedBox(
                         width: 100,
                         child: Center(
                           child: Text(
@@ -359,15 +360,15 @@ Widget HomeScreen() {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0, left: 8.0),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     CircleAvatar(
                       radius: 35,
                       backgroundImage:
                           AssetImage('assets/images/instagrammer6.png'),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SizedBox(
                         width: 100,
                         child: Center(
                           child: Text(
@@ -383,7 +384,7 @@ Widget HomeScreen() {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         Column(
           children: <Widget>[
             Post(
@@ -421,14 +422,14 @@ Widget Post(hasStory, numOfUser, name, location) {
                 children: <Widget>[
                   Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
                   Text(location,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Roboto',
                       )),
                 ],
@@ -442,7 +443,7 @@ Widget Post(hasStory, numOfUser, name, location) {
         ],
       ),
       Image.asset(
-          'assets/images/instagrammer' + numOfUser.toString() + '_post.png'),
+          'assets/images/instagrammer${numOfUser}_post.png'),
     ],
   );
 }
@@ -452,7 +453,7 @@ Widget smallProfileWithStory(numOfUser) {
     padding: const EdgeInsets.all(8.0),
     child: CircleAvatar(
         radius: 24,
-        backgroundImage: AssetImage('assets/images/storybackground.jpg'),
+        backgroundImage: const AssetImage('assets/images/storybackground.jpg'),
         child: CircleAvatar(
             radius: 22,
             backgroundColor: Colors.white,

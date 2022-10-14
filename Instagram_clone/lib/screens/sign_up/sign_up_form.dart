@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -92,6 +90,7 @@ class SignUpFormState extends State<SignUpForm> {
         _isLoading = false;
       });
       // navigate to the home screen
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Start()),
@@ -101,6 +100,7 @@ class SignUpFormState extends State<SignUpForm> {
         _isLoading = false;
       });
       // show the error
+      if (!mounted) return;
       showMess(context, translation(context).weak_password);
     }
   }
