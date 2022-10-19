@@ -38,5 +38,12 @@
   "forgot_pass_title": "Trợ giúp đăng nhập",
   "forgot_pass_title1": "Tìm tài khoản",
   "forgot_pass_subtitle": "Nhập email liên kết với tài khoản của ban.",
-  "password_reset_inform": "Email để đặt lại mật khẩu đã được gửi"
+  "password_reset_inform": "Email để đặt lại mật khẩu đã được gửi",
+  "post": "Đăng",
+  "new_post": "Bài viết mới",
+  "take_a_photo": "Chụp từ máy ảnh",
+  "choose_from_gallery": "Chọn từ thư viện",
+  "cancel": "Hủy",
+  "write_a_caption": "Viết mô tả...",
+  "posted": "Đã đăng thành công!"
 }

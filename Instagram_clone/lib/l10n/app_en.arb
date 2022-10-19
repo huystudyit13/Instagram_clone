@@ -38,5 +38,12 @@
   "forgot_pass_title": "Login help",
   "forgot_pass_title1": "Find your account",
   "forgot_pass_subtitle": "Enter your email linked to your account.",
-  "password_reset_inform": "Password reset email sent"
+  "password_reset_inform": "Password reset email sent",
+  "post": "Post",
+  "new_post": "New post",
+  "take_a_photo": "Take a photo",
+  "choose_from_gallery": "Choose from Gallery",
+  "cancel": "Cancel",
+  "write_a_caption": "Write a caption...",
+  "posted": "Posted!"
 }

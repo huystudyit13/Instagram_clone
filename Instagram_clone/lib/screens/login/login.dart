@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
-import 'package:instagram_clone/screens/homeUI.dart';
+import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/screens/login/forgot_password.dart';
+import 'package:instagram_clone/screens/main_ui/navigator.dart';
 import 'package:instagram_clone/screens/sign_up/sign_up_options.dart';
+import 'package:provider/provider.dart';
 
 import '../../resources/utils.dart';
 
@@ -45,7 +47,11 @@ class _LoginState extends State<Login> {
     password.dispose();
   }
 
-
+  addData() async {
+    UserProvider userProvider =
+    Provider.of<UserProvider>(context, listen: false);
+    await userProvider.refreshUser();
+  }
 
   void loginUser() async {
     _isLoading = true;
@@ -53,9 +59,10 @@ class _LoginState extends State<Login> {
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
       if (!mounted) return;
+      addData();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
+        MaterialPageRoute(builder: (context) => const MainUiNavigator()),
       );
       _isLoading = false;
     } else {

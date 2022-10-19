@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/resources/user_provider.dart';
+import 'package:instagram_clone/screens/main_ui/add_post.dart';
+import 'package:instagram_clone/screens/main_ui/feed.dart';
+import 'package:provider/provider.dart';
 
 class MainUiNavigator extends StatefulWidget {
   const MainUiNavigator({Key? key}) : super(key: key);
@@ -17,6 +19,13 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
   void initState() {
     super.initState();
     pageController = PageController();
+    addData();
+  }
+
+  addData() async {
+    UserProvider userProvider =
+    Provider.of<UserProvider>(context, listen: false);
+    await userProvider.refreshUser();
   }
 
   @override
@@ -38,17 +47,19 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    //final model.User user = Provider.of<UserProvider>(context).getUser;
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: PageView(
         controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
         children: const [
-          // const Home(),
-          Text('home'),
+          Feed(),
           // const Search(),
           Text('search'),
-          // const AddPost(),
-          Text('add'),
+          AddPost(),
+          //Text('search'),
           // const Notification(),
           Text('notifications'),
           // ProfileScreen(
@@ -57,75 +68,87 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
           Text('profile'),
         ],
       ),
-      bottomNavigationBar: CupertinoTabBar(
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: (_page == 0)
-                ? const Icon(
-                    Icons.home,
-                    color: Colors.black,
-                  )
-                : const Icon(
-                    Icons.home_outlined,
-                    color: Colors.black,
-                  ),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              //color: Colors.black,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
+            label: '',
+            backgroundColor: Colors.white,
+          ),
+          const BottomNavigationBarItem(
+              // activeIcon: SvgPicture.asset(
+              //   'assets/images/ic_search_selected.svg',
+              // ),
+              // icon    : SvgPicture.asset(
+              //   'assets/images/ic_search.svg',
+              // ),
+              icon: Icon(
+                Icons.search_outlined,
+                //color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              label: '',
+              backgroundColor: Colors.white),
+          const BottomNavigationBarItem(
+              icon: Icon(
+                Icons.add_circle_outline_outlined,
+                //color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.add_circle,
+                color: Colors.black,
+              ),
+              label: '',
+              backgroundColor: Colors.white),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite_outline_outlined,
+              //color: Colors.black,
+            ),
+            activeIcon: Icon(
+              Icons.favorite,
+              color: Colors.black,
+            ),
             label: '',
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-              icon: (_page == 1)
-                  ? SvgPicture.asset(
-                      'assets/images/ic_search_selected.svg',
-                      //color: Colors.black,
-                    )
-                  : SvgPicture.asset(
-                      'assets/images/ic_search.svg',
-                      //color: Colors.black,
-                    ),
-              label: '',
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: (_page == 2)
-                  ? const Icon(
-                      Icons.add_circle,
-                      color: Colors.black,
-                    )
-                  : const Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.black,
-                    ),
-              label: '',
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-            icon: (_page == 3)
-                ? const Icon(
-                    Icons.favorite,
-                    color: Colors.black,
-                  )
-                : const Icon(
-                    Icons.favorite_outline,
-                    color: Colors.black,
-                  ),
-            label: '',
-            backgroundColor: Colors.white,
-          ),
-          BottomNavigationBarItem(
-            icon: (_page == 4)
-                ? const Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  )
-                : const Icon(
-                    Icons.person_outlined,
-                    color: Colors.black,
-                  ),
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundImage: NetworkImage(userProvider.getUser.photoUrl),
+            ),
+            activeIcon: CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.black,
+              child: CircleAvatar(
+                radius: 17,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                    radius: 15, backgroundImage: NetworkImage(userProvider.getUser.photoUrl)),
+              ),
+            ),
             label: '',
             backgroundColor: Colors.white,
           ),
         ],
         onTap: navigationTapped,
+        iconSize: 30.0,
         currentIndex: _page,
+        selectedItemColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }

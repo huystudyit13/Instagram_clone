@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
-import 'package:instagram_clone/screens/homeUI.dart';
+import 'package:instagram_clone/resources/user_provider.dart';
+import 'package:instagram_clone/screens/main_ui/navigator.dart';
 import 'package:instagram_clone/screens/start.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +46,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+        providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider(),),
+    ],
+    child: MaterialApp(
       //title: 'Localization',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -54,6 +60,7 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       home: const StartingUp(),
       locale: _locale,
+    )
     );
   }
 }
@@ -69,7 +76,14 @@ class _StartingUpState extends State<StartingUp> {
   @override
   void initState() {
     super.initState();
+    addData();
     Timer(const Duration(seconds: 3), checkState);
+  }
+
+  addData() async {
+    UserProvider userProvider =
+    Provider.of<UserProvider>(context, listen: false);
+    await userProvider.refreshUser();
   }
 
   @override
@@ -102,6 +116,13 @@ class _CheckState extends State<Check> {
   @override
   void initState() {
     super.initState();
+
+  }
+
+  addData() async {
+    UserProvider userProvider =
+    Provider.of<UserProvider>(context, listen: false);
+    await userProvider.refreshUser();
   }
 
   @override
@@ -114,7 +135,8 @@ class _CheckState extends State<Check> {
             // Checking if the snapshot has any data or not
             if (snapshot.hasData) {
               // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-              return const Home();
+              addData();
+              return const MainUiNavigator();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),
