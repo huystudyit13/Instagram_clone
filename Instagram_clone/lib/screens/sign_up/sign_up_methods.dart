@@ -124,8 +124,8 @@ class _SignUpMethodsState extends State<SignUpMethods>
           unselectedLabelColor: Colors.grey,
           indicatorColor: Colors.black,
           tabs: [
-            Tab(text: translation(context).phone),
-            Tab(text: translation(context).email),
+            Tab(key: const ValueKey('firstTab'),text: translation(context).phone),
+            Tab(key: const ValueKey('secondTab'),text: translation(context).email),
           ],
         ),
         SizedBox(
@@ -141,6 +141,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
                     child: Stack(
                       children: [
                         InternationalPhoneNumberInput(
+                          key: const ValueKey('phoneNumber'),
                           onInputChanged: (PhoneNumber number) {
                             //print(number.phoneNumber);
                           },
@@ -209,6 +210,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: TextField(
+                      key: const ValueKey('emailField'),
                       controller: email,
                       decoration: InputDecoration(
                         hintText: translation(context).email,
@@ -230,6 +232,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
                       height: 48,
                       width: double.infinity,
                       child: ElevatedButton(
+                        key: const ValueKey('nextButton'),
                         style: ElevatedButton.styleFrom(
                           disabledBackgroundColor: Colors.lightBlueAccent,
                           disabledForegroundColor: Colors.white70,
@@ -268,6 +271,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
 
   Widget _bottomWidget() {
     return RichText(
+      key: const ValueKey('login'),
       text: TextSpan(
         text: translation(context).alredy_have_acc,
         style: const TextStyle(

@@ -22,6 +22,7 @@ Future<void> changeLanguage(BuildContext context, String newValue) async {
 
 void showMess(BuildContext context, String content) {
   final snackBar = SnackBar(
+    key: const ValueKey('message'),
     content: Text(
       content,
       style: const TextStyle(color: Colors.white),

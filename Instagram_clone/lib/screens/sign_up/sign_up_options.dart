@@ -78,6 +78,7 @@ class _SignUpOptionsState extends State<SignUpOptions> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
+                key: const ValueKey('login_fb_button'),
                 onPressed: () {},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -100,6 +101,7 @@ class _SignUpOptionsState extends State<SignUpOptions> {
         ),
         const SizedBox(height: 24),
         InkWell(
+            key: const ValueKey('sign_up_option'),
             child: Text(translation(context).sign_up_option,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.blue)),

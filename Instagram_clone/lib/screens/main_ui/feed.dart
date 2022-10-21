@@ -33,6 +33,7 @@ class _FeedState extends State<Feed> {
         ),
         actions: [
             IconButton(
+              key: const ValueKey('Logout'),
               icon: const Icon(Icons.send_rounded),
               color: Colors.black,
               onPressed: signOut,

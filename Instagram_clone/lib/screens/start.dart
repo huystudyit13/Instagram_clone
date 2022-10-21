@@ -50,11 +50,11 @@ class _StartState extends State<Start> {
       items: [
         DropdownMenuItem<String>(
           value: 'en',
-          child: Text(translation(context).first_language),
+          child: Text(translation(context).first_language, key: const ValueKey('firstMenu'),),
         ),
         DropdownMenuItem<String>(
           value: 'vi',
-          child: Text(translation(context).second_language),
+          child: Text(translation(context).second_language, key: const ValueKey('secondMenu'),),
         ),
       ],
       onChanged: (String? newValue) {
@@ -76,6 +76,7 @@ class _StartState extends State<Start> {
         const SizedBox(height: 24),
         SizedBox(
             height: 48,
+            key: const ValueKey('signupButton'),
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
@@ -91,6 +92,7 @@ class _StartState extends State<Start> {
             )),
         const SizedBox(height: 24),
         InkWell(
+            key: const ValueKey('login'),
             child: Text(
               translation(context).log_in,
               style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),

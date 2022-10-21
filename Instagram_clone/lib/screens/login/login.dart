@@ -145,6 +145,7 @@ class _LoginState extends State<Login> {
         ),
         const SizedBox(height: 24),
         TextField(
+          key: const ValueKey('emailSignUpField'),
           controller: username,
           decoration: InputDecoration(
             labelText: translation(context).name_input_field,
@@ -163,6 +164,7 @@ class _LoginState extends State<Login> {
         ),
         const SizedBox(height: 24),
         TextField(
+          key: const ValueKey('passwordSignUpField'),
           obscureText: _isObscure,
           controller: password,
           decoration: InputDecoration(
@@ -195,6 +197,7 @@ class _LoginState extends State<Login> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
+              key: const ValueKey('loginButton'),
               style: ElevatedButton.styleFrom(
                 disabledBackgroundColor: Colors.lightBlueAccent,
                 disabledForegroundColor: Colors.white70,

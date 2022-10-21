@@ -48,19 +48,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider(),),
-    ],
-    child: MaterialApp(
-      //title: 'Localization',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const StartingUp(),
-      locale: _locale,
-    )
+          ChangeNotifierProvider(create: (_) => UserProvider(),),
+        ],
+        child: MaterialApp(
+          //title: 'Localization',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const StartingUp(),
+          locale: _locale,
+        )
     );
   }
 }
@@ -76,7 +76,7 @@ class _StartingUpState extends State<StartingUp> {
   @override
   void initState() {
     super.initState();
-    addData();
+    //addData();
     Timer(const Duration(seconds: 3), checkState);
   }
 
