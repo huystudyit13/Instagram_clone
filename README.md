@@ -49,3 +49,12 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 * #### Sửa lỗi thay đổi ngôn ngữ sau khi tắt app và bật lại, sửa màn hình splash khi bật app, thêm phương thức quên mật khẩu và bottom navigator bar.
 ![Video_2022-10-14_112212](https://user-images.githubusercontent.com/63287129/195762135-6ad43933-72f9-4948-949c-f40c8a2fd9a0.gif)
+
+----
+
+## Week 7
+
+* #### Thêm màn hình và các phương thức đăng bài viết mới và lưu trữ trên firebase.
+* #### Thêm các ca kiểm thử integration test.
+![image](https://user-images.githubusercontent.com/62604651/197119174-50ff815d-f5ee-4c61-bf72-c7d63720269c.png)
+
