@@ -3,7 +3,16 @@ import 'package:instagram_clone/models/user.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
-  late User? _user;
+  User? _user = const User(
+  username: '',
+  uid: '',
+  photoUrl: '',
+  email: '',
+  bio: '',
+  followers: [],
+  following: [],
+  );
+
   final AuthMethods _authMethods = AuthMethods();
 
   User get getUser => _user!;

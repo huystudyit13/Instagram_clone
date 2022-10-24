@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
+import 'package:instagram_clone/screens/main_ui/home.dart';
 import 'package:instagram_clone/screens/main_ui/navigator.dart';
 import 'package:provider/provider.dart';
 
@@ -96,7 +97,9 @@ class SignUpFormState extends State<SignUpForm> {
       //addData();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainUiNavigator()),
+        MaterialPageRoute(builder: (context) => const HomeLayout(
+            mobileScreenLayout: MainUiNavigator(),
+      )),
       );
     } else {
       setState(() {

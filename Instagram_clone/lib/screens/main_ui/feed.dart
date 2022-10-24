@@ -11,15 +11,6 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  Future<void> signOut() async {
-    await AuthMethods().signOut();
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Start()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +26,8 @@ class _FeedState extends State<Feed> {
             key: const ValueKey('Logout'),
             icon: const Icon(Icons.send_rounded),
             color: Colors.black,
-            onPressed: signOut,
             iconSize: 35,
+            onPressed: () {},
           ),
         ],
         backgroundColor: Colors.white,

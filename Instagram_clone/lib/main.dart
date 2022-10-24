@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
+import 'package:instagram_clone/screens/main_ui/home.dart';
 import 'package:instagram_clone/screens/main_ui/navigator.dart';
 import 'package:instagram_clone/screens/start.dart';
 import 'package:provider/provider.dart';
@@ -136,7 +137,9 @@ class _CheckState extends State<Check> {
             if (snapshot.hasData) {
               // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
               //addData();
-              return const MainUiNavigator();
+              return const HomeLayout(
+                mobileScreenLayout: MainUiNavigator(),
+              );
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),

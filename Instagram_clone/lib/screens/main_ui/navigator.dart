@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
+import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/main_ui/add_post.dart';
 import 'package:instagram_clone/screens/main_ui/feed.dart';
+import 'package:instagram_clone/screens/main_ui/profile.dart';
 import 'package:provider/provider.dart';
+import 'package:instagram_clone/models/user.dart' as model;
 
 class MainUiNavigator extends StatefulWidget {
   const MainUiNavigator({Key? key}) : super(key: key);
@@ -14,12 +19,30 @@ class MainUiNavigator extends StatefulWidget {
 class _MainUiNavigatorState extends State<MainUiNavigator> {
   int _page = 0;
   late PageController pageController; // for tabs animation
+  var userData = {};
 
   @override
   void initState() {
     super.initState();
     pageController = PageController();
-    addData();
+    //addData();
+    //getData();
+  }
+
+  getData() async {
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      userData = userSnap.data()!;
+    } catch (e) {
+      showMess(
+        context,
+        e.toString(),
+      );
+    }
   }
 
   addData() async {
@@ -47,7 +70,8 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    //final model.User user = Provider.of<UserProvider>(context).getUser;
+    final model.User user = Provider.of<UserProvider>(context).getUser;
+    //String? photoUrl = user.photoUrl;
     //final UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: PageView(
@@ -62,10 +86,8 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
           //Text('search'),
           // const Notification(),
           Text('notifications'),
-          // ProfileScreen(
-          //   uid: FirebaseAuth.instance.currentUser!.uid,
-          // ),
-          Text('profile'),
+          Profile(),
+          //Text('profile'),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -123,36 +145,24 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
             label: '',
             backgroundColor: Colors.white,
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline_outlined,
-              //color: Colors.black,
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundImage: NetworkImage(user.photoUrl),
             ),
-            activeIcon: Icon(
-              Icons.person,
-              color: Colors.black,
+            activeIcon: CircleAvatar(
+              radius: 15,
+              backgroundColor: Colors.black,
+              child: CircleAvatar(
+                radius: 14,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                    radius: 13, backgroundImage: NetworkImage(user.photoUrl)),
+              ),
             ),
             label: '',
             backgroundColor: Colors.white,
           ),
-          // BottomNavigationBarItem(
-          //   icon: CircleAvatar(
-          //     radius: 15,
-          //     backgroundImage: NetworkImage(userProvider.getUser.photoUrl),
-          //   ),
-          //   activeIcon: CircleAvatar(
-          //     radius: 18,
-          //     backgroundColor: Colors.black,
-          //     child: CircleAvatar(
-          //       radius: 17,
-          //       backgroundColor: Colors.white,
-          //       child: CircleAvatar(
-          //           radius: 15, backgroundImage: NetworkImage(userProvider.getUser.photoUrl)),
-          //     ),
-          //   ),
-          //   label: '',
-          //   backgroundColor: Colors.white,
-          // ),
         ],
         onTap: navigationTapped,
         iconSize: 30.0,
