@@ -35,8 +35,8 @@ class _ForgotPassState extends State<ForgotPass> {
   Future<bool> resetPassword() async {
     bool check = true;
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-          email: email.text.trim());
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email.text.trim());
     } on FirebaseAuthException catch (e) {
       check = false;
       if (e.code == "invalid-email") {
@@ -53,74 +53,83 @@ class _ForgotPassState extends State<ForgotPass> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(translation(context).forgot_pass_title, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: Text(
+          translation(context).forgot_pass_title,
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.white,
       ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(translation(context).forgot_pass_title1, style: const TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),),
+          child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                translation(context).forgot_pass_title1,
+                style: const TextStyle(
+                    fontSize: 25.0, fontWeight: FontWeight.bold),
               ),
-              Text(translation(context).forgot_pass_subtitle),
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextField(
-                        controller: email,
-                        decoration: InputDecoration(
-                          hintText: translation(context).email,
-                          border: OutlineInputBorder(
-                            borderSide: Divider.createBorderSide(context),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: Divider.createBorderSide(context),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: Divider.createBorderSide(context),
-                          ),
-                          filled: true,
-                          contentPadding: const EdgeInsets.all(8),
+            ),
+            Text(translation(context).forgot_pass_subtitle),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: TextField(
+                      controller: email,
+                      decoration: InputDecoration(
+                        hintText: translation(context).email,
+                        border: OutlineInputBorder(
+                          borderSide: Divider.createBorderSide(context),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: Divider.createBorderSide(context),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: Divider.createBorderSide(context),
+                        ),
+                        filled: true,
+                        contentPadding: const EdgeInsets.all(8),
                       ),
                     ),
-                    SizedBox(
-                        height: 48,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            disabledBackgroundColor: Colors.lightBlueAccent,
-                            disabledForegroundColor: Colors.white70,
-                          ),
-                          onPressed: checkMail ?
-                              () async {
-                              if(await resetPassword()) {
-                                showMess(context, translation(context).password_reset_inform);
-                                Navigator.pop(context);
+                  ),
+                  SizedBox(
+                      height: 48,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          disabledBackgroundColor: Colors.lightBlueAccent,
+                          disabledForegroundColor: Colors.white70,
+                        ),
+                        onPressed: checkMail
+                            ? () async {
+                                if (await resetPassword()) {
+                                  showMess(
+                                      context,
+                                      translation(context)
+                                          .password_reset_inform);
+                                  Navigator.pop(context);
+                                }
                               }
-                              } :null,
-                          child: Text(
-                            translation(context).next,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                  ],
-                ),
+                            : null,
+                        child: Text(
+                          translation(context).next,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                ],
               ),
-              const SizedBox(height: 96),
-            ],
-          ),
-        )
-      ),
+            ),
+          ],
+        ),
+      )),
     );
   }
-
 }

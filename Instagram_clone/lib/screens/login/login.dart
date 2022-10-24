@@ -49,24 +49,23 @@ class _LoginState extends State<Login> {
 
   addData() async {
     UserProvider userProvider =
-    Provider.of<UserProvider>(context, listen: false);
+        Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 
   void loginUser() async {
-    _isLoading = true;
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
+      _isLoading = true;
       if (!mounted) return;
-      addData();
+      //addData();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainUiNavigator()),
       );
       _isLoading = false;
     } else {
-      _isLoading = false;
       if (res == "wrong-password") {
         if (!mounted) return;
         res = translation(context).wrong_password;
@@ -78,6 +77,7 @@ class _LoginState extends State<Login> {
         res = translation(context).user_not_found;
       }
       if (!mounted) return;
+      _isLoading = false;
       showMess(context, res);
     }
   }
@@ -85,27 +85,32 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: _topWidget(),
-            ),
-            Flexible(flex: 2, child: Container()),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _centerWidget(),
-            ),
-            Flexible(flex: 2, child: Container()),
-            const Divider(thickness: 2),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: _bottomWidget(),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: _topWidget(),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+              //Flexible(flex: 1, child: Container()),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _centerWidget(),
+              ),
+              Flexible(flex: 2, child: Container()),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              const Divider(thickness: 2),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: _bottomWidget(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -204,6 +209,7 @@ class _LoginState extends State<Login> {
               ),
               onPressed: userCheck && passCheck
                   ? () => {
+                        FocusManager.instance.primaryFocus?.unfocus(),
                         loginUser(),
                       }
                   : null,
@@ -231,7 +237,11 @@ class _LoginState extends State<Login> {
                     color: Colors.black, fontWeight: FontWeight.bold),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPass()),);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgotPass()),
+                    );
                   },
               ),
             ],

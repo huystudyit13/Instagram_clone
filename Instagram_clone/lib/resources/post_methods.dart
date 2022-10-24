@@ -20,7 +20,7 @@ class PostMethods {
         description: description,
         uid: uid,
         username: username,
-        likes: [],
+        likes: 0,
         postId: postId,
         datePublished: DateTime.now(),
         postUrl: photoUrl,

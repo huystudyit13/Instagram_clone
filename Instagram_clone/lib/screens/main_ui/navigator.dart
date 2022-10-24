@@ -24,7 +24,7 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
 
   addData() async {
     UserProvider userProvider =
-    Provider.of<UserProvider>(context, listen: false);
+        Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 
@@ -48,7 +48,7 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
   @override
   Widget build(BuildContext context) {
     //final model.User user = Provider.of<UserProvider>(context).getUser;
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    //final UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: PageView(
         controller: pageController,
@@ -123,24 +123,36 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
             label: '',
             backgroundColor: Colors.white,
           ),
-          BottomNavigationBarItem(
-            icon: CircleAvatar(
-              radius: 15,
-              backgroundImage: NetworkImage(userProvider.getUser.photoUrl),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outline_outlined,
+              //color: Colors.black,
             ),
-            activeIcon: CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.black,
-              child: CircleAvatar(
-                radius: 17,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                    radius: 15, backgroundImage: NetworkImage(userProvider.getUser.photoUrl)),
-              ),
+            activeIcon: Icon(
+              Icons.person,
+              color: Colors.black,
             ),
             label: '',
             backgroundColor: Colors.white,
           ),
+          // BottomNavigationBarItem(
+          //   icon: CircleAvatar(
+          //     radius: 15,
+          //     backgroundImage: NetworkImage(userProvider.getUser.photoUrl),
+          //   ),
+          //   activeIcon: CircleAvatar(
+          //     radius: 18,
+          //     backgroundColor: Colors.black,
+          //     child: CircleAvatar(
+          //       radius: 17,
+          //       backgroundColor: Colors.white,
+          //       child: CircleAvatar(
+          //           radius: 15, backgroundImage: NetworkImage(userProvider.getUser.photoUrl)),
+          //     ),
+          //   ),
+          //   label: '',
+          //   backgroundColor: Colors.white,
+          // ),
         ],
         onTap: navigationTapped,
         iconSize: 30.0,

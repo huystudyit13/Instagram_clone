@@ -48,7 +48,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => UserProvider(),),
+          ChangeNotifierProvider(
+            create: (_) => UserProvider(),
+          ),
         ],
         child: MaterialApp(
           //title: 'Localization',
@@ -60,8 +62,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: AppLocalizations.supportedLocales,
           home: const StartingUp(),
           locale: _locale,
-        )
-    );
+        ));
   }
 }
 
@@ -82,7 +83,7 @@ class _StartingUpState extends State<StartingUp> {
 
   addData() async {
     UserProvider userProvider =
-    Provider.of<UserProvider>(context, listen: false);
+        Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 
@@ -116,12 +117,11 @@ class _CheckState extends State<Check> {
   @override
   void initState() {
     super.initState();
-
   }
 
   addData() async {
     UserProvider userProvider =
-    Provider.of<UserProvider>(context, listen: false);
+        Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 
@@ -135,7 +135,7 @@ class _CheckState extends State<Check> {
             // Checking if the snapshot has any data or not
             if (snapshot.hasData) {
               // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-              addData();
+              //addData();
               return const MainUiNavigator();
             } else if (snapshot.hasError) {
               return Center(

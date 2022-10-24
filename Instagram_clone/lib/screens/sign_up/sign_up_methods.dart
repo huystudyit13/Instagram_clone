@@ -27,7 +27,6 @@ class _SignUpMethodsState extends State<SignUpMethods>
   late EmailAuth emailAuth;
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-
   Future<bool> checkEmail({
     required String email,
     required String password,
@@ -124,8 +123,12 @@ class _SignUpMethodsState extends State<SignUpMethods>
           unselectedLabelColor: Colors.grey,
           indicatorColor: Colors.black,
           tabs: [
-            Tab(key: const ValueKey('firstTab'),text: translation(context).phone),
-            Tab(key: const ValueKey('secondTab'),text: translation(context).email),
+            Tab(
+                key: const ValueKey('firstTab'),
+                text: translation(context).phone),
+            Tab(
+                key: const ValueKey('secondTab'),
+                text: translation(context).email),
           ],
         ),
         SizedBox(

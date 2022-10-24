@@ -45,5 +45,7 @@
   "choose_from_gallery": "Choose from Gallery",
   "cancel": "Cancel",
   "write_a_caption": "Write a caption...",
-  "posted": "Posted!"
+  "posted": "Posted!",
+  "complete_acc": "Complete your account",
+  "contain_blank_spaces": "Your password can not contain blank spaces"
 }

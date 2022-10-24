@@ -159,7 +159,8 @@ class _VerifyState extends State<Verify> {
                           }
                         else
                           {
-                            showMess(context, translation(context).validate_fail),
+                            showMess(
+                                context, translation(context).validate_fail),
                           }
                       }
                   : null,

@@ -13,7 +13,6 @@ class Start extends StatefulWidget {
 }
 
 class _StartState extends State<Start> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +40,6 @@ class _StartState extends State<Start> {
     );
   }
 
-
   Widget _topWidget() {
     return DropdownButton<String>(
       hint: Text(translation(context).language),
@@ -50,16 +48,21 @@ class _StartState extends State<Start> {
       items: [
         DropdownMenuItem<String>(
           value: 'en',
-          child: Text(translation(context).first_language, key: const ValueKey('firstMenu'),),
+          child: Text(
+            translation(context).first_language,
+            key: const ValueKey('firstMenu'),
+          ),
         ),
         DropdownMenuItem<String>(
           value: 'vi',
-          child: Text(translation(context).second_language, key: const ValueKey('secondMenu'),),
+          child: Text(
+            translation(context).second_language,
+            key: const ValueKey('secondMenu'),
+          ),
         ),
       ],
       onChanged: (String? newValue) {
-        setState(()  {
-        });
+        setState(() {});
         changeLanguage(context, newValue!);
       },
     );
@@ -82,7 +85,8 @@ class _StartState extends State<Start> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignUpOptions()),
+                  MaterialPageRoute(
+                      builder: (context) => const SignUpOptions()),
                 );
               },
               child: Text(
@@ -95,7 +99,8 @@ class _StartState extends State<Start> {
             key: const ValueKey('login'),
             child: Text(
               translation(context).log_in,
-              style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  color: Colors.blue, fontWeight: FontWeight.bold),
             ),
             onTap: () {
               Navigator.push(

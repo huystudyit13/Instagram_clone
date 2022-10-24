@@ -45,5 +45,7 @@
   "choose_from_gallery": "Chọn từ thư viện",
   "cancel": "Hủy",
   "write_a_caption": "Viết mô tả...",
-  "posted": "Đã đăng thành công!"
+  "posted": "Đã đăng thành công!",
+  "complete_acc": "Hoàn thiện tài khoản của bạn",
+  "contain_blank_spaces": "Mật khẩu của bạn không được chứa dấu cách"
 }

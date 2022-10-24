@@ -93,7 +93,7 @@ class SignUpFormState extends State<SignUpForm> {
       });
       // navigate to the home screen
       if (!mounted) return;
-      addData();
+      //addData();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainUiNavigator()),
@@ -110,178 +110,203 @@ class SignUpFormState extends State<SignUpForm> {
 
   addData() async {
     UserProvider userProvider =
-    Provider.of<UserProvider>(context, listen: false);
+        Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          translation(context).complete_acc,
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           width: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 48,
-              ),
-              Stack(
-                children: [
-                  _image != null
-                      ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(_image!),
-                          backgroundColor: Colors.white,
-                        )
-                      : const CircleAvatar(
-                          radius: 64,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.person,
-                            size: 100,
-                            color: Colors.grey,
-                          ),
-                        ),
-                  Positioned(
-                    bottom: -10,
-                    left: 80,
-                    child: IconButton(
-                      onPressed: selectImage,
-                      icon: const Icon(
-                        Icons.add_a_photo,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  hintText: translation(context).username,
-                  border: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(8),
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextField(
-                obscureText: _isObscure,
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  hintText: translation(context).pass_input_field,
-                  border: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  filled: true,
-                  suffixIcon: passCheck
-                      ? IconButton(
-                          icon: Icon(_isObscure
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              _isObscure = !_isObscure;
-                            });
-                          })
-                      : null,
-                  contentPadding: const EdgeInsets.all(8),
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextField(
-                obscureText: _isObscureCF,
-                controller: _passwordCfController,
-                decoration: InputDecoration(
-                  hintText: translation(context).pass_cf,
-                  border: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: Divider.createBorderSide(context),
-                  ),
-                  filled: true,
-                  suffixIcon: passCfCheck
-                      ? IconButton(
-                          icon: Icon(_isObscureCF
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              _isObscureCF = !_isObscureCF;
-                            });
-                          })
-                      : null,
-                  contentPadding: const EdgeInsets.all(8),
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              SizedBox(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
                   height: 48,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      disabledBackgroundColor: Colors.lightBlueAccent,
-                      disabledForegroundColor: Colors.white70,
-                    ),
-                    onPressed: userCheck && passCheck && passCfCheck
-                        ? () async => {
-                              if (_image == null) {
-                                _image = await convert(),
-                              },
-                              if (_passwordCfController.text ==
-                                  _passwordController.text)
-                                {
-                                  signUpUser(),
-                                }
-                              else
-                                {
-                                  showMess(context, translation(context).wrong_cf_pass),
-                                }
-                            }
-                        : null,
-                    child: !_isLoading
-                        ? Text(
-                            translation(context).sign_up_btn,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Stack(
+                  children: [
+                    _image != null
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundImage: MemoryImage(_image!),
+                            backgroundColor: Colors.white,
                           )
-                        : const CircularProgressIndicator(
-                            color: Colors.white,
+                        : const CircleAvatar(
+                            radius: 64,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.person,
+                              size: 100,
+                              color: Colors.grey,
+                            ),
                           ),
-                  )),
-              Flexible(
-                flex: 2,
-                child: Container(),
-              ),
-            ],
+                    Positioned(
+                      bottom: -10,
+                      left: 80,
+                      child: IconButton(
+                        onPressed: selectImage,
+                        icon: const Icon(
+                          Icons.add_a_photo,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    hintText: translation(context).username,
+                    border: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    filled: true,
+                    contentPadding: const EdgeInsets.all(8),
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                TextField(
+                  obscureText: _isObscure,
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: translation(context).pass_input_field,
+                    border: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    filled: true,
+                    suffixIcon: passCheck
+                        ? IconButton(
+                            icon: Icon(_isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            })
+                        : null,
+                    contentPadding: const EdgeInsets.all(8),
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                TextField(
+                  obscureText: _isObscureCF,
+                  controller: _passwordCfController,
+                  decoration: InputDecoration(
+                    hintText: translation(context).pass_cf,
+                    border: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: Divider.createBorderSide(context),
+                    ),
+                    filled: true,
+                    suffixIcon: passCfCheck
+                        ? IconButton(
+                            icon: Icon(_isObscureCF
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _isObscureCF = !_isObscureCF;
+                              });
+                            })
+                        : null,
+                    contentPadding: const EdgeInsets.all(8),
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                SizedBox(
+                    height: 48,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        disabledBackgroundColor: Colors.lightBlueAccent,
+                        disabledForegroundColor: Colors.white70,
+                      ),
+                      onPressed: userCheck && passCheck && passCfCheck
+                          ? () async => {
+                                FocusManager.instance.primaryFocus?.unfocus(),
+                                if (_passwordController.text.contains(' '))
+                                  {
+                                    showMess(
+                                        context,
+                                        translation(context)
+                                            .contain_blank_spaces),
+                                  }
+                                else
+                                  {
+                                    if (_passwordCfController.text ==
+                                        _passwordController.text)
+                                      {
+                                        if (_image == null)
+                                          {
+                                            _image = await convert(),
+                                          },
+                                        signUpUser(),
+                                      }
+                                    else
+                                      {
+                                        showMess(context,
+                                            translation(context).wrong_cf_pass),
+                                      }
+                                  }
+                              }
+                          : null,
+                      child: !_isLoading
+                          ? Text(
+                              translation(context).sign_up_btn,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          : const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                    )),
+                const SizedBox(
+                  height: 48,
+                ),
+              ],
+            ),
           ),
         ),
       ),

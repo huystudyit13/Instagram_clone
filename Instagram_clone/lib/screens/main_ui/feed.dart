@@ -11,7 +11,6 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-
   Future<void> signOut() async {
     await AuthMethods().signOut();
     if (!mounted) return;
@@ -32,14 +31,14 @@ class _FeedState extends State<Feed> {
           height: 35,
         ),
         actions: [
-            IconButton(
-              key: const ValueKey('Logout'),
-              icon: const Icon(Icons.send_rounded),
-              color: Colors.black,
-              onPressed: signOut,
-              iconSize: 35,
-            ),
-          ],
+          IconButton(
+            key: const ValueKey('Logout'),
+            icon: const Icon(Icons.send_rounded),
+            color: Colors.black,
+            onPressed: signOut,
+            iconSize: 35,
+          ),
+        ],
         backgroundColor: Colors.white,
       ),
       body: Center(
@@ -58,7 +57,8 @@ class _FeedState extends State<Feed> {
                             children: const <Widget>[
                               CircleAvatar(
                                 radius: 35,
-                                backgroundImage: AssetImage('assets/images/UET.png'),
+                                backgroundImage:
+                                    AssetImage('assets/images/UET.png'),
                               ),
                               Positioned(
                                   right: -2.0,
@@ -68,8 +68,8 @@ class _FeedState extends State<Feed> {
                                       backgroundColor: Colors.white,
                                       child: CircleAvatar(
                                         radius: 10,
-                                        backgroundImage:
-                                        AssetImage('assets/images/addstory.png'),
+                                        backgroundImage: AssetImage(
+                                            'assets/images/addstory.png'),
                                       )))
                             ],
                           ),
@@ -89,14 +89,14 @@ class _FeedState extends State<Feed> {
                           CircleAvatar(
                             radius: 39,
                             backgroundImage:
-                            AssetImage('assets/images/storybackground.jpg'),
+                                AssetImage('assets/images/storybackground.jpg'),
                             child: CircleAvatar(
                               radius: 37,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 35,
-                                backgroundImage:
-                                AssetImage('assets/images/instagrammer1.png'),
+                                backgroundImage: AssetImage(
+                                    'assets/images/instagrammer1.png'),
                               ),
                             ),
                           ),
@@ -106,9 +106,9 @@ class _FeedState extends State<Feed> {
                                 width: 100,
                                 child: Center(
                                     child: Text(
-                                      'ThuongDuyDao',
-                                      overflow: TextOverflow.ellipsis,
-                                    ))),
+                                  'ThuongDuyDao',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
                           ),
                         ],
                       ),
@@ -122,14 +122,14 @@ class _FeedState extends State<Feed> {
                           CircleAvatar(
                             radius: 39,
                             backgroundImage:
-                            AssetImage('assets/images/storybackground.jpg'),
+                                AssetImage('assets/images/storybackground.jpg'),
                             child: CircleAvatar(
                               radius: 37,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 35,
-                                backgroundImage:
-                                AssetImage('assets/images/instagrammer2.png'),
+                                backgroundImage: AssetImage(
+                                    'assets/images/instagrammer2.png'),
                               ),
                             ),
                           ),
@@ -139,9 +139,9 @@ class _FeedState extends State<Feed> {
                                 width: 100,
                                 child: Center(
                                     child: Text(
-                                      'itsnothoaanhtuc',
-                                      overflow: TextOverflow.ellipsis,
-                                    ))),
+                                  'itsnothoaanhtuc',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
                           ),
                         ],
                       ),
@@ -155,14 +155,14 @@ class _FeedState extends State<Feed> {
                           CircleAvatar(
                             radius: 39,
                             backgroundImage:
-                            AssetImage('assets/images/storybackground.jpg'),
+                                AssetImage('assets/images/storybackground.jpg'),
                             child: CircleAvatar(
                               radius: 37,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 35,
-                                backgroundImage:
-                                AssetImage('assets/images/instagrammer3.png'),
+                                backgroundImage: AssetImage(
+                                    'assets/images/instagrammer3.png'),
                               ),
                             ),
                           ),
@@ -172,9 +172,9 @@ class _FeedState extends State<Feed> {
                                 width: 100,
                                 child: Center(
                                     child: Text(
-                                      'duyCow',
-                                      overflow: TextOverflow.ellipsis,
-                                    ))),
+                                  'duyCow',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
                           ),
                         ],
                       ),
@@ -188,14 +188,14 @@ class _FeedState extends State<Feed> {
                           CircleAvatar(
                             radius: 39,
                             backgroundImage:
-                            AssetImage('assets/images/storybackground.jpg'),
+                                AssetImage('assets/images/storybackground.jpg'),
                             child: CircleAvatar(
                               radius: 37,
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 35,
-                                backgroundImage:
-                                AssetImage('assets/images/instagrammer4.png'),
+                                backgroundImage: AssetImage(
+                                    'assets/images/instagrammer4.png'),
                               ),
                             ),
                           ),
@@ -205,9 +205,9 @@ class _FeedState extends State<Feed> {
                                 width: 100,
                                 child: Center(
                                     child: Text(
-                                      'thuong.daoduy.3',
-                                      overflow: TextOverflow.ellipsis,
-                                    ))),
+                                  'thuong.daoduy.3',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
                           ),
                         ],
                       ),
@@ -221,7 +221,7 @@ class _FeedState extends State<Feed> {
                           CircleAvatar(
                             radius: 35,
                             backgroundImage:
-                            AssetImage('assets/images/instagrammer5.png'),
+                                AssetImage('assets/images/instagrammer5.png'),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 4.0),
@@ -238,8 +238,6 @@ class _FeedState extends State<Feed> {
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               ),
@@ -264,10 +262,8 @@ class _FeedState extends State<Feed> {
           ),
         ),
       ),
-
     );
   }
-
 }
 
 Widget Post(hasStory, numOfUser, name, location) {
@@ -292,11 +288,12 @@ Widget Post(hasStory, numOfUser, name, location) {
                       fontSize: 18,
                     ),
                   ),
-                  Text(location,
-                      // style: const TextStyle(
-                      //   fontFamily: 'Roboto',
-                      // )
-                    ),
+                  Text(
+                    location,
+                    // style: const TextStyle(
+                    //   fontFamily: 'Roboto',
+                    // )
+                  ),
                 ],
               )
             ],
@@ -307,8 +304,7 @@ Widget Post(hasStory, numOfUser, name, location) {
           )
         ],
       ),
-      Image.asset(
-          'assets/images/instagrammer${numOfUser}_post.png'),
+      Image.asset('assets/images/instagrammer${numOfUser}_post.png'),
     ],
   );
 }
@@ -325,7 +321,7 @@ Widget smallProfileWithStory(numOfUser) {
             child: CircleAvatar(
               radius: 20,
               backgroundImage:
-              AssetImage('assets/images/instagrammer$numOfUser.png'),
+                  AssetImage('assets/images/instagrammer$numOfUser.png'),
             ))),
   );
 }
@@ -339,4 +335,3 @@ Widget smallProfileWithoutStory(numOfUser) {
     ),
   );
 }
-
