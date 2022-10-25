@@ -34,7 +34,7 @@
   "wrong_password": "Your password is incorrect",
   "user_not_found": "No user corresponding to the given email.",
   "wrong_cf_pass": "Your confirm password is incorrect",
-  "sign_out": "Sign_out",
+  "sign_out": "Sign out",
   "forgot_pass_title": "Login help",
   "forgot_pass_title1": "Find your account",
   "forgot_pass_subtitle": "Enter your email linked to your account.",
@@ -49,6 +49,7 @@
   "complete_acc": "Complete your account",
   "contain_blank_spaces": "Your password can not contain blank spaces",
   "your_story": "Your story",
+  "like": "like",
   "likes": "likes",
   "view_all_cmt": "View all comments",
   "delete": "Delete"

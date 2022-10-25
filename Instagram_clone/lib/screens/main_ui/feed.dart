@@ -28,7 +28,10 @@ class _FeedState extends State<Feed> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.send_rounded),
+            icon: SvgPicture.asset(
+              'assets/images/message.svg',
+              color: Colors.black,
+            ),
             color: Colors.black,
             iconSize: 35,
             onPressed: () {},
@@ -71,7 +74,7 @@ class _FeedState extends State<Feed> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 20.0, left: 16.0),
+                                        top: 16.0, left: 16.0),
                                     child: Column(
                                       children: <Widget>[
                                         Stack(
@@ -87,10 +90,15 @@ class _FeedState extends State<Feed> {
                                                 child: CircleAvatar(
                                                     radius: 12,
                                                     backgroundColor: Colors.white,
-                                                    child: CircleAvatar(
-                                                      radius: 10,
-                                                      backgroundImage: AssetImage(
-                                                          'assets/images/addstory.png'),
+                                                    )),
+                                            Positioned(
+                                                right: -14.0,
+                                                bottom: -14.0,
+                                                child: IconButton(
+                                                    onPressed: () {},
+                                                    icon: const Icon(
+                                                      Icons.add_circle,
+                                                      color: Colors.blue,
                                                     )))
                                           ],
                                         ),

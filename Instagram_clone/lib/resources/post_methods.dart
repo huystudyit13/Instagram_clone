@@ -45,4 +45,25 @@ class PostMethods {
     }
     return res;
   }
+
+  Future<String> likePost(String postId, String uid, List likes, bool isDoubleTap) async {
+    String res = "Some error occurred";
+    try {
+      if (likes.contains(uid) && !isDoubleTap) {
+        // if the likes list contains the user uid, we need to remove it
+        _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid])
+        });
+      } else if (!likes.contains(uid)) {
+        // else we need to add uid to the likes array
+        _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        });
+      }
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 }

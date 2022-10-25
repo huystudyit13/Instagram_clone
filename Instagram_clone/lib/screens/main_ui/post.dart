@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/post_methods.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
+import 'package:instagram_clone/screens/main_ui/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +21,7 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  int commentLen = 0;
+  bool isLikeAnimating = false;
 
   @override
   void initState() {
@@ -118,41 +120,102 @@ class _PostCardState extends State<PostCard> {
                             },
                           );
                         },
-                        icon: const Icon(Icons.more_vert),
+                        icon: const Icon(
+                          Icons.more_vert,
+                          size: 30,
+                        ),
                       )
                     : Container(),
               ],
             ),
           ),
           // IMAGE SECTION OF THE POST
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: double.infinity,
-            child: Image.network(
-              widget.snap['postUrl'].toString(),
-              fit: BoxFit.cover,
+          GestureDetector(
+            onDoubleTap: () {
+              PostMethods().likePost(widget.snap['postId'].toString(), user.uid,
+                  widget.snap['likes'], true);
+              setState(() {
+                isLikeAnimating = true;
+              });
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  width: double.infinity,
+                  child: Image.network(
+                    widget.snap['postUrl'].toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: isLikeAnimating ? 1 : 0,
+                  child: LikeAnimation(
+                    isAnimating: isLikeAnimating,
+                    duration: const Duration(
+                      milliseconds: 400,
+                    ),
+                    onEnd: () {
+                      setState(() {
+                        isLikeAnimating = false;
+                      });
+                    },
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                      size: 100,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
 
-          // LIKE, COMMENT SECTION OF THE POST
           Row(
             children: <Widget>[
-              IconButton(
-                icon: const Icon(
-                  Icons.comment_outlined,
+              LikeAnimation(
+                isAnimating: widget.snap['likes'].contains(user.uid),
+                smallLike: true,
+                child: IconButton(
+                  icon: widget.snap['likes'].contains(user.uid)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                          size: 30,
+                        )
+                      : const Icon(
+                          Icons.favorite_border,
+                          size: 30,
+                        ),
+                  onPressed: () => PostMethods().likePost(
+                      widget.snap['postId'].toString(),
+                      user.uid,
+                      widget.snap['likes'],
+                      false),
                 ),
-                onPressed: () {},
               ),
               IconButton(
-                  icon: const Icon(
-                    Icons.send,
+                  icon: SvgPicture.asset(
+                    'assets/images/comment.svg',
+                    color: Colors.black,
+                  ),
+                  onPressed: () {}),
+              IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/images/message.svg',
+                    color: Colors.black,
                   ),
                   onPressed: () {}),
               Expanded(
                   child: Align(
                 alignment: Alignment.bottomRight,
                 child: IconButton(
-                    icon: const Icon(Icons.bookmark_border), onPressed: () {}),
+                  icon: const Icon(Icons.bookmark_border),
+                  onPressed: () {},
+                  iconSize: 30,
+                ),
               ))
             ],
           ),
@@ -168,10 +231,15 @@ class _PostCardState extends State<PostCard> {
                         .textTheme
                         .subtitle2!
                         .copyWith(fontWeight: FontWeight.w800),
-                    child: Text(
-                      translation(context).likes,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    )),
+                    child: widget.snap['likes'].length < 2
+                        ? Text(
+                            "${widget.snap['likes'].length} ${translation(context).like}",
+                            style: Theme.of(context).textTheme.bodyText2,
+                          )
+                        : Text(
+                            "${widget.snap['likes'].length} ${translation(context).likes}",
+                            style: Theme.of(context).textTheme.bodyText2,
+                          )),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.only(
