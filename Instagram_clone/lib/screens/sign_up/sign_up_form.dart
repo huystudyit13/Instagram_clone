@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
-import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/screens/main_ui/home.dart';
 import 'package:instagram_clone/screens/main_ui/navigator.dart';
-import 'package:provider/provider.dart';
 
 import '../../resources/language_controller.dart';
 import '../../resources/utils.dart';
@@ -94,7 +92,6 @@ class SignUpFormState extends State<SignUpForm> {
       });
       // navigate to the home screen
       if (!mounted) return;
-      //addData();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeLayout(
@@ -109,12 +106,6 @@ class SignUpFormState extends State<SignUpForm> {
       if (!mounted) return;
       showMess(context, translation(context).weak_password);
     }
-  }
-
-  addData() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    await userProvider.refreshUser();
   }
 
   @override

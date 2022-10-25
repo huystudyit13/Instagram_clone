@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone/resources/auth_methods.dart';
-import 'package:instagram_clone/screens/start.dart';
+import 'package:instagram_clone/models/user.dart' as model;
+import 'package:instagram_clone/resources/language_controller.dart';
+import 'package:instagram_clone/resources/user_provider.dart';
+import 'package:instagram_clone/screens/main_ui/post.dart';
+import 'package:provider/provider.dart';
 
 class Feed extends StatefulWidget {
   const Feed({super.key});
@@ -13,6 +17,7 @@ class Feed extends StatefulWidget {
 class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
+    final model.User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -23,7 +28,6 @@ class _FeedState extends State<Feed> {
         ),
         actions: [
           IconButton(
-            key: const ValueKey('Logout'),
             icon: const Icon(Icons.send_rounded),
             color: Colors.black,
             iconSize: 35,
@@ -32,297 +36,119 @@ class _FeedState extends State<Feed> {
         ],
         backgroundColor: Colors.white,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, left: 16.0),
-                      child: Column(
-                        children: <Widget>[
-                          Stack(
-                            children: const <Widget>[
-                              CircleAvatar(
-                                radius: 35,
-                                backgroundImage:
-                                    AssetImage('assets/images/UET.png'),
-                              ),
-                              Positioned(
-                                  right: -2.0,
-                                  bottom: -2.0,
-                                  child: CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor: Colors.white,
-                                      child: CircleAvatar(
-                                        radius: 10,
-                                        backgroundImage: AssetImage(
-                                            'assets/images/addstory.png'),
-                                      )))
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text('Your Story'),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //instagrammer1
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-                      child: Column(
-                        children: const <Widget>[
-                          CircleAvatar(
-                            radius: 39,
-                            backgroundImage:
-                                AssetImage('assets/images/storybackground.jpg'),
-                            child: CircleAvatar(
-                              radius: 37,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 35,
-                                backgroundImage: AssetImage(
-                                    'assets/images/instagrammer1.png'),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: SizedBox(
-                                width: 100,
-                                child: Center(
-                                    child: Text(
-                                  'ThuongDuyDao',
-                                  overflow: TextOverflow.ellipsis,
-                                ))),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //instagrammer2
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-                      child: Column(
-                        children: const <Widget>[
-                          CircleAvatar(
-                            radius: 39,
-                            backgroundImage:
-                                AssetImage('assets/images/storybackground.jpg'),
-                            child: CircleAvatar(
-                              radius: 37,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 35,
-                                backgroundImage: AssetImage(
-                                    'assets/images/instagrammer2.png'),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: SizedBox(
-                                width: 100,
-                                child: Center(
-                                    child: Text(
-                                  'itsnothoaanhtuc',
-                                  overflow: TextOverflow.ellipsis,
-                                ))),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //instagrammer3
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-                      child: Column(
-                        children: const <Widget>[
-                          CircleAvatar(
-                            radius: 39,
-                            backgroundImage:
-                                AssetImage('assets/images/storybackground.jpg'),
-                            child: CircleAvatar(
-                              radius: 37,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 35,
-                                backgroundImage: AssetImage(
-                                    'assets/images/instagrammer3.png'),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: SizedBox(
-                                width: 100,
-                                child: Center(
-                                    child: Text(
-                                  'duyCow',
-                                  overflow: TextOverflow.ellipsis,
-                                ))),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //instagrammer4
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-                      child: Column(
-                        children: const <Widget>[
-                          CircleAvatar(
-                            radius: 39,
-                            backgroundImage:
-                                AssetImage('assets/images/storybackground.jpg'),
-                            child: CircleAvatar(
-                              radius: 37,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 35,
-                                backgroundImage: AssetImage(
-                                    'assets/images/instagrammer4.png'),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: SizedBox(
-                                width: 100,
-                                child: Center(
-                                    child: Text(
-                                  'thuong.daoduy.3',
-                                  overflow: TextOverflow.ellipsis,
-                                ))),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //instagrammer5
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 8.0),
-                      child: Column(
-                        children: const <Widget>[
-                          CircleAvatar(
-                            radius: 35,
-                            backgroundImage:
-                                AssetImage('assets/images/instagrammer5.png'),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4.0),
-                            child: SizedBox(
-                              width: 100,
-                              child: Center(
-                                child: Text(
-                                  'longVu',
-                                  overflow: TextOverflow.ellipsis,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .orderBy("datePublished", descending: true)
+                  .snapshots(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (ctx, index) {
+                      if (index == 0) {
+                        return Column(
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: Colors.black12),
                                 ),
                               ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                //mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 20.0, left: 16.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Stack(
+                                          children: <Widget>[
+                                            CircleAvatar(
+                                              radius: 35,
+                                              backgroundImage:
+                                                  NetworkImage(user.photoUrl),
+                                            ),
+                                            const Positioned(
+                                                right: -2.0,
+                                                bottom: -2.0,
+                                                child: CircleAvatar(
+                                                    radius: 12,
+                                                    backgroundColor: Colors.white,
+                                                    child: CircleAvatar(
+                                                      radius: 10,
+                                                      backgroundImage: AssetImage(
+                                                          'assets/images/addstory.png'),
+                                                    )))
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8.0, bottom: 8.0),
+                                          child: Text(
+                                              translation(context).your_story),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              Column(
-                children: <Widget>[
-                  Post(
-                    true,
-                    1,
-                    'ThuongDuyDao',
-                    '144 Xuân Thủy, Hà Lội',
-                  ),
-                  Post(
-                    true,
-                    2,
-                    'itsnothoaanhtuc',
-                    '199 Hồ Tùng Mậu, Hà Lội',
-                  ),
-                ],
-              ),
-            ],
+                            PostCard(
+                              snap: snapshot.data!.docs[index].data(),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return PostCard(
+                          snap: snapshot.data!.docs[index].data(),
+                        );
+                      }
+                    });
+              },
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-Widget Post(hasStory, numOfUser, name, location) {
-  return Column(
-    children: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              hasStory
-                  ? smallProfileWithStory(numOfUser)
-                  : smallProfileWithoutStory(numOfUser),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      //fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Text(
-                    location,
-                    // style: const TextStyle(
-                    //   fontFamily: 'Roboto',
-                    // )
-                  ),
-                ],
-              )
-            ],
-          ),
-          Image.asset(
-            'assets/images/more.png',
-            width: 40,
-          )
-        ],
-      ),
-      Image.asset('assets/images/instagrammer${numOfUser}_post.png'),
-    ],
-  );
-}
-
-Widget smallProfileWithStory(numOfUser) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: CircleAvatar(
-        radius: 24,
-        backgroundImage: const AssetImage('assets/images/storybackground.jpg'),
-        child: CircleAvatar(
-            radius: 22,
-            backgroundColor: Colors.white,
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage:
-                  AssetImage('assets/images/instagrammer$numOfUser.png'),
-            ))),
-  );
-}
-
-Widget smallProfileWithoutStory(numOfUser) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: CircleAvatar(
-      radius: 20,
-      backgroundImage: AssetImage('assets/images/instagrammer$numOfUser.png'),
-    ),
-  );
-}
+// Widget smallProfileWithStory(numOfUser) {
+//   return Padding(
+//     padding: const EdgeInsets.all(8.0),
+//     child: CircleAvatar(
+//         radius: 24,
+//         backgroundImage: const AssetImage('assets/images/storybackground.jpg'),
+//         child: CircleAvatar(
+//             radius: 22,
+//             backgroundColor: Colors.white,
+//             child: CircleAvatar(
+//               radius: 20,
+//               backgroundImage:
+//                   AssetImage('assets/images/instagrammer$numOfUser.png'),
+//             ))),
+//   );
+// }
+//
+// Widget smallProfileWithoutStory(numOfUser) {
+//   return Padding(
+//     padding: const EdgeInsets.all(8.0),
+//     child: CircleAvatar(
+//       radius: 20,
+//       backgroundImage: AssetImage('assets/images/instagrammer$numOfUser.png'),
+//     ),
+//   );
+// }

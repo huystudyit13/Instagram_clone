@@ -78,12 +78,14 @@ class _AddPostState extends State<AddPost> {
         setState(() {
           isLoading = false;
         });
+        if (!mounted) return;
         showMess(
           context,
           translation(context).posted,
         );
         clearImage();
       } else {
+        if (!mounted) return;
         showMess(context, res);
       }
     } catch (err) {
@@ -131,11 +133,14 @@ class _AddPostState extends State<AddPost> {
               ),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => postImage(
-                    userProvider.getUser.uid,
-                    userProvider.getUser.username,
-                    userProvider.getUser.photoUrl,
-                  ),
+                  onPressed: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    postImage(
+                      userProvider.getUser.uid,
+                      userProvider.getUser.username,
+                      userProvider.getUser.photoUrl,
+                    );
+                  },
                   child: Text(
                     translation(context).post,
                     style: const TextStyle(
@@ -184,14 +189,19 @@ class _AddPostState extends State<AddPost> {
                     image: MemoryImage(_file!),
                   )),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextField(
-                    controller: _descriptionController,
-                    decoration: InputDecoration(
-                        hintText: translation(context).write_a_caption,
-                        border: InputBorder.none),
-                    //maxLines: 8,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: TextField(
+                      controller: _descriptionController,
+                      //maxLength: 200,
+                      maxLines: 8,
+                      decoration: InputDecoration(
+                          hintText: translation(context).write_a_caption,
+                          border: InputBorder.none),
+                      //maxLines: 8,
+                    ),
                   ),
                 ),
               ]),

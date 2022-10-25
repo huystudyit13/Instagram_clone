@@ -276,7 +276,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
     return RichText(
       key: const ValueKey('login'),
       text: TextSpan(
-        text: translation(context).alredy_have_acc,
+        text: translation(context).already_have_acc,
         style: const TextStyle(
           color: Colors.black,
         ),

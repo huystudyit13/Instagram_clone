@@ -106,12 +106,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
             backgroundColor: Colors.white,
           ),
           const BottomNavigationBarItem(
-              // activeIcon: SvgPicture.asset(
-              //   'assets/images/ic_search_selected.svg',
-              // ),
-              // icon    : SvgPicture.asset(
-              //   'assets/images/ic_search.svg',
-              // ),
               icon: Icon(
                 Icons.search_outlined,
                 //color: Colors.black,

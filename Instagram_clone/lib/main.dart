@@ -78,14 +78,7 @@ class _StartingUpState extends State<StartingUp> {
   @override
   void initState() {
     super.initState();
-    //addData();
     Timer(const Duration(seconds: 3), checkState);
-  }
-
-  addData() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    await userProvider.refreshUser();
   }
 
   @override
@@ -120,11 +113,6 @@ class _CheckState extends State<Check> {
     super.initState();
   }
 
-  addData() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    await userProvider.refreshUser();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +124,6 @@ class _CheckState extends State<Check> {
             // Checking if the snapshot has any data or not
             if (snapshot.hasData) {
               // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-              //addData();
               return const HomeLayout(
                 mobileScreenLayout: MainUiNavigator(),
               );

@@ -13,7 +13,7 @@
   "dont_have_acc": "Don't have an account",
   "sign_up": " Sign up.",
   "sign_up_option": "Sign up with email or phone number",
-  "alredy_have_acc": "Already have an account?",
+  "already_have_acc": "Already have an account?",
   "sign_up_log_in": " Log in.",
   "phone": "PHONE",
   "email": "EMAIL",
@@ -47,5 +47,9 @@
   "write_a_caption": "Write a caption...",
   "posted": "Posted!",
   "complete_acc": "Complete your account",
-  "contain_blank_spaces": "Your password can not contain blank spaces"
+  "contain_blank_spaces": "Your password can not contain blank spaces",
+  "your_story": "Your story",
+  "likes": "likes",
+  "view_all_cmt": "View all comments",
+  "delete": "Delete"
 }

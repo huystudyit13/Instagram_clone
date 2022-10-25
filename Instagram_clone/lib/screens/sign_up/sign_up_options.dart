@@ -118,7 +118,7 @@ class _SignUpOptionsState extends State<SignUpOptions> {
   Widget _bottomWidget() {
     return RichText(
       text: TextSpan(
-        text: translation(context).alredy_have_acc,
+        text: translation(context).already_have_acc,
         style: const TextStyle(
           color: Colors.black,
         ),

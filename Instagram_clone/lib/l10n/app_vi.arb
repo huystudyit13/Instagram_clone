@@ -13,7 +13,7 @@
   "dont_have_acc": "Bạn chưa có tài khoản ư?",
   "sign_up": " Đăng ký.",
   "sign_up_option": "Đăng ký bằng email hoặc số điện thoại",
-  "alredy_have_acc": "Bạn đã có tài khoản?",
+  "already_have_acc": "Bạn đã có tài khoản?",
   "sign_up_log_in": " Hãy đăng nhập.",
   "phone": "SỐ ĐIỆN THOẠI",
   "email": "EMAIL",
@@ -47,5 +47,9 @@
   "write_a_caption": "Viết mô tả...",
   "posted": "Đã đăng thành công!",
   "complete_acc": "Hoàn thiện tài khoản của bạn",
-  "contain_blank_spaces": "Mật khẩu của bạn không được chứa dấu cách"
+  "contain_blank_spaces": "Mật khẩu của bạn không được chứa dấu cách",
+  "your_story": "Tin của bạn",
+  "likes": "lượt thích",
+  "view_all_cmt": "Xem tất cả bình luận",
+  "delete": "Xóa"
 }
