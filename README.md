@@ -58,3 +58,10 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 * #### Thêm các ca kiểm thử integration test.
 ![image](https://user-images.githubusercontent.com/62604651/197119174-50ff815d-f5ee-4c61-bf72-c7d63720269c.png)
 
+----
+
+## Week 8
+
+* #### Hiển thị các bài viết từ firebase và có thể like, bình luận hoặc xóa bài viết. Các bình luận cũng có thể like và xóa.
+* #### Kiểm thử chức năng Test Lab của Firebase.
+![image](https://user-images.githubusercontent.com/62604651/198500772-aae3d823-130c-4282-8e29-fffaaf67fc75.png)
