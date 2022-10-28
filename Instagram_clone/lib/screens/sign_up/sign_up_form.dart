@@ -94,9 +94,10 @@ class SignUpFormState extends State<SignUpForm> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeLayout(
-            mobileScreenLayout: MainUiNavigator(),
-      )),
+        MaterialPageRoute(
+            builder: (context) => const HomeLayout(
+                  mobileScreenLayout: MainUiNavigator(),
+                )),
       );
     } else {
       setState(() {
@@ -260,6 +261,13 @@ class SignUpFormState extends State<SignUpForm> {
                       onPressed: userCheck && passCheck && passCfCheck
                           ? () async => {
                                 FocusManager.instance.primaryFocus?.unfocus(),
+                                if (_usernameController.text.contains(' '))
+                                  {
+                                    showMess(
+                                        context,
+                                        translation(context)
+                                            .user_name_contain_blank_spaces),
+                                  },
                                 if (_passwordController.text.contains(' '))
                                   {
                                     showMess(

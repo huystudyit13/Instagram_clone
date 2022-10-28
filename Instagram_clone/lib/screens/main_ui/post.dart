@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/models/user.dart' as model;
@@ -5,6 +6,7 @@ import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/post_methods.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
+import 'package:instagram_clone/screens/main_ui/comments.dart';
 import 'package:instagram_clone/screens/main_ui/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +24,28 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+  int commentLen = 0;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  fetchCommentLen() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+      commentLen = snap.docs.length;
+    } catch (err) {
+      showMess(
+        context,
+        err.toString(),
+      );
+    }
+    setState(() {});
   }
 
   deletePost(String postId) async {
@@ -42,7 +62,7 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     final model.User user = Provider.of<UserProvider>(context).getUser;
-
+    fetchCommentLen();
     return Container(
       // boundary needed for web
       padding: const EdgeInsets.symmetric(
@@ -77,6 +97,7 @@ class _PostCardState extends State<PostCard> {
                           widget.snap['username'].toString(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ],
@@ -113,6 +134,10 @@ class _PostCardState extends State<PostCard> {
                                                       .toString(),
                                                 );
                                                 Navigator.of(context).pop();
+                                                showMess(
+                                                  context,
+                                                  translation(context).deleted,
+                                                );
                                               }),
                                         )
                                         .toList()),
@@ -197,17 +222,25 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                  icon: SvgPicture.asset(
-                    'assets/images/comment.svg',
-                    color: Colors.black,
+                icon: SvgPicture.asset(
+                  'assets/images/comment.svg',
+                  color: Colors.black,
+                ),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentsScreen(
+                      snap: widget.snap,
+                    ),
                   ),
-                  onPressed: () {}),
+                ),
+              ),
               IconButton(
-                  icon: SvgPicture.asset(
-                    'assets/images/message.svg',
-                    color: Colors.black,
-                  ),
-                  onPressed: () {}),
+                icon: SvgPicture.asset(
+                  'assets/images/message.svg',
+                  color: Colors.black,
+                ),
+                onPressed: () {},
+              ),
               Expanded(
                   child: Align(
                 alignment: Alignment.bottomRight,
@@ -226,20 +259,22 @@ class _PostCardState extends State<PostCard> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DefaultTextStyle(
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .copyWith(fontWeight: FontWeight.w800),
-                    child: widget.snap['likes'].length < 2
-                        ? Text(
-                            "${widget.snap['likes'].length} ${translation(context).like}",
-                            style: Theme.of(context).textTheme.bodyText2,
-                          )
-                        : Text(
-                            "${widget.snap['likes'].length} ${translation(context).likes}",
-                            style: Theme.of(context).textTheme.bodyText2,
-                          )),
+                widget.snap['likes'].length > 0
+                    ? DefaultTextStyle(
+                        style: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                        child: widget.snap['likes'].length == 1
+                            ? Text(
+                                "${widget.snap['likes'].length} ${translation(context).like}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              )
+                            : Text(
+                                "${widget.snap['likes'].length} ${translation(context).likes}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ))
+                    : const SizedBox(height: 0),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.only(
@@ -247,7 +282,7 @@ class _PostCardState extends State<PostCard> {
                   ),
                   child: RichText(
                     text: TextSpan(
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                       children: [
                         TextSpan(
                           text: widget.snap['username'].toString(),
@@ -262,19 +297,32 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                 ),
-                InkWell(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Text(
-                      translation(context).view_all_cmt,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  onTap: () {},
-                ),
+                commentLen > 0
+                    ? InkWell(
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: commentLen == 1
+                                ? Text(
+                                    "${translation(context).view} $commentLen ${translation(context).cmt}",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                : Text(
+                                    "${translation(context).view} ${translation(context).all} $commentLen ${translation(context).cmts}",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  )),
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CommentsScreen(
+                              snap: widget.snap,
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(height: 0),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(

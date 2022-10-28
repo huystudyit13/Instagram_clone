@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/utils.dart';
+import 'package:instagram_clone/screens/login/login.dart';
 import 'package:instagram_clone/screens/start.dart';
 
 class Profile extends StatefulWidget {
@@ -18,7 +19,7 @@ class _ProfileState extends State<Profile> {
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const Start()),
+      MaterialPageRoute(builder: (context) => const Login()),
     );
   }
 

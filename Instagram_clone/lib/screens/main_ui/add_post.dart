@@ -195,8 +195,8 @@ class _AddPostState extends State<AddPost> {
                     width: double.infinity,
                     child: TextField(
                       controller: _descriptionController,
-                      //maxLength: 200,
-                      maxLines: 8,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
                           hintText: translation(context).write_a_caption,
                           border: InputBorder.none),

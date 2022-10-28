@@ -48,9 +48,16 @@
   "posted": "Posted!",
   "complete_acc": "Complete your account",
   "contain_blank_spaces": "Your password can not contain blank spaces",
+  "user_name_contain_blank_spaces": "Your username can not contain blank spaces",
   "your_story": "Your story",
   "like": "like",
   "likes": "likes",
-  "view_all_cmt": "View all comments",
-  "delete": "Delete"
+  "view": "View",
+  "all": "all",
+  "cmt": "comment",
+  "cmts": "comments",
+  "delete": "Delete",
+  "deleted": "Deleted!",
+  "comments": "Comments",
+  "cmt_as": "Comment as"
 }
