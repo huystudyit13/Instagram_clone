@@ -15,6 +15,11 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 # Learning process
 
+[Week 7](#week_7)
+
+
+
+
 ## Week 2
 
 * #### Cài đặt Android Studio, Flutter, Dart.
