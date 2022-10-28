@@ -15,7 +15,7 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 # Learning process
 
-[Week 7](#week_7)
+[Week 7](#week-7)
 
 
 
