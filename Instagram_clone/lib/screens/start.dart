@@ -42,7 +42,7 @@ class _StartState extends State<Start> {
 
   Widget _topWidget() {
     return DropdownButton<String>(
-      hint: Text(translation(context).language),
+      hint: Text(translation(context).default_language),
       alignment: Alignment.center,
       underline: null,
       items: [

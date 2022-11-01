@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/comment_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/main_ui/like_animation.dart';
+import 'package:instagram_clone/screens/main_ui/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:provider/provider.dart';
@@ -41,11 +43,20 @@ class _CommentCardState extends State<CommentCard> {
         //mainAxisAlignment: MainAxisAlignment.start,
         //mainAxisSize: MainAxisSize.max,
         children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(
-              widget.snap.data()['profilePic'],
+          InkWell(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => Profile(
+                  uid: widget.snap.data()['uid'].toString(),
+                ),
+              ),
             ),
-            radius: 18,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                widget.snap.data()['profilePic'],
+              ),
+              radius: 18,
+            ),
           ),
           Expanded(
             child: Padding(
@@ -58,6 +69,16 @@ class _CommentCardState extends State<CommentCard> {
                     text: TextSpan(
                       children: [
                         TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => Profile(
+                                      uid: widget.snap.data()['uid'].toString(),
+                                    ),
+                                  ),
+                                );
+                              },
                             text: widget.snap.data()['name'],
                             style: const TextStyle(
                                 fontSize: 15,

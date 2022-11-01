@@ -136,7 +136,7 @@ void main() {
       expect(find.byType(SnackBar), findsOneWidget);
     });
 
-    testWidgets('Authentication Testing', (WidgetTester tester) async {
+    testWidgets('Forgot pass Testing', (WidgetTester tester) async {
       //TODO: add Firebase Initialization Here
       await Firebase.initializeApp(); // previous code
       await tester.pumpWidget(const ForgotPass());

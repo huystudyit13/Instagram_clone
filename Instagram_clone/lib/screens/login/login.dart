@@ -47,10 +47,11 @@ class _LoginState extends State<Login> {
   }
 
   void loginUser() async {
+    _isLoading = true;
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
-      _isLoading = true;
+
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -70,8 +71,8 @@ class _LoginState extends State<Login> {
         if (!mounted) return;
         res = translation(context).user_not_found;
       }
-      if (!mounted) return;
       _isLoading = false;
+      if (!mounted) return;
       showMess(context, res);
     }
   }
@@ -112,7 +113,7 @@ class _LoginState extends State<Login> {
 
   Widget _topWidget() {
     return DropdownButton<String>(
-      hint: Text(translation(context).language),
+      hint: Text(translation(context).default_language),
       alignment: Alignment.center,
       underline: null,
       items: [

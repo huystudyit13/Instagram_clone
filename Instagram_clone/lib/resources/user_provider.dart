@@ -4,13 +4,14 @@ import 'package:instagram_clone/resources/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
   User? _user = const User(
-  username: '',
-  uid: '',
-  photoUrl: '',
-  email: '',
-  bio: '',
-  followers: [],
-  following: [],
+    username: '',
+    uid: '',
+    photoUrl: '',
+    email: '',
+    bio: '',
+    followers: [],
+    following: [],
+    name: '',
   );
 
   final AuthMethods _authMethods = AuthMethods();

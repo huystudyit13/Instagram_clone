@@ -45,7 +45,7 @@ class _SignUpOptionsState extends State<SignUpOptions> {
 
   Widget _topWidget() {
     return DropdownButton<String>(
-      hint: Text(translation(context).language),
+      hint: Text(translation(context).default_language),
       alignment: Alignment.center,
       underline: null,
       items: [

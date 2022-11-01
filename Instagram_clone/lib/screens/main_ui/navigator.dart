@@ -78,15 +78,17 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
-        children: const [
-          Feed(),
+        children: [
+          const Feed(),
           // const Search(),
-          Text('search'),
-          AddPost(),
+          const Text('search'),
+          const AddPost(),
           //Text('search'),
           // const Notification(),
-          Text('notifications'),
-          Profile(),
+          const Text('notifications'),
+          Profile(
+            uid: FirebaseAuth.instance.currentUser!.uid,
+          ),
           //Text('profile'),
         ],
       ),
