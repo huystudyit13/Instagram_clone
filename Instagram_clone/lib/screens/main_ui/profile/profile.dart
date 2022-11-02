@@ -5,11 +5,12 @@ import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/login/login.dart';
-import 'package:instagram_clone/screens/main_ui/follow_button.dart';
 
 class Profile extends StatefulWidget {
   final String uid;
-  const Profile({Key? key, required this.uid}) : super(key: key);
+  final bool isNavigate;
+  const Profile({Key? key, required this.uid, required this.isNavigate})
+      : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -147,8 +148,7 @@ class _ProfileState extends State<Profile> {
           )
         : Scaffold(
             appBar: AppBar(
-              //automaticallyImplyLeading: false,
-              leading: FirebaseAuth.instance.currentUser!.uid != widget.uid
+              leading: !widget.isNavigate
                   ? const BackButton(color: Colors.black)
                   : null,
               backgroundColor: Colors.white,
@@ -236,10 +236,7 @@ class _ProfileState extends State<Profile> {
                                 onPressed: () {},
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: Colors.black,
-                                    ),
+                                    color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   alignment: Alignment.center,
@@ -248,7 +245,7 @@ class _ProfileState extends State<Profile> {
                                   child: Text(
                                     translation(context).edit_profile,
                                     style: const TextStyle(
-                                      color: Colors.black,
+                                      color: Color(0xFF3E3E3E),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -269,10 +266,7 @@ class _ProfileState extends State<Profile> {
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: Colors.black,
-                                        ),
+                                        color: Colors.grey[200],
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       alignment: Alignment.center,
@@ -281,7 +275,7 @@ class _ProfileState extends State<Profile> {
                                       child: Text(
                                         translation(context).unfollow,
                                         style: const TextStyle(
-                                          color: Colors.black,
+                                          color: Color(0xFF3E3E3E),
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -302,9 +296,6 @@ class _ProfileState extends State<Profile> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: Colors.blue,
-                                        border: Border.all(
-                                          color: Colors.black,
-                                        ),
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       alignment: Alignment.center,

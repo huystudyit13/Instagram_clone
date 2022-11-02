@@ -14,7 +14,7 @@ class PostMethods {
     String res = "Some error occurred";
     try {
       String photoUrl =
-      await StorageMethods().uploadImageToStorage('posts', file, true);
+          await StorageMethods().uploadImageToStorage('posts', file, true);
       String postId = const Uuid().v1(); // creates unique id based on time
       Post post = Post(
         description: description,
@@ -46,7 +46,8 @@ class PostMethods {
     return res;
   }
 
-  Future<String> likePost(String postId, String uid, List likes, bool isDoubleTap) async {
+  Future<String> likePost(
+      String postId, String uid, List likes, bool isDoubleTap) async {
     String res = "Some error occurred";
     try {
       if (likes.contains(uid) && !isDoubleTap) {
@@ -66,5 +67,4 @@ class PostMethods {
     }
     return res;
   }
-
 }

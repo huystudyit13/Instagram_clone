@@ -6,8 +6,8 @@ import 'package:instagram_clone/resources/comment_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
-import 'package:instagram_clone/screens/main_ui/comment_card.dart';
-import 'package:instagram_clone/screens/main_ui/profile.dart';
+import 'package:instagram_clone/screens/main_ui/comment/comment_card.dart';
+import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
@@ -61,7 +61,6 @@ class CommentsScreenState extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -74,7 +73,6 @@ class CommentsScreenState extends State<CommentsScreen> {
           translation(context).comments,
           style: const TextStyle(color: Colors.black),
         ),
-        //centerTitle: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -90,15 +88,14 @@ class CommentsScreenState extends State<CommentsScreen> {
                 ),
               ),
               child: Row(
-                //mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   InkWell(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => Profile(
                           uid: widget.snap['uid'].toString(),
+                          isNavigate: false,
                         ),
                       ),
                     ),
@@ -129,6 +126,7 @@ class CommentsScreenState extends State<CommentsScreen> {
                                     MaterialPageRoute(
                                       builder: (context) => Profile(
                                         uid: widget.snap['uid'].toString(),
+                                        isNavigate: false,
                                       ),
                                     ),
                                   );
@@ -194,7 +192,6 @@ class CommentsScreenState extends State<CommentsScreen> {
                     controller: commentEditingController,
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
-                    //expands: true,
                     decoration: InputDecoration(
                       hintText:
                           '${translation(context).cmt_as} ${user.username}',

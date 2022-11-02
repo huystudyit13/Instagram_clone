@@ -267,8 +267,8 @@ class SignUpFormState extends State<SignUpForm> {
                                         context,
                                         translation(context)
                                             .user_name_contain_blank_spaces),
-                                  },
-                                if (_passwordController.text.contains(' '))
+                                  }
+                                else if (_passwordController.text.contains(' '))
                                   {
                                     showMess(
                                         context,

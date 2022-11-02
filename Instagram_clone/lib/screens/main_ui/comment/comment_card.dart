@@ -4,8 +4,8 @@ import 'package:instagram_clone/resources/comment_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
-import 'package:instagram_clone/screens/main_ui/like_animation.dart';
-import 'package:instagram_clone/screens/main_ui/profile.dart';
+import 'package:instagram_clone/screens/main_ui/news_feed/like_animation.dart';
+import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:provider/provider.dart';
@@ -48,6 +48,7 @@ class _CommentCardState extends State<CommentCard> {
               MaterialPageRoute(
                 builder: (context) => Profile(
                   uid: widget.snap.data()['uid'].toString(),
+                  isNavigate: false,
                 ),
               ),
             ),
@@ -75,6 +76,7 @@ class _CommentCardState extends State<CommentCard> {
                                   MaterialPageRoute(
                                     builder: (context) => Profile(
                                       uid: widget.snap.data()['uid'].toString(),
+                                      isNavigate: false,
                                     ),
                                   ),
                                 );
@@ -134,7 +136,8 @@ class _CommentCardState extends State<CommentCard> {
                           height: 0,
                           width: 10,
                         ),
-                        widget.snap.data()['uid'].toString() == user.uid || widget.postSnap['uid'].toString() == user.uid
+                        widget.snap.data()['uid'].toString() == user.uid ||
+                                widget.postSnap['uid'].toString() == user.uid
                             ? DefaultTextStyle(
                                 style: Theme.of(context).textTheme.subtitle2!,
                                 child: InkWell(
@@ -161,11 +164,11 @@ class _CommentCardState extends State<CommentCard> {
                   ? const Icon(
                       Icons.favorite,
                       color: Colors.red,
-                      size: 20,
+                      size: 18,
                     )
                   : const Icon(
                       Icons.favorite_border,
-                      size: 20,
+                      size: 18,
                     ),
               onPressed: () => CommentMethods().likeComment(
                   widget.postSnap['postId'].toString(),

@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
-import 'package:instagram_clone/resources/utils.dart';
-import 'package:instagram_clone/screens/main_ui/add_post.dart';
-import 'package:instagram_clone/screens/main_ui/feed.dart';
-import 'package:instagram_clone/screens/main_ui/profile.dart';
+import 'package:instagram_clone/screens/main_ui/add_post/add_post.dart';
+import 'package:instagram_clone/screens/main_ui/news_feed/feed.dart';
+import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
+import 'package:instagram_clone/screens/main_ui/search/search.dart';
 import 'package:provider/provider.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 
@@ -25,30 +24,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
   void initState() {
     super.initState();
     pageController = PageController();
-    //addData();
-    //getData();
-  }
-
-  getData() async {
-    try {
-      var userSnap = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get();
-
-      userData = userSnap.data()!;
-    } catch (e) {
-      showMess(
-        context,
-        e.toString(),
-      );
-    }
-  }
-
-  addData() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    await userProvider.refreshUser();
   }
 
   @override
@@ -71,8 +46,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
   @override
   Widget build(BuildContext context) {
     final model.User user = Provider.of<UserProvider>(context).getUser;
-    //String? photoUrl = user.photoUrl;
-    //final UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: PageView(
         controller: pageController,
@@ -80,16 +53,14 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
         onPageChanged: onPageChanged,
         children: [
           const Feed(),
-          // const Search(),
-          const Text('search'),
+          const Search(),
           const AddPost(),
-          //Text('search'),
           // const Notification(),
           const Text('notifications'),
           Profile(
             uid: FirebaseAuth.instance.currentUser!.uid,
+            isNavigate: true,
           ),
-          //Text('profile'),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -98,7 +69,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
           const BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
-              //color: Colors.black,
             ),
             activeIcon: Icon(
               Icons.home,
@@ -110,7 +80,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
           const BottomNavigationBarItem(
               icon: Icon(
                 Icons.search_outlined,
-                //color: Colors.black,
               ),
               activeIcon: Icon(
                 Icons.search,
@@ -121,7 +90,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
           const BottomNavigationBarItem(
               icon: Icon(
                 Icons.add_circle_outline_outlined,
-                //color: Colors.black,
               ),
               activeIcon: Icon(
                 Icons.add_circle,
@@ -132,7 +100,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
           const BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite_outline_outlined,
-              //color: Colors.black,
             ),
             activeIcon: Icon(
               Icons.favorite,

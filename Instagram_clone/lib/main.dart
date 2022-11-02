@@ -54,10 +54,8 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
         child: MaterialApp(
-          //title: 'Localization',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.blue,
             scaffoldBackgroundColor: Colors.white,
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -114,7 +112,6 @@ class _CheckState extends State<Check> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +137,6 @@ class _CheckState extends State<Check> {
               child: CircularProgressIndicator(),
             );
           }
-
           return const Start();
         },
       ),

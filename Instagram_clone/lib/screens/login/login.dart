@@ -51,13 +51,13 @@ class _LoginState extends State<Login> {
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
-
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeLayout(
-            mobileScreenLayout: MainUiNavigator(),
-      )),
+        MaterialPageRoute(
+            builder: (context) => const HomeLayout(
+                  mobileScreenLayout: MainUiNavigator(),
+                )),
       );
       _isLoading = false;
     } else {

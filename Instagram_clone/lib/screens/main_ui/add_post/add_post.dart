@@ -115,12 +115,23 @@ class _AddPostState extends State<AddPost> {
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
     return _file == null
-        ? Center(
-            child: IconButton(
-              icon: const Icon(
-                Icons.upload,
+        ? Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              automaticallyImplyLeading: false,
+              title: Text(
+                translation(context).new_post,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               ),
-              onPressed: () => _selectImage(context),
+            ),
+            body: Center(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.upload,
+                ),
+                onPressed: () => _selectImage(context),
+              ),
             ),
           )
         : Scaffold(
@@ -200,7 +211,6 @@ class _AddPostState extends State<AddPost> {
                       decoration: InputDecoration(
                           hintText: translation(context).write_a_caption,
                           border: InputBorder.none),
-                      //maxLines: 8,
                     ),
                   ),
                 ),

@@ -27,7 +27,7 @@ Locale _locale(String languageCode) {
     case vietnam:
       return const Locale(vietnam, '');
     default:
-       return const Locale(english, '');
+      return const Locale(english, '');
   }
 }
 

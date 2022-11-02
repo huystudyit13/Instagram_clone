@@ -7,9 +7,9 @@ import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/post_methods.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
-import 'package:instagram_clone/screens/main_ui/comments.dart';
-import 'package:instagram_clone/screens/main_ui/like_animation.dart';
-import 'package:instagram_clone/screens/main_ui/profile.dart';
+import 'package:instagram_clone/screens/main_ui/comment/comments.dart';
+import 'package:instagram_clone/screens/main_ui/news_feed/like_animation.dart';
+import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -85,6 +85,7 @@ class _PostCardState extends State<PostCard> {
                     MaterialPageRoute(
                       builder: (context) => Profile(
                         uid: widget.snap['uid'].toString(),
+                        isNavigate: false,
                       ),
                     ),
                   ),
@@ -109,6 +110,7 @@ class _PostCardState extends State<PostCard> {
                             MaterialPageRoute(
                               builder: (context) => Profile(
                                 uid: widget.snap['uid'].toString(),
+                                isNavigate: false,
                               ),
                             ),
                           ),
@@ -315,6 +317,7 @@ class _PostCardState extends State<PostCard> {
                                 MaterialPageRoute(
                                   builder: (context) => Profile(
                                     uid: widget.snap['uid'].toString(),
+                                    isNavigate: false,
                                   ),
                                 ),
                               );

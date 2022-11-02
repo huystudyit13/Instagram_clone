@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 
-
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -14,7 +13,7 @@ class AuthMethods {
     User currentUser = _auth.currentUser!;
 
     DocumentSnapshot documentSnapshot =
-    await _firestore.collection('users').doc(currentUser.uid).get();
+        await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(documentSnapshot);
   }
@@ -29,32 +28,32 @@ class AuthMethods {
   }) async {
     String res = "Some error Occurred";
     try {
-        // registering user in auth with email and password
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        String photoUrl =
-        await StorageMethods().uploadImageToStorage('profilePics', file, false);
+      // registering user in auth with email and password
+      UserCredential cred = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      String photoUrl = await StorageMethods()
+          .uploadImageToStorage('profilePics', file, false);
 
-        model.User user = model.User(
-          username: username,
-          uid: cred.user!.uid,
-          photoUrl: photoUrl,
-          email: email,
-          bio: '',
-          followers: [],
-          following: [],
-          name: '',
-        );
+      model.User user = model.User(
+        username: username,
+        uid: cred.user!.uid,
+        photoUrl: photoUrl,
+        email: email,
+        bio: '',
+        followers: [],
+        following: [],
+        name: '',
+      );
 
-        // adding user in our database
-        await _firestore
-            .collection("users")
-            .doc(cred.user!.uid)
-            .set(user.toJson());
+      // adding user in our database
+      await _firestore
+          .collection("users")
+          .doc(cred.user!.uid)
+          .set(user.toJson());
 
-        res = "success";
+      res = "success";
     } on FirebaseAuthException catch (err) {
       if (err.code == "weak-password") {
         res = "weak-password";
@@ -70,12 +69,12 @@ class AuthMethods {
   }) async {
     String res = "Some error occurred";
     try {
-        // logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        res = "success";
+      // logging in user with email and password
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      res = "success";
     } on FirebaseAuthException catch (err) {
       if (err.code == "wrong-password") {
         res = "wrong-password";
@@ -92,15 +91,13 @@ class AuthMethods {
     await _auth.signOut();
   }
 
-  Future<void> followUser(
-      String uid,
-      String followId
-      ) async {
+  Future<void> followUser(String uid, String followId) async {
     try {
-      DocumentSnapshot snap = await _firestore.collection('users').doc(uid).get();
+      DocumentSnapshot snap =
+          await _firestore.collection('users').doc(uid).get();
       List following = (snap.data()! as dynamic)['following'];
 
-      if(following.contains(followId)) {
+      if (following.contains(followId)) {
         await _firestore.collection('users').doc(followId).update({
           'followers': FieldValue.arrayRemove([uid])
         });
@@ -117,9 +114,6 @@ class AuthMethods {
           'following': FieldValue.arrayUnion([followId])
         });
       }
-
-    } catch(e) {
-      print(e.toString());
-    }
+    } catch (e) {}
   }
 }

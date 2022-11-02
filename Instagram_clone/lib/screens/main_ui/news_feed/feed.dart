@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
-import 'package:instagram_clone/screens/main_ui/post.dart';
+import 'package:instagram_clone/screens/main_ui/news_feed/post.dart';
 import 'package:provider/provider.dart';
 
 class Feed extends StatefulWidget {
@@ -15,7 +15,6 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> with AutomaticKeepAliveClientMixin {
-
   @override
   bool get wantKeepAlive => true;
 
@@ -75,7 +74,6 @@ class _FeedState extends State<Feed> with AutomaticKeepAliveClientMixin {
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                //mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -93,9 +91,9 @@ class _FeedState extends State<Feed> with AutomaticKeepAliveClientMixin {
                                                 right: -2.0,
                                                 bottom: -2.0,
                                                 child: CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundColor: Colors.white,
-                                                    )),
+                                                  radius: 12,
+                                                  backgroundColor: Colors.white,
+                                                )),
                                             Positioned(
                                                 right: -14.0,
                                                 bottom: -14.0,
