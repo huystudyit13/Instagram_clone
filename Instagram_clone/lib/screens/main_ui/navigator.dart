@@ -64,6 +64,7 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        key: const ValueKey('bottomBar'),
         backgroundColor: Colors.white,
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(

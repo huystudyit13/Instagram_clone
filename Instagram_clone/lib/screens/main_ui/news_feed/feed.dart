@@ -29,6 +29,7 @@ class _FeedState extends State<Feed> with AutomaticKeepAliveClientMixin {
           'assets/images/logo_insta.svg',
           color: Colors.black,
           height: 35,
+          key: const ValueKey('logo'),
         ),
         actions: [
           IconButton(

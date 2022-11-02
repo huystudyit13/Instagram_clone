@@ -47,10 +47,10 @@ class _LoginState extends State<Login> {
   }
 
   void loginUser() async {
-    _isLoading = true;
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
+      _isLoading = true;
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -59,8 +59,8 @@ class _LoginState extends State<Login> {
                   mobileScreenLayout: MainUiNavigator(),
                 )),
       );
-      _isLoading = false;
     } else {
+      //_isLoading = false;
       if (res == "wrong-password") {
         if (!mounted) return;
         res = translation(context).wrong_password;
@@ -71,7 +71,6 @@ class _LoginState extends State<Login> {
         if (!mounted) return;
         res = translation(context).user_not_found;
       }
-      _isLoading = false;
       if (!mounted) return;
       showMess(context, res);
     }
@@ -219,6 +218,7 @@ class _LoginState extends State<Login> {
             )),
         const SizedBox(height: 24),
         RichText(
+          key: const ValueKey('forgot'),
           textAlign: TextAlign.center,
           text: TextSpan(
             text: translation(context).forgot_login,

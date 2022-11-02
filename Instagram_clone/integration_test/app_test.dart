@@ -17,36 +17,62 @@ void main() {
   }
 
   group('end-to-end test', () {
-    //TODO: add random email var here
+    testWidgets('Change language', (WidgetTester tester) async {
+      //TODO: add Firebase Initialization Here
+      await Firebase.initializeApp(); // previous code
+      await tester.pumpWidget(const MyApp());
+      await tester.pumpAndSettle();
+      await addDelay(5000);
+      await tester.tap(find.byType(DropdownButton<String>));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      await tester.tap(find.byKey(const ValueKey('secondMenu')).last);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      await addDelay(5000);
+      expect(find.byKey(const ValueKey('signupButton')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('firstMenu')).last);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      await addDelay(5000);
+      expect(find.byKey(const ValueKey('signupButton')), findsOneWidget);
+    });
 
-    //TODO: add test 1 here
     testWidgets('Authentication Testing', (WidgetTester tester) async {
       //TODO: add Firebase Initialization Here
       await Firebase.initializeApp(); // previous code
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
-      // await addDelay(1000);
-      // await logout(tester);
-      await addDelay(10000);
+      await addDelay(5000);
       await tester.tap(find.byKey(const ValueKey('login')));
-      //await tester.tap(find.byType(InkWell));
 //TODO: Add code here
       tester.printToConsole('Login screen opens');
       await tester.pumpAndSettle();
-      // previous code
       await tester.enterText(
-          find.byKey(const ValueKey('emailSignUpField')), 'huydo1341@gmail.com');
-
+          find.byKey(const ValueKey('emailSignUpField')), 'huydo');
       await tester.enterText(
-          find.byKey(const ValueKey('passwordSignUpField')), 'admin1');
+          find.byKey(const ValueKey('passwordSignUpField')), 'admin2');
       await tester.ensureVisible(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ElevatedButton));
-      //await tester.tap(find.byKey(const ValueKey('loginButton')));
-      await addDelay(10000);
+      await addDelay(1000);
+      expect(find.byType(SnackBar), findsOneWidget);
+      await addDelay(4000);
+      await tester.enterText(
+          find.byKey(const ValueKey('emailSignUpField')), 'huydo@gmail.com');
+      await tester.ensureVisible(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('Logout')), findsOneWidget);
-      await logout(tester);
+      await tester.tap(find.byType(ElevatedButton));
+      await addDelay(1000);
+      expect(find.byType(SnackBar), findsOneWidget);
+      await addDelay(4000);
+      await tester.enterText(find.byKey(const ValueKey('emailSignUpField')),
+          'huydo1341@gmail.com');
+      await tester.ensureVisible(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(ElevatedButton));
+      await addDelay(1000);
+      expect(find.byType(SnackBar), findsOneWidget);
     });
 
     //TODO: add test 2 here
@@ -80,7 +106,7 @@ void main() {
       await addDelay(1000);
       //await tester.pumpAndSettle();
       expect(find.byType(SnackBar), findsOneWidget);
-      await addDelay(5000);
+      await addDelay(4000);
       await tester.enterText(
           find.byKey(const ValueKey('emailField')), 'huydo1341@gmail.com');
       await tester.ensureVisible(find.byKey(const ValueKey('nextButton')));
@@ -96,8 +122,7 @@ void main() {
       await addDelay(1000);
       await tester.pumpAndSettle();
       expect(find.byType(TextField), findsOneWidget);
-      await tester.enterText(
-          find.byType(TextField), '111');
+      await tester.enterText(find.byType(TextField), '111');
       await tester.ensureVisible(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ElevatedButton));
@@ -105,12 +130,13 @@ void main() {
       expect(find.byType(SnackBar), findsOneWidget);
     });
 
+    //TODO: add test 1 here
     testWidgets('Authentication Testing', (WidgetTester tester) async {
       //TODO: add Firebase Initialization Here
       await Firebase.initializeApp(); // previous code
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
-      await addDelay(5000);
+      await addDelay(10000);
       await tester.tap(find.byKey(const ValueKey('login')));
 //TODO: Add code here
       tester.printToConsole('Login screen opens');
@@ -119,75 +145,49 @@ void main() {
           'huydo1341@gmail.com');
 
       await tester.enterText(
-          find.byKey(const ValueKey('passwordSignUpField')), 'admin2');
+          find.byKey(const ValueKey('passwordSignUpField')), 'admin1');
       await tester.ensureVisible(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ElevatedButton));
-      //await tester.tap(find.byKey(const ValueKey('loginButton')));
-      await addDelay(1000);
-      expect(find.byType(SnackBar), findsOneWidget);
-      await addDelay(5000);
-      await tester.enterText(find.byKey(const ValueKey('emailSignUpField')),
-          'huydo@gmail.com');
-      await tester.ensureVisible(find.byType(ElevatedButton));
+      await addDelay(10000);
       await tester.pumpAndSettle();
-      await tester.tap(find.byType(ElevatedButton));
-      await addDelay(2000);
-      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.byKey(const ValueKey('bottomBar')), findsOneWidget);
     });
 
     testWidgets('Forgot pass Testing', (WidgetTester tester) async {
       //TODO: add Firebase Initialization Here
       await Firebase.initializeApp(); // previous code
-      await tester.pumpWidget(const ForgotPass());
-      await tester.pumpAndSettle();
-      await addDelay(5000);
-//TODO: Add code here
-      tester.printToConsole('forgot screen opens');
-      await tester.enterText(find.byType(TextField),
-          'huydo@gmail.com');
-      await tester.ensureVisible(find.byType(ElevatedButton));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(ElevatedButton));
-      //await tester.tap(find.byKey(const ValueKey('loginButton')));
-      await addDelay(1000);
-      expect(find.byType(SnackBar), findsOneWidget);
-      await addDelay(4000);
-      await tester.enterText(find.byType(TextField),
-          'huydo');
-      await tester.ensureVisible(find.byType(ElevatedButton));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(ElevatedButton));
-      await addDelay(1000);
-      expect(find.byType(SnackBar), findsOneWidget);
-      await addDelay(4000);
-      await tester.enterText(find.byType(TextField),
-          'huydo1341@gmail.com');
-      await tester.ensureVisible(find.byType(ElevatedButton));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(ElevatedButton));
-      await addDelay(1000);
-      expect(find.byType(SnackBar), findsOneWidget);
-      await addDelay(4000);
-    });
-    testWidgets('Change language', (WidgetTester tester) async {
-      //TODO: add Firebase Initialization Here
-      await Firebase.initializeApp(); // previous code
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
-      await addDelay(5000);
-      await tester.tap(find.byType(DropdownButton<String>));
+      await addDelay(10000);
+      await tester.tap(find.byKey(const ValueKey('login')));
+//TODO: Add code here
+      tester.printToConsole('Login screen opens');
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('secondMenu')));
+      await tester.tap(find.text(" Get help logging in."));
       await tester.pumpAndSettle();
-      await addDelay(5000);
-      expect(find.byKey(const ValueKey('signupButton')), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('firstMenu')));
+      await tester.enterText(find.byType(TextField), 'huydo@gmail.com');
+      await tester.ensureVisible(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
-      await addDelay(5000);
-      expect(find.byKey(const ValueKey('signupButton')), findsOneWidget);
+      await tester.tap(find.byType(ElevatedButton));
+      await addDelay(1000);
+      expect(find.byType(SnackBar), findsOneWidget);
+      await addDelay(4000);
+      await tester.enterText(find.byType(TextField), 'huydo');
+      await tester.ensureVisible(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(ElevatedButton));
+      await addDelay(1000);
+      expect(find.byType(SnackBar), findsOneWidget);
+      await addDelay(4000);
+      await tester.enterText(find.byType(TextField), 'huydo1341@gmail.com');
+      await tester.ensureVisible(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(ElevatedButton));
+      await addDelay(1000);
+      expect(find.byType(SnackBar), findsOneWidget);
+      await addDelay(4000);
     });
-
   });
 }
 
