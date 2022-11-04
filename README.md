@@ -29,6 +29,8 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 [Week 8](#week-8)
 
+[Week 9](#week-9)
+
 
 ## Week 2
 
@@ -80,3 +82,12 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 * #### Hiển thị các bài viết từ firebase và có thể like, bình luận hoặc xóa bài viết. Các bình luận cũng có thể like và xóa.
 * #### Kiểm thử chức năng Test Lab của Firebase.
 ![image](https://user-images.githubusercontent.com/62604651/198500772-aae3d823-130c-4282-8e29-fffaaf67fc75.png)
+
+----
+
+## Week 9
+
+* #### Thêm màn hình trang cá nhân của người dùng và màn hình tìm kiếm người dùng. Thêm tính năng theo dõi, bỏ theo dõi người dùng.
+* #### Cập nhật bộ kiểm thử và độ bao phủ của integration_test.
+![image](https://user-images.githubusercontent.com/62604651/199878821-ac358ef6-e599-4c2e-9a04-9782edc176c5.png)
+
