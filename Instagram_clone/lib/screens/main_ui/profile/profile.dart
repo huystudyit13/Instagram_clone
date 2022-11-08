@@ -5,6 +5,8 @@ import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/login/login.dart';
+import 'package:instagram_clone/screens/main_ui/profile/change_language.dart';
+import 'package:instagram_clone/screens/main_ui/profile/change_theme.dart';
 
 class Profile extends StatefulWidget {
   final String uid;
@@ -70,7 +72,13 @@ class _ProfileState extends State<Profile> {
                     color: Colors.black,
                   ),
                   title: Text(translation(context).language),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ChangeLanguage()),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: const Icon(
@@ -78,7 +86,13 @@ class _ProfileState extends State<Profile> {
                     color: Colors.black,
                   ),
                   title: Text(translation(context).theme),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ChangeTheme()),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: const Icon(
@@ -148,6 +162,9 @@ class _ProfileState extends State<Profile> {
           )
         : Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: !widget.isNavigate
+                  ? true
+                  : false,
               leading: !widget.isNavigate
                   ? const BackButton(color: Colors.black)
                   : null,

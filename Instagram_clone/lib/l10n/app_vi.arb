@@ -71,6 +71,8 @@
   "system_default": "Mặc định của hệ thống",
   "language": "Ngôn ngữ",
   "edit_profile": "Chỉnh sửa trang cá nhân",
+  "name": "Tên",
+  "change_profile_photo": "Đổi ảnh đại diện",
   "follow": "Theo dõi",
   "unfollow": "Bỏ theo dõi",
   "search": "Tìm kiếm"

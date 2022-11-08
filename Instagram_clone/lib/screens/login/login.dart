@@ -47,10 +47,13 @@ class _LoginState extends State<Login> {
   }
 
   void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
-      _isLoading = true;
+
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -60,7 +63,9 @@ class _LoginState extends State<Login> {
                 )),
       );
     } else {
-      //_isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
       if (res == "wrong-password") {
         if (!mounted) return;
         res = translation(context).wrong_password;

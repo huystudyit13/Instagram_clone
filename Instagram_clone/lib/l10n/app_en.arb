@@ -71,6 +71,8 @@
   "system_default": "System default",
   "language": "Language",
   "edit_profile": "Edit profile",
+  "name": "Name",
+  "change_profile_photo": "Change profile photo",
   "follow": "Follow",
   "unfollow": "Unfollow",
   "search": "Search"
