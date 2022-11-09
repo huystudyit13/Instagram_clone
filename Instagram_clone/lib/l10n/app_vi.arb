@@ -19,7 +19,7 @@
   "email": "EMAIL",
   "next": "Tiếp",
   "sign_up_info": "Chúng tôi có thể gửi thông báo cho bạn qua SMS vì mục đích bảo mật và đăng nhập.",
-  "username": "Tên người sử dụng",
+  "username": "Tên người dùng",
   "pass_cf": "Xác nhận mật khẩu",
   "sign_up_btn": "Đăng ký tài khoản",
   "cf_code": "Mã xác nhận",
@@ -48,7 +48,7 @@
   "posted": "Đã đăng thành công!",
   "complete_acc": "Hoàn thiện tài khoản của bạn",
   "contain_blank_spaces": "Mật khẩu của bạn không được chứa khoảng trắng",
-  "user_name_contain_blank_spaces": "Tên người sử dụng của bạn không được chứa khoảng trắng",
+  "user_name_contain_blank_spaces": "Tên người dùng không được chứa khoảng trắng",
   "your_story": "Tin của bạn",
   "like": "lượt thích",
   "likes": "lượt thích",
@@ -75,5 +75,13 @@
   "change_profile_photo": "Đổi ảnh đại diện",
   "follow": "Theo dõi",
   "unfollow": "Bỏ theo dõi",
-  "search": "Tìm kiếm"
+  "search": "Tìm kiếm",
+  "username_error_length": "Tên người dùng cần ít nhất 3 ký tự",
+  "username_error_special": "Tên người dùng chỉ được bao gồm dấu gạch dưới và dấu chấm",
+  "username_error_number": "Tên người dùng không được chứa mỗi chữ số",
+  "username_error_upper": "Tên người dùng không được chứa chữ cái viết hoa",
+  "unsaved": "Thay đổi chưa lưu",
+  "unsaved_content": "Bạn chưa lưu thay đổi. Bạn có chắc chắn muốn hủy không?",
+  "yes": "Có",
+  "no": "Không"
 }

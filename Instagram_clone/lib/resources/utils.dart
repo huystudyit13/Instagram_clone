@@ -21,7 +21,7 @@ Future<void> changeLanguage(BuildContext context, String newValue) async {
 
 void showMess(BuildContext context, String content) {
   final snackBar = SnackBar(
-    key: const ValueKey('message'),
+    duration: const Duration(milliseconds: 1000),
     content: Text(
       content,
       style: const TextStyle(color: Colors.white),
@@ -29,4 +29,24 @@ void showMess(BuildContext context, String content) {
     backgroundColor: Colors.blue,
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+usernameError(String? txt, BuildContext context) {
+  if (txt!.contains(' ')) {
+    return translation(context).user_name_contain_blank_spaces;
+  }
+  if (txt.contains(RegExp(
+      r"[-!$%^&*()+|~=`{}#@\[\]:;'’<>?,\/"
+      '"”'
+          "]"))) {
+    return translation(context).username_error_special;
+  }
+  if (txt.length < 3) {
+    return translation(context).username_error_length;
+  }
+  if (txt.contains(RegExp(r'[A-Z]'))) {
+    return translation(context).username_error_upper;
+  } else {
+    return;
+  }
 }

@@ -19,14 +19,6 @@ class Feed extends StatefulWidget {
 class _FeedState extends State<Feed> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  Future<void> signOut() async {
-    await AuthMethods().signOut();
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Login()),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +41,7 @@ class _FeedState extends State<Feed> with AutomaticKeepAliveClientMixin {
             ),
             color: Colors.black,
             iconSize: 35,
-            onPressed: () {signOut();},
+            onPressed: () {},
           ),
         ],
         backgroundColor: Colors.white,

@@ -7,6 +7,7 @@ import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/login/login.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_language.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_theme.dart';
+import 'package:instagram_clone/screens/main_ui/profile/edit_profile.dart';
 
 class Profile extends StatefulWidget {
   final String uid;
@@ -162,9 +163,7 @@ class _ProfileState extends State<Profile> {
           )
         : Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading: !widget.isNavigate
-                  ? true
-                  : false,
+              automaticallyImplyLeading: !widget.isNavigate ? true : false,
               leading: !widget.isNavigate
                   ? const BackButton(color: Colors.black)
                   : null,
@@ -250,7 +249,15 @@ class _ProfileState extends State<Profile> {
                         ),
                         FirebaseAuth.instance.currentUser!.uid == widget.uid
                             ? TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditProfile(
+                                              userData: userData,
+                                            )),
+                                  );
+                                },
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.grey[200],

@@ -168,7 +168,9 @@ class SignUpFormState extends State<SignUpForm> {
                 ),
                 TextField(
                   controller: _usernameController,
+                  onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(
+                    errorText: usernameError(_usernameController.text, context),
                     hintText: translation(context).username,
                     border: OutlineInputBorder(
                       borderSide: Divider.createBorderSide(context),

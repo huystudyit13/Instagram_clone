@@ -9,7 +9,6 @@ import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/screens/main_ui/home.dart';
 import 'package:instagram_clone/screens/main_ui/navigator.dart';
-import 'package:instagram_clone/screens/main_ui/profile/edit_profile.dart';
 import 'package:instagram_clone/screens/start.dart';
 import 'package:provider/provider.dart';
 
@@ -57,11 +56,12 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            colorSchemeSeed: Colors.white, useMaterial3: true,
             scaffoldBackgroundColor: Colors.white,
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const EditProfile(),
+          home: const StartingUp(),
           locale: _locale,
         ));
   }

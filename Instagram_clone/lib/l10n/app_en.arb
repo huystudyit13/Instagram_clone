@@ -47,8 +47,8 @@
   "write_a_caption": "Write a caption...",
   "posted": "Posted!",
   "complete_acc": "Complete your account",
-  "contain_blank_spaces": "Your password can not contain blank spaces",
-  "user_name_contain_blank_spaces": "Your username can not contain blank spaces",
+  "contain_blank_spaces": "Your password cannot contain blank spaces",
+  "user_name_contain_blank_spaces": "Username cannot contain blank spaces",
   "your_story": "Your story",
   "like": "like",
   "likes": "likes",
@@ -75,5 +75,13 @@
   "change_profile_photo": "Change profile photo",
   "follow": "Follow",
   "unfollow": "Unfollow",
-  "search": "Search"
+  "search": "Search",
+  "username_error_length": "Username needs at least 3 characters",
+  "username_error_special": "Username can only use underscores and periods",
+  "username_error_number": "Username cannot contain only numbers",
+  "username_error_upper": "Username cannot contain uppercase",
+  "unsaved": "Unsaved changes",
+  "unsaved_content": "You have unsaved changes. Are you sure that you want to cancel?",
+  "yes": "Yes",
+  "no": "No"
 }
