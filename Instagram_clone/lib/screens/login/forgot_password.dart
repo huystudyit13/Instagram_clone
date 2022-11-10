@@ -52,7 +52,7 @@ class _ForgotPassState extends State<ForgotPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: ,
         title: Text(
           translation(context).forgot_pass_title,
           style:
@@ -105,7 +105,7 @@ class _ForgotPassState extends State<ForgotPass> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          disabledBackgroundColor: Colors.lightBlueAccent,
+                          backgroundColor: Colors.lightBlueAccent,
                           disabledForegroundColor: Colors.white70,
                         ),
                         onPressed: checkMail
@@ -121,7 +121,8 @@ class _ForgotPassState extends State<ForgotPass> {
                             : null,
                         child: Text(
                           translation(context).next,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       )),
                 ],

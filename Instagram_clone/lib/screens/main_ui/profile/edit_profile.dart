@@ -14,7 +14,7 @@ class _EditProfileState extends State<EditProfile> {
   final username = TextEditingController();
   final name = TextEditingController();
   final bio = TextEditingController();
-  bool checkUsername = false;
+  bool checkUsername = true;
 
   @override
   void dispose() {

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
-import 'package:instagram_clone/screens/main_ui/news_feed/post.dart';
 import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_clone/screens/main_ui/search/post_search.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -21,6 +21,13 @@ class _SearchState extends State<Search> {
     // TODO: implement initState
     super.initState();
     isShowUsers = false;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    searchController.dispose();
   }
 
   @override
@@ -71,15 +78,25 @@ class _SearchState extends State<Search> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            color: Colors.black,
-                            onPressed: () {
-                              setState(() {
-                                isShowUsers = false;
-                              });
-                            },
-                          ),
+                          child: searchController.text.isEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.arrow_back),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    setState(() {
+                                      isShowUsers = false;
+                                    });
+                                    searchController.clear();
+                                  },
+                                )
+                              : IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    setState(() {});
+                                    searchController.clear();
+                                  },
+                                ),
                         ),
                         Expanded(
                           flex: 6,
@@ -95,13 +112,9 @@ class _SearchState extends State<Search> {
                                   filled: true,
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide:
-                                        Divider.createBorderSide(context),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide:
-                                        Divider.createBorderSide(context),
                                   ),
                                   contentPadding: const EdgeInsets.all(8.0),
                                   hintText: translation(context).search),
@@ -132,14 +145,15 @@ class _SearchState extends State<Search> {
                         crossAxisCount: 3,
                         itemCount: (snapshot.data! as dynamic).docs.length,
                         itemBuilder: (context, index) => GestureDetector(
-                          //           onTap: () => Navigator.of(context).push(
-                          //             MaterialPageRoute(
-                          //               builder: (context) => PostCard(
-                          // snap: (snapshot.data! as dynamic).docs[index],
-                          //               ),
-                          //             ),
-                          //           ),
-                          onTap: () {},
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Post(
+                                snap: (snapshot.data! as dynamic)
+                                    .docs[index]
+                                    .data(),
+                              ),
+                            ),
+                          ),
                           child: Image.network(
                             (snapshot.data! as dynamic).docs[index]['postUrl'],
                             fit: BoxFit.cover,
@@ -156,10 +170,8 @@ class _SearchState extends State<Search> {
                     ? FutureBuilder(
                         future: FirebaseFirestore.instance
                             .collection('users')
-                            .where(
-                              'username',
-                              isGreaterThanOrEqualTo: searchController.text,
-                            )
+                            // .where('username', isGreaterThanOrEqualTo: searchController.text)
+                            // .where('username', isLessThan: searchController.text +'z')
                             .get(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
@@ -172,30 +184,35 @@ class _SearchState extends State<Search> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: (snapshot.data! as dynamic).docs.length,
                             itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => Profile(
-                                      uid: (snapshot.data! as dynamic)
-                                          .docs[index]['uid'],
-                                      isNavigate: false,
-                                    ),
-                                  ),
-                                ),
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                      (snapshot.data! as dynamic).docs[index]
-                                          ['photoUrl'],
-                                    ),
-                                    radius: 16,
-                                  ),
-                                  title: Text(
-                                    (snapshot.data! as dynamic).docs[index]
-                                        ['username'],
-                                  ),
-                                ),
-                              );
+                              return (snapshot.data! as dynamic)
+                                      .docs[index]['username']
+                                      .toString()
+                                      .contains(searchController.text)
+                                  ? InkWell(
+                                      onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Profile(
+                                            uid: (snapshot.data! as dynamic)
+                                                .docs[index]['uid'],
+                                            isNavigate: false,
+                                          ),
+                                        ),
+                                      ),
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['photoUrl'],
+                                          ),
+                                          radius: 16,
+                                        ),
+                                        title: Text(
+                                          (snapshot.data! as dynamic)
+                                              .docs[index]['username'],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox();
                             },
                           );
                         },

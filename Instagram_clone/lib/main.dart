@@ -56,7 +56,8 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            colorSchemeSeed: Colors.white, useMaterial3: true,
+            colorSchemeSeed: Colors.white,
+            useMaterial3: true,
             scaffoldBackgroundColor: Colors.white,
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,

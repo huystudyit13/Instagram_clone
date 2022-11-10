@@ -78,6 +78,9 @@ class _SignUpOptionsState extends State<SignUpOptions> {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
                 key: const ValueKey('login_fb_button'),
                 onPressed: () {},
                 child: Row(

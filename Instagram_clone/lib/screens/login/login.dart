@@ -53,7 +53,6 @@ class _LoginState extends State<Login> {
     String res = await AuthMethods()
         .loginUser(email: username.text, password: password.text);
     if (res == 'success') {
-
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
@@ -203,8 +202,9 @@ class _LoginState extends State<Login> {
             child: ElevatedButton(
               key: const ValueKey('loginButton'),
               style: ElevatedButton.styleFrom(
-                disabledBackgroundColor: Colors.lightBlueAccent,
+                // disabledBackgroundColor: Colors.lightBlueAccent,
                 disabledForegroundColor: Colors.white70,
+                backgroundColor: Colors.blue,
               ),
               onPressed: userCheck && passCheck
                   ? () => {
@@ -215,7 +215,8 @@ class _LoginState extends State<Login> {
               child: !_isLoading
                   ? Text(
                       translation(context).log_in,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     )
                   : const CircularProgressIndicator(
                       color: Colors.white,

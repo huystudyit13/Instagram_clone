@@ -174,7 +174,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.black, fontWeight: FontWeight.bold),
               ),
               centerTitle: false,
-              actions: FirebaseAuth.instance.currentUser!.uid == widget.uid
+              actions: widget.isNavigate
                   ? [
                       IconButton(
                         icon: const Icon(Icons.menu),

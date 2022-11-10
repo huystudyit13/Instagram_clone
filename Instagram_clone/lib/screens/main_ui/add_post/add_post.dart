@@ -169,7 +169,9 @@ class _AddPostState extends State<AddPost> {
                 isLoading
                     ? const LinearProgressIndicator()
                     : const Padding(padding: EdgeInsets.only(top: 0.0)),
-                const Divider(),
+                const Divider(
+                  height: 0,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[

@@ -143,8 +143,9 @@ class _VerifyState extends State<Verify> {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                disabledBackgroundColor: Colors.lightBlueAccent,
+                // disabledBackgroundColor: Colors.lightBlueAccent,
                 disabledForegroundColor: Colors.white70,
+                backgroundColor: Colors.blue,
               ),
               onPressed: checkCode
                   ? () async => {
@@ -166,7 +167,8 @@ class _VerifyState extends State<Verify> {
                   : null,
               child: Text(
                 translation(context).next,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
               ),
             )),
       ],

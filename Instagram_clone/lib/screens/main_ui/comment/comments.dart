@@ -22,6 +22,7 @@ class CommentsScreenState extends State<CommentsScreen> {
   final TextEditingController commentEditingController =
       TextEditingController();
   bool cmtCheck = false;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: true,
@@ -74,103 +75,103 @@ class CommentsScreenState extends State<CommentsScreen> {
           style: const TextStyle(color: Colors.black),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 16,
-              ).copyWith(right: 0),
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.black12),
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  InkWell(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Profile(
-                          uid: widget.snap['uid'].toString(),
-                          isNavigate: false,
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .doc(widget.snap['postId'].toString())
+            .collection('comments')
+            .orderBy("datePublished", descending: false)
+            .snapshots(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return ListView.builder(
+                controller: scrollController,
+                itemCount: snapshot.data!.docs.length + 1,
+                itemBuilder: (ctx, index) {
+                  if (index == 0) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
+                      ).copyWith(right: 0),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.black12),
                         ),
                       ),
-                    ),
-                    child: CircleAvatar(
-                      radius: 18,
-                      backgroundImage: NetworkImage(
-                        widget.snap['profImage'].toString(),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 8,
-                      ),
-                      child: RichText(
-                        text: TextSpan(
-                          style: const TextStyle(color: Colors.black),
-                          children: [
-                            TextSpan(
-                              text: widget.snap['username'].toString(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => Profile(
+                                  uid: widget.snap['uid'].toString(),
+                                  isNavigate: false,
+                                ),
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Profile(
-                                        uid: widget.snap['uid'].toString(),
-                                        isNavigate: false,
+                            ),
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundImage: NetworkImage(
+                                widget.snap['profImage'].toString(),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8,
+                              ),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: const TextStyle(color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                      text: widget.snap['username'].toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
                                       ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => Profile(
+                                                uid: widget.snap['uid']
+                                                    .toString(),
+                                                isNavigate: false,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                     ),
-                                  );
-                                },
+                                    TextSpan(
+                                      text: ' ${widget.snap['description']}',
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            TextSpan(
-                              text: ' ${widget.snap['description']}',
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('posts')
-                  .doc(widget.snap['postId'].toString())
-                  .collection('comments')
-                  .orderBy("datePublished", descending: false)
-                  .snapshots(),
-              builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (ctx, index) => CommentCard(
-                    snap: snapshot.data!.docs[index],
-                    postSnap: widget.snap,
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+                    );
+                  } else {
+                    return CommentCard(
+                      snap: snapshot.data!.docs[index - 1],
+                      postSnap: widget.snap,
+                    );
+                  }
+                });
+          }
+        },
       ),
+
       // text input
       bottomNavigationBar: SafeArea(
         child: Container(
@@ -189,6 +190,10 @@ class CommentsScreenState extends State<CommentsScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, right: 8),
                   child: TextField(
+                    onTap: () {
+                      scrollController
+                          .jumpTo(scrollController.position.maxScrollExtent);
+                    },
                     controller: commentEditingController,
                     maxLines: null,
                     keyboardType: TextInputType.multiline,

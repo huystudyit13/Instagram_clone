@@ -1,4 +1,3 @@
-import 'package:instagram_clone/screens/login/forgot_password.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -196,13 +196,14 @@ class _SignUpMethodsState extends State<SignUpMethods>
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            disabledBackgroundColor: Colors.lightBlueAccent,
-                            disabledForegroundColor: Colors.white70,
+                            backgroundColor: Colors.lightBlueAccent,
                           ),
                           onPressed: checkPhone ? () => {} : null,
                           child: Text(
                             translation(context).next,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         )),
                   ),
@@ -237,8 +238,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
                       child: ElevatedButton(
                         key: const ValueKey('nextButton'),
                         style: ElevatedButton.styleFrom(
-                          disabledBackgroundColor: Colors.lightBlueAccent,
-                          disabledForegroundColor: Colors.white70,
+                          backgroundColor: Colors.lightBlueAccent,
                         ),
                         onPressed: checkMail
                             ? () async => {
@@ -260,7 +260,8 @@ class _SignUpMethodsState extends State<SignUpMethods>
                             : null,
                         child: Text(
                           translation(context).next,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       )),
                 ],

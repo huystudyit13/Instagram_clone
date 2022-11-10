@@ -83,5 +83,6 @@
   "unsaved": "Unsaved changes",
   "unsaved_content": "You have unsaved changes. Are you sure that you want to cancel?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "explore": "Explore"
 }

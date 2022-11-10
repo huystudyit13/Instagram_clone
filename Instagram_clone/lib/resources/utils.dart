@@ -35,10 +35,9 @@ usernameError(String? txt, BuildContext context) {
   if (txt!.contains(' ')) {
     return translation(context).user_name_contain_blank_spaces;
   }
-  if (txt.contains(RegExp(
-      r"[-!$%^&*()+|~=`{}#@\[\]:;'’<>?,\/"
+  if (txt.contains(RegExp(r"[-!$%^&*()+|~=`{}#@\[\]:;'’<>?,\/"
       '"”'
-          "]"))) {
+      "]"))) {
     return translation(context).username_error_special;
   }
   if (txt.length < 3) {

@@ -41,11 +41,11 @@ class SignUpFormState extends State<SignUpForm> {
     // TODO: implement initState
     super.initState();
 
-    _usernameController.addListener(() {
-      setState(() {
-        userCheck = _usernameController.text.isNotEmpty;
-      });
-    });
+    // _usernameController.addListener(() {
+    //   setState(() {
+    //     userCheck = _usernameController.text.isNotEmpty;
+    //   });
+    // });
     _passwordController.addListener(() {
       setState(() {
         passCheck = _passwordController.text.isNotEmpty;
@@ -168,7 +168,15 @@ class SignUpFormState extends State<SignUpForm> {
                 ),
                 TextField(
                   controller: _usernameController,
-                  onChanged: (_) => setState(() {}),
+                  onChanged: (_) {
+                    setState(() {});
+                    var temp = usernameError(_usernameController.text, context);
+                    if (temp == null) {
+                      userCheck = true;
+                    } else {
+                      userCheck = false;
+                    }
+                  },
                   decoration: InputDecoration(
                     errorText: usernameError(_usernameController.text, context),
                     hintText: translation(context).username,
@@ -257,20 +265,14 @@ class SignUpFormState extends State<SignUpForm> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        disabledBackgroundColor: Colors.lightBlueAccent,
+                        // disabledBackgroundColor: Colors.lightBlueAccent,
                         disabledForegroundColor: Colors.white70,
+                        backgroundColor: Colors.blue,
                       ),
                       onPressed: userCheck && passCheck && passCfCheck
                           ? () async => {
                                 FocusManager.instance.primaryFocus?.unfocus(),
-                                if (_usernameController.text.contains(' '))
-                                  {
-                                    showMess(
-                                        context,
-                                        translation(context)
-                                            .user_name_contain_blank_spaces),
-                                  }
-                                else if (_passwordController.text.contains(' '))
+                                if (_passwordController.text.contains(' '))
                                   {
                                     showMess(
                                         context,
@@ -299,8 +301,9 @@ class SignUpFormState extends State<SignUpForm> {
                       child: !_isLoading
                           ? Text(
                               translation(context).sign_up_btn,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             )
                           : const CircularProgressIndicator(
                               color: Colors.white,

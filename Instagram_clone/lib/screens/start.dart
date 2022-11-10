@@ -82,9 +82,7 @@ class _StartState extends State<Start> {
             key: const ValueKey('signupButton'),
             width: double.infinity,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -94,7 +92,8 @@ class _StartState extends State<Start> {
               },
               child: Text(
                 translation(context).create_account,
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
               ),
             )),
         const SizedBox(height: 24),

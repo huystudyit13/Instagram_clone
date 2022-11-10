@@ -77,11 +77,12 @@
   "unfollow": "Bỏ theo dõi",
   "search": "Tìm kiếm",
   "username_error_length": "Tên người dùng cần ít nhất 3 ký tự",
-  "username_error_special": "Tên người dùng chỉ được bao gồm dấu gạch dưới và dấu chấm",
+  "username_error_special": "Tên người dùng chỉ được chứa dấu gạch dưới và dấu chấm",
   "username_error_number": "Tên người dùng không được chứa mỗi chữ số",
   "username_error_upper": "Tên người dùng không được chứa chữ cái viết hoa",
   "unsaved": "Thay đổi chưa lưu",
   "unsaved_content": "Bạn chưa lưu thay đổi. Bạn có chắc chắn muốn hủy không?",
   "yes": "Có",
-  "no": "Không"
+  "no": "Không",
+  "explore": "Khám phá"
 }

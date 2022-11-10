@@ -17,7 +17,6 @@ class _ChangeThemeState extends State<ChangeTheme> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
