@@ -31,6 +31,7 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 [Week 9](#week-9)
 
+[Week 10](#week-10)
 
 ## Week 2
 
@@ -91,3 +92,9 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 * #### Cập nhật bộ kiểm thử và độ bao phủ của integration_test.
 ![image](https://user-images.githubusercontent.com/62604651/199878821-ac358ef6-e599-4c2e-9a04-9782edc176c5.png)
 
+----
+
+## Week 10
+
+* #### Thêm các màn hình cài đặt gồm thay đổi ngôn ngữ, thay đổi chủ đề ứng dụng, chỉnh sửa trang cá nhân và màn hình kết quả trả về từ tìm kiếm.
+* #### Chỉnh sửa màu sắc của 1 số nút, tính năng tìm kiếm, luật đặt tên người dùng.
