@@ -98,3 +98,9 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 * #### Thêm các màn hình cài đặt gồm thay đổi ngôn ngữ, thay đổi chủ đề ứng dụng, chỉnh sửa trang cá nhân và màn hình kết quả trả về từ tìm kiếm.
 * #### Chỉnh sửa màu sắc của 1 số nút, tính năng tìm kiếm, luật đặt tên người dùng.
+![Video_2022-11-12_164746](https://user-images.githubusercontent.com/62604651/201469123-9a7b5f04-0559-4c58-a963-abca6f4183af.gif)
+![Video_2022-11-12_165855](https://user-images.githubusercontent.com/62604651/201469134-f7eaa190-be74-40fa-b835-5cf30a0fbfd4.gif)
+
+* #### Back end sử dụng Firebase.
+![image](https://user-images.githubusercontent.com/62604651/201469170-1f522a0f-cf45-4e77-b49a-bffd530e5499.png)
+![image](https://user-images.githubusercontent.com/62604651/201469182-efd82e91-b298-460e-8e35-8a4847cc4508.png)
