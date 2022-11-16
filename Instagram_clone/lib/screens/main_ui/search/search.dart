@@ -131,7 +131,7 @@ class _SearchState extends State<Search> {
                 ? FutureBuilder(
                     future: FirebaseFirestore.instance
                         .collection('posts')
-                        .orderBy('datePublished')
+                        .orderBy('datePublished', descending: true)
                         .get(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {

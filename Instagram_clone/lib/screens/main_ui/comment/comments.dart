@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:instagram_clone/models/user.dart';
 import 'package:instagram_clone/resources/comment_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
@@ -23,6 +24,7 @@ class CommentsScreenState extends State<CommentsScreen> {
       TextEditingController();
   bool cmtCheck = false;
   final ScrollController scrollController = ScrollController();
+  late Stream<QuerySnapshot> data;
 
   @override
   void initState() {
@@ -32,6 +34,12 @@ class CommentsScreenState extends State<CommentsScreen> {
         cmtCheck = commentEditingController.text.isNotEmpty;
       });
     });
+    data = FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.snap['postId'].toString())
+        .collection('comments')
+        .orderBy("datePublished", descending: false)
+        .snapshots();
   }
 
   void postComment(String uid, String name, String profilePic) async {
@@ -75,103 +83,105 @@ class CommentsScreenState extends State<CommentsScreen> {
           style: const TextStyle(color: Colors.black),
         ),
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('posts')
-            .doc(widget.snap['postId'].toString())
-            .collection('comments')
-            .orderBy("datePublished", descending: false)
-            .snapshots(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return ListView.builder(
-                controller: scrollController,
-                itemCount: snapshot.data!.docs.length + 1,
-                itemBuilder: (ctx, index) {
-                  if (index == 0) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 16,
-                      ).copyWith(right: 0),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: Colors.black12),
+      body: SingleChildScrollView(
+        controller: scrollController,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 16,
+              ).copyWith(right: 0),
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black12),
+                ),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Profile(
+                          uid: widget.snap['uid'].toString(),
+                          isNavigate: false,
                         ),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => Profile(
-                                  uid: widget.snap['uid'].toString(),
-                                  isNavigate: false,
-                                ),
-                              ),
-                            ),
-                            child: CircleAvatar(
-                              radius: 18,
-                              backgroundImage: NetworkImage(
-                                widget.snap['profImage'].toString(),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8,
-                              ),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: widget.snap['username'].toString(),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) => Profile(
-                                                uid: widget.snap['uid']
-                                                    .toString(),
-                                                isNavigate: false,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                    ),
-                                    TextSpan(
-                                      text: ' ${widget.snap['description']}',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    ),
+                    child: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: NetworkImage(
+                        widget.snap['profImage'].toString(),
                       ),
-                    );
-                  } else {
-                    return CommentCard(
-                      snap: snapshot.data!.docs[index - 1],
-                      postSnap: widget.snap,
-                    );
-                  }
-                });
-          }
-        },
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                      ),
+                      child: RichText(
+                        text: TextSpan(
+                          style: const TextStyle(color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: widget.snap['username'].toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Profile(
+                                        uid: widget.snap['uid'].toString(),
+                                        isNavigate: false,
+                                      ),
+                                    ),
+                                  );
+                                },
+                            ),
+                            TextSpan(
+                              text: ' ${widget.snap['description']}',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: data,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return ListView(
+                    shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data_ =
+                          document.data()! as Map<String, dynamic>;
+                      return CommentCard(
+                        snap: data_,
+                        postSnap: widget.snap,
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
+            const SizedBox(),
+          ],
+        ),
       ),
-
       // text input
       bottomNavigationBar: SafeArea(
         child: Container(
@@ -190,9 +200,12 @@ class CommentsScreenState extends State<CommentsScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, right: 8),
                   child: TextField(
-                    onTap: () {
-                      scrollController
-                          .jumpTo(scrollController.position.maxScrollExtent);
+                    onTap: () async {
+                      await Future.delayed(const Duration(milliseconds: 100));
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        scrollController
+                            .jumpTo(scrollController.position.maxScrollExtent);
+                      });
                     },
                     controller: commentEditingController,
                     maxLines: null,

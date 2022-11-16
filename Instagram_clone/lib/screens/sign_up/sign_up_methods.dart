@@ -94,7 +94,7 @@ class _SignUpMethodsState extends State<SignUpMethods>
               child: _centerWidget(),
             ),
             Flexible(flex: 2, child: Container()),
-            const Divider(thickness: 2),
+            const Divider(thickness: 1),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: _bottomWidget(),

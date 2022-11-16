@@ -21,7 +21,7 @@ Future<void> changeLanguage(BuildContext context, String newValue) async {
 
 void showMess(BuildContext context, String content) {
   final snackBar = SnackBar(
-    duration: const Duration(milliseconds: 1000),
+    duration: const Duration(milliseconds: 600),
     content: Text(
       content,
       style: const TextStyle(color: Colors.white),

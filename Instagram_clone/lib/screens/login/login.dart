@@ -102,7 +102,7 @@ class _LoginState extends State<Login> {
               ),
               Flexible(flex: 2, child: Container()),
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              const Divider(thickness: 2),
+              const Divider(thickness: 1),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: _bottomWidget(),
@@ -251,9 +251,9 @@ class _LoginState extends State<Login> {
         const SizedBox(height: 24),
         Row(
           children: [
-            const Flexible(child: Divider(thickness: 2)),
+            const Flexible(child: Divider(thickness: 1)),
             Text(translation(context).or),
-            const Flexible(child: Divider(thickness: 2)),
+            const Flexible(child: Divider(thickness: 1)),
           ],
         ),
         const SizedBox(height: 24),

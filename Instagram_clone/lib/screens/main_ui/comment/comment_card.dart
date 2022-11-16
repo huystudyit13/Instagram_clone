@@ -11,7 +11,7 @@ import 'package:instagram_clone/models/user.dart' as model;
 import 'package:provider/provider.dart';
 
 class CommentCard extends StatefulWidget {
-  final snap;
+  final Map<String, dynamic> snap;
   final postSnap;
   const CommentCard({Key? key, required this.snap, required this.postSnap})
       : super(key: key);
@@ -24,7 +24,7 @@ class _CommentCardState extends State<CommentCard> {
   deleteComment(String postId) async {
     try {
       await CommentMethods()
-          .deleteComment(postId, widget.snap.data()['commentId']);
+          .deleteComment(postId, widget.snap['commentId']);
     } catch (err) {
       showMess(
         context,
@@ -47,14 +47,14 @@ class _CommentCardState extends State<CommentCard> {
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => Profile(
-                  uid: widget.snap.data()['uid'].toString(),
+                  uid: widget.snap['uid'].toString(),
                   isNavigate: false,
                 ),
               ),
             ),
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                widget.snap.data()['profilePic'],
+                widget.snap['profilePic'],
               ),
               radius: 18,
             ),
@@ -75,19 +75,19 @@ class _CommentCardState extends State<CommentCard> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => Profile(
-                                      uid: widget.snap.data()['uid'].toString(),
+                                      uid: widget.snap['uid'].toString(),
                                       isNavigate: false,
                                     ),
                                   ),
                                 );
                               },
-                            text: widget.snap.data()['name'],
+                            text: widget.snap['name'],
                             style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black)),
                         TextSpan(
-                            text: ' ${widget.snap.data()['text']}',
+                            text: ' ${widget.snap['text']}',
                             style: const TextStyle(
                                 fontSize: 15, color: Colors.black)),
                       ],
@@ -101,7 +101,7 @@ class _CommentCardState extends State<CommentCard> {
                       children: [
                         Text(
                           DateFormat.yMMMd().format(
-                            widget.snap.data()['datePublished'].toDate(),
+                            widget.snap['datePublished'].toDate(),
                           ),
                           style: const TextStyle(
                             fontSize: 14,
@@ -112,21 +112,21 @@ class _CommentCardState extends State<CommentCard> {
                           height: 0,
                           width: 10,
                         ),
-                        widget.snap.data()['likes'].length > 0
+                        widget.snap['likes'].length > 0
                             ? DefaultTextStyle(
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle2!
                                     .copyWith(fontWeight: FontWeight.w800),
-                                child: widget.snap.data()['likes'].length == 1
+                                child: widget.snap['likes'].length == 1
                                     ? Text(
-                                        "${widget.snap.data()['likes'].length} ${translation(context).like}",
+                                        "${widget.snap['likes'].length} ${translation(context).like}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
                                       )
                                     : Text(
-                                        "${widget.snap.data()['likes'].length} ${translation(context).likes}",
+                                        "${widget.snap['likes'].length} ${translation(context).likes}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
@@ -136,7 +136,7 @@ class _CommentCardState extends State<CommentCard> {
                           height: 0,
                           width: 10,
                         ),
-                        widget.snap.data()['uid'].toString() == user.uid ||
+                        widget.snap['uid'].toString() == user.uid ||
                                 widget.postSnap['uid'].toString() == user.uid
                             ? DefaultTextStyle(
                                 style: Theme.of(context).textTheme.subtitle2!,
@@ -157,10 +157,10 @@ class _CommentCardState extends State<CommentCard> {
             ),
           ),
           LikeAnimation(
-            isAnimating: widget.snap.data()['likes'].contains(user.uid),
+            isAnimating: widget.snap['likes'].contains(user.uid),
             smallLike: true,
             child: IconButton(
-              icon: widget.snap.data()['likes'].contains(user.uid)
+              icon: widget.snap['likes'].contains(user.uid)
                   ? const Icon(
                       Icons.favorite,
                       color: Colors.red,
@@ -173,8 +173,8 @@ class _CommentCardState extends State<CommentCard> {
               onPressed: () => CommentMethods().likeComment(
                   widget.postSnap['postId'].toString(),
                   user.uid,
-                  widget.snap.data()['likes'],
-                  widget.snap.data()['commentId']),
+                  widget.snap['likes'],
+                  widget.snap['commentId']),
             ),
           )
         ],

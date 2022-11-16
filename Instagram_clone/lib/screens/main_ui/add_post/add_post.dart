@@ -102,6 +102,7 @@ class _AddPostState extends State<AddPost> {
   void clearImage() {
     setState(() {
       _file = null;
+      _descriptionController.clear();
     });
   }
 
@@ -114,9 +115,9 @@ class _AddPostState extends State<AddPost> {
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
-    return _file == null
-        ? Scaffold(
-            appBar: AppBar(
+    return Scaffold(
+      appBar: _file == null
+          ? AppBar(
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               title: Text(
@@ -124,22 +125,43 @@ class _AddPostState extends State<AddPost> {
                 style: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
               ),
-            ),
-            body: Center(
-              child: IconButton(
-                icon: const Icon(
-                  Icons.upload,
-                ),
-                onPressed: () => _selectImage(context),
-              ),
-            ),
-          )
-        : Scaffold(
-            appBar: AppBar(
+            )
+          : AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: clearImage,
+                onPressed: () {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text(
+                          translation(context).unsaved,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        content: Text(translation(context).unsaved_content),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: Text(
+                              translation(context).no,
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: Text(
+                              translation(context).yes,
+                              style: const TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).then((value) {
+                      if (value == 'OK') {
+                        clearImage();
+                      }
+                    });
+                },
                 color: Colors.black,
               ),
               actions: <Widget>[
@@ -162,9 +184,16 @@ class _AddPostState extends State<AddPost> {
                 )
               ],
             ),
-            // POST FORM
-            resizeToAvoidBottomInset: false,
-            body: SingleChildScrollView(
+      body: _file == null
+          ? Center(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.upload,
+                ),
+                onPressed: () => _selectImage(context),
+              ),
+            )
+          : SingleChildScrollView(
               child: Column(children: <Widget>[
                 isLoading
                     ? const LinearProgressIndicator()
@@ -192,15 +221,15 @@ class _AddPostState extends State<AddPost> {
                     ),
                   ],
                 ),
-                Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    fit: BoxFit.fill,
-                    alignment: FractionalOffset.topCenter,
-                    image: MemoryImage(_file!),
-                  )),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height * 0.4,
+                //   width: double.infinity,
+                //   child: Image.memory(_file!),
+                // ),
+                Image(
+                  image: MemoryImage(
+                    _file!,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -218,6 +247,6 @@ class _AddPostState extends State<AddPost> {
                 ),
               ]),
             ),
-          );
+    );
   }
 }

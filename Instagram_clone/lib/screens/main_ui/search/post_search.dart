@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/comment_methods.dart';
@@ -31,6 +32,7 @@ class _PostState extends State<Post> {
       TextEditingController();
   bool cmtCheck = false;
   final ScrollController scrollController = ScrollController();
+  late Stream<QuerySnapshot> data;
 
   @override
   void initState() {
@@ -40,6 +42,12 @@ class _PostState extends State<Post> {
         cmtCheck = commentEditingController.text.isNotEmpty;
       });
     });
+    data = FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.snap['postId'].toString())
+        .collection('comments')
+        .orderBy("datePublished", descending: false)
+        .snapshots();
   }
 
   deletePost(String postId) async {
@@ -215,12 +223,9 @@ class _PostState extends State<Post> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    width: double.infinity,
-                    child: Image.network(
+                  Image(
+                    image: NetworkImage(
                       widget.snap['postUrl'].toString(),
-                      fit: BoxFit.fill,
                     ),
                   ),
                   AnimatedOpacity(
@@ -358,29 +363,29 @@ class _PostState extends State<Post> {
                 ],
               ),
             ),
-            FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('posts')
-                  .doc(widget.snap['postId'].toString())
-                  .collection('comments')
-                  .orderBy("datePublished", descending: false)
-                  .get(),
-              builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            StreamBuilder<QuerySnapshot>(
+              stream: data,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                } else {
+                  return ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children:
+                    snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data_ =
+                      document.data()! as Map<String, dynamic>;
+                      return CommentCard(
+                        snap: data_,
+                        postSnap: widget.snap,
+                      );
+                    }).toList(),
+                  );
                 }
-                return ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (ctx, index) => CommentCard(
-                    snap: snapshot.data!.docs[index],
-                    postSnap: widget.snap,
-                  ),
-                );
               },
             ),
             const SizedBox(),
@@ -403,9 +408,12 @@ class _PostState extends State<Post> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 8),
                 child: TextField(
-                  onTap: () {
-                    scrollController
-                        .jumpTo(scrollController.position.maxScrollExtent);
+                  onTap: () async {
+                    await Future.delayed(const Duration(milliseconds: 100));
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      scrollController
+                          .jumpTo(scrollController.position.maxScrollExtent);
+                    });
                   },
                   controller: commentEditingController,
                   maxLines: null,

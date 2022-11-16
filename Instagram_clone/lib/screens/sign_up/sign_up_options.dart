@@ -32,7 +32,7 @@ class _SignUpOptionsState extends State<SignUpOptions> {
               child: _centerWidget(),
             ),
             Flexible(flex: 1, child: Container()),
-            const Divider(thickness: 2),
+            const Divider(thickness: 1),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: _bottomWidget(),
@@ -97,9 +97,9 @@ class _SignUpOptionsState extends State<SignUpOptions> {
         const SizedBox(height: 48),
         Row(
           children: [
-            const Flexible(child: Divider(thickness: 2)),
+            const Flexible(child: Divider(thickness: 1)),
             Text(translation(context).or),
-            const Flexible(child: Divider(thickness: 2)),
+            const Flexible(child: Divider(thickness: 1)),
           ],
         ),
         const SizedBox(height: 24),

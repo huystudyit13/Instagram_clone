@@ -81,7 +81,7 @@ class _ForgotPassState extends State<ForgotPass> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 24),
                     child: TextField(
                       controller: email,
                       decoration: InputDecoration(
@@ -100,6 +100,7 @@ class _ForgotPassState extends State<ForgotPass> {
                       ),
                     ),
                   ),
+                  //const SizedBox(height: 24,),
                   SizedBox(
                       height: 48,
                       width: double.infinity,

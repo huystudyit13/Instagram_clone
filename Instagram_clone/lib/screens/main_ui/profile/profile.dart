@@ -8,6 +8,7 @@ import 'package:instagram_clone/screens/login/login.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_language.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_theme.dart';
 import 'package:instagram_clone/screens/main_ui/profile/edit_profile.dart';
+import 'package:instagram_clone/screens/main_ui/search/post_search.dart';
 
 class Profile extends StatefulWidget {
   final String uid;
@@ -363,10 +364,18 @@ class _ProfileState extends State<Profile> {
                         itemBuilder: (context, index) {
                           DocumentSnapshot snap =
                               (snapshot.data! as dynamic).docs[index];
-
-                          return Image(
-                            image: NetworkImage(snap['postUrl']),
-                            fit: BoxFit.cover,
+                          return GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => Post(
+                                  snap: snap.data(),
+                                ),
+                              ),
+                            ),
+                            child: Image.network(
+                              snap['postUrl'],
+                              fit: BoxFit.cover,
+                            ),
                           );
                         },
                       );
