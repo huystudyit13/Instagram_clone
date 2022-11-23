@@ -8,6 +8,7 @@ import 'package:instagram_clone/screens/login/login.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_language.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_theme.dart';
 import 'package:instagram_clone/screens/main_ui/profile/edit_profile.dart';
+import 'package:instagram_clone/screens/main_ui/profile/follow_detail.dart';
 import 'package:instagram_clone/screens/main_ui/search/post_search.dart';
 
 class Profile extends StatefulWidget {
@@ -134,7 +135,7 @@ class _ProfileState extends State<Profile> {
       // get post lENGTH
       var postSnap = await FirebaseFirestore.instance
           .collection('posts')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('uid', isEqualTo: widget.uid)
           .get();
 
       postLen = postSnap.docs.length;
@@ -158,6 +159,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    // getData();
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -216,10 +218,10 @@ class _ProfileState extends State<Profile> {
                                     children: [
                                       buildStatColumn(
                                           postLen, translation(context).posts),
-                                      buildStatColumn(followers,
-                                          translation(context).followers),
-                                      buildStatColumn(following,
-                                          translation(context).following),
+                                      buildStatGesture(followers,
+                                          translation(context).followers, 0),
+                                      buildStatGesture(following,
+                                          translation(context).following, 1),
                                     ],
                                   ),
                                 ],
@@ -353,6 +355,7 @@ class _ProfileState extends State<Profile> {
 
                       return GridView.builder(
                         shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: (snapshot.data! as dynamic).docs.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -384,6 +387,43 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ));
+  }
+
+  InkWell buildStatGesture(int num, String label, int tab) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => FollowDetail(
+                    uid: widget.uid, tab: tab,
+                  )),
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            num.toString(),
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 4),
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Column buildStatColumn(int num, String label) {

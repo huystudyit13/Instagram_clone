@@ -116,7 +116,7 @@ class _EditProfileState extends State<EditProfile> {
                         color: Theme.of(context).scaffoldBackgroundColor),
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                         image: NetworkImage(
                           widget.userData['photoUrl'],
                         ))),

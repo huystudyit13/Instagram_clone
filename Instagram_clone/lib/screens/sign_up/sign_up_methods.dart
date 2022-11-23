@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/login/login.dart';
+import 'package:instagram_clone/screens/sign_up/sign_up_form.dart';
 import 'package:instagram_clone/screens/sign_up/verify.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -246,14 +247,22 @@ class _SignUpMethodsState extends State<SignUpMethods>
                                       email: email.value.text,
                                       password: "123456"))
                                     {
-                                      sendOTP(),
+                                      //sendOTP(),
+                                      await auth.currentUser?.delete(),
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) => Verify(
+                                      //             mail: email.value.text,
+                                      //             emailAuth: emailAuth,
+                                      //           )),
+                                      // ),
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Verify(
-                                                  mail: email.value.text,
-                                                  emailAuth: emailAuth,
-                                                )),
+                                            builder: (context) => SignUpForm(
+                                              mail: email.value.text,
+                                            )),
                                       ),
                                     }
                                 }

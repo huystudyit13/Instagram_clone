@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
@@ -170,8 +171,6 @@ class _SearchState extends State<Search> {
                     ? FutureBuilder(
                         future: FirebaseFirestore.instance
                             .collection('users')
-                            // .where('username', isGreaterThanOrEqualTo: searchController.text)
-                            // .where('username', isLessThan: searchController.text +'z')
                             .get(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
@@ -198,17 +197,41 @@ class _SearchState extends State<Search> {
                                           ),
                                         ),
                                       ),
-                                      child: ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                            (snapshot.data! as dynamic)
-                                                .docs[index]['photoUrl'],
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                                        child: ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                              (snapshot.data! as dynamic)
+                                                  .docs[index]['photoUrl'],
+                                            ),
+                                            radius: 24,
                                           ),
-                                          radius: 16,
-                                        ),
-                                        title: Text(
-                                          (snapshot.data! as dynamic)
-                                              .docs[index]['username'],
+                                          title: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                (snapshot.data! as dynamic)
+                                                    .docs[index]['username'],
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                              (snapshot.data! as dynamic)
+                                                      .docs[index]['followers']
+                                                      .contains(FirebaseAuth
+                                                          .instance
+                                                          .currentUser!
+                                                          .uid)
+                                                  ? Text(
+                                                      translation(context)
+                                                          .following,
+                                                      style: const TextStyle(
+                                                          color: Colors.grey),
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     )

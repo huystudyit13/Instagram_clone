@@ -164,7 +164,7 @@ class CommentsScreenState extends State<CommentsScreen> {
                 } else {
                   return ListView(
                     shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children:
                         snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data_ =

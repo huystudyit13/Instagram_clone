@@ -84,5 +84,6 @@
   "unsaved_content": "Bạn chưa lưu thay đổi. Bạn có chắc chắn muốn hủy không?",
   "yes": "Có",
   "no": "Không",
-  "explore": "Khám phá"
+  "explore": "Khám phá",
+  "no_user_found": "Không tìm thấy người dùng nào."
 }
