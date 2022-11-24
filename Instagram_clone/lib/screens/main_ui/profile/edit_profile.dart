@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
 import 'package:instagram_clone/resources/utils.dart';
+import 'package:instagram_clone/resources/storage_methods.dart';
 
 class EditProfile extends StatefulWidget {
   final userData;
@@ -15,6 +19,7 @@ class _EditProfileState extends State<EditProfile> {
   final name = TextEditingController();
   final bio = TextEditingController();
   bool checkUsername = true;
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -32,6 +37,14 @@ class _EditProfileState extends State<EditProfile> {
     username.text = widget.userData['username'];
     name.text = widget.userData['name'];
     bio.text = widget.userData['bio'];
+  }
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -53,7 +66,8 @@ class _EditProfileState extends State<EditProfile> {
             FocusManager.instance.primaryFocus?.unfocus();
             if (username.text == widget.userData['username'] &&
                 name.text == widget.userData['name'] &&
-                bio.text == widget.userData['bio']) {
+                bio.text == widget.userData['bio'] &&
+                _image == null) {
               Navigator.pop(context);
             } else {
               showDialog<String>(
@@ -92,7 +106,26 @@ class _EditProfileState extends State<EditProfile> {
         actions: checkUsername
             ? [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (username.text != widget.userData['username']) {
+                        CollectionReference users = FirebaseFirestore.instance.collection('users');
+                        users.doc(widget.userData['uid']).update({'username': username.text});
+                      }
+                      if (name.text != widget.userData['name']){
+                        CollectionReference users = FirebaseFirestore.instance.collection('users');
+                        users.doc(widget.userData['uid']).update({'name': name.text});
+                      }
+                      if (bio.text != widget.userData['bio']){
+                        CollectionReference users = FirebaseFirestore.instance.collection('users');
+                        users.doc(widget.userData['uid']).update({'bio': bio.text.toString()});
+                      }
+                      if (_image != null) {
+                        String newPhoto = await StorageMethods().updateImage('profilePics', _image!);
+                        CollectionReference users = FirebaseFirestore.instance.collection('users');
+                        users.doc(widget.userData['uid']).update({'photoUrl': newPhoto});
+                      }
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(
                       Icons.check,
                       color: Colors.blue,
@@ -107,27 +140,32 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBox(
                 height: 8,
               ),
-              Container(
-                width: 130,
-                height: 130,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 4,
-                        color: Theme.of(context).scaffoldBackgroundColor),
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(
-                          widget.userData['photoUrl'],
-                        ))),
-              ),
+              _image == null
+                  ? Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                widget.userData['photoUrl'],
+                              ))),
+                    )
+                  : CircleAvatar(
+                      radius: 64,
+                      backgroundImage: MemoryImage(_image!),
+                      backgroundColor: Colors.white,
+                    ),
               Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 16),
                 child: InkWell(
+                    onTap: selectImage,
                     child: Text(
-                  translation(context).change_profile_photo,
-                  style: const TextStyle(color: Colors.blue, fontSize: 20.0),
-                )),
+                      translation(context).change_profile_photo,
+                      style:
+                          const TextStyle(color: Colors.blue, fontSize: 20.0),
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),

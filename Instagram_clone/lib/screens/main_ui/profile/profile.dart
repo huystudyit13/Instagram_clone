@@ -123,6 +123,7 @@ class _ProfileState extends State<Profile> {
   }
 
   getData() async {
+    if (!mounted) return;
     setState(() {
       isLoading = true;
     });
@@ -145,6 +146,7 @@ class _ProfileState extends State<Profile> {
       isFollowing = userSnap
           .data()!['followers']
           .contains(FirebaseAuth.instance.currentUser!.uid);
+      if (!mounted) return;
       setState(() {});
     } catch (e) {
       showMess(
@@ -152,14 +154,29 @@ class _ProfileState extends State<Profile> {
         e.toString(),
       );
     }
+    if (!mounted) return;
     setState(() {
       isLoading = false;
     });
   }
 
+  refresh() async {
+    var userSnap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .get();
+
+    userData = userSnap.data()!;
+    followers = userSnap.data()!['followers'].length;
+    following = userSnap.data()!['following'].length;
+    // if (!mounted) return;
+    // setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // getData();
+    refresh();
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -235,7 +252,7 @@ class _ProfileState extends State<Profile> {
                             top: 15,
                           ),
                           child: Text(
-                            userData['username'],
+                            userData['name'],
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
