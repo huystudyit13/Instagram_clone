@@ -21,8 +21,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   }
 
   addData() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 

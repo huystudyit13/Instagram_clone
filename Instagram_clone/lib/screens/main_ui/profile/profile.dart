@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
+import 'package:instagram_clone/resources/user_provider.dart';
 import 'package:instagram_clone/resources/utils.dart';
 import 'package:instagram_clone/screens/login/login.dart';
 import 'package:instagram_clone/screens/main_ui/profile/change_language.dart';
@@ -10,6 +11,7 @@ import 'package:instagram_clone/screens/main_ui/profile/change_theme.dart';
 import 'package:instagram_clone/screens/main_ui/profile/edit_profile.dart';
 import 'package:instagram_clone/screens/main_ui/profile/follow_detail.dart';
 import 'package:instagram_clone/screens/main_ui/search/post_search.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   final String uid;
@@ -42,6 +44,11 @@ class _ProfileState extends State<Profile> {
       context,
       MaterialPageRoute(builder: (context) => const Login()),
     );
+  }
+
+  addData() async {
+    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    await userProvider.refreshUser();
   }
 
   void showOptions() {
@@ -176,7 +183,8 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     // getData();
-    refresh();
+    //userProvider.refreshUser();
+    // refresh();
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -276,7 +284,10 @@ class _ProfileState extends State<Profile> {
                                         builder: (context) => EditProfile(
                                               userData: userData,
                                             )),
-                                  );
+                                  ).then((value) => setState(() {
+                                        getData();
+                                        addData();
+                                      }));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -413,7 +424,8 @@ class _ProfileState extends State<Profile> {
           context,
           MaterialPageRoute(
               builder: (context) => FollowDetail(
-                    uid: widget.uid, tab: tab,
+                    uid: widget.uid,
+                    tab: tab,
                   )),
         );
       },

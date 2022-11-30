@@ -108,21 +108,80 @@ class _EditProfileState extends State<EditProfile> {
                 IconButton(
                     onPressed: () async {
                       if (username.text != widget.userData['username']) {
-                        CollectionReference users = FirebaseFirestore.instance.collection('users');
-                        users.doc(widget.userData['uid']).update({'username': username.text});
+                        CollectionReference users =
+                            FirebaseFirestore.instance.collection('users');
+                        users
+                            .doc(widget.userData['uid'])
+                            .update({'username': username.text});
+
+                        final posts = await FirebaseFirestore.instance
+                            .collection('posts')
+                            .where('uid', isEqualTo: widget.userData['uid'])
+                            .get();
+                        WriteBatch batch = FirebaseFirestore.instance.batch();
+                        for (final post in posts.docs) {
+                          batch.update(
+                              post.reference, {'username': username.text});
+                        }
+                        await batch.commit();
+
+                        final comments = await FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc()
+                            .collection('comments')
+                            .where('uid', isEqualTo: widget.userData['uid'])
+                            .get();
+                        WriteBatch batch_ = FirebaseFirestore.instance.batch();
+                        for (final comment in comments.docs) {
+                          batch_.update(
+                              comment.reference, {'name': username.text});
+                        }
+                        await batch_.commit();
                       }
-                      if (name.text != widget.userData['name']){
-                        CollectionReference users = FirebaseFirestore.instance.collection('users');
-                        users.doc(widget.userData['uid']).update({'name': name.text});
+                      if (name.text != widget.userData['name']) {
+                        CollectionReference users =
+                            FirebaseFirestore.instance.collection('users');
+                        users
+                            .doc(widget.userData['uid'])
+                            .update({'name': name.text});
                       }
-                      if (bio.text != widget.userData['bio']){
-                        CollectionReference users = FirebaseFirestore.instance.collection('users');
-                        users.doc(widget.userData['uid']).update({'bio': bio.text.toString()});
+                      if (bio.text != widget.userData['bio']) {
+                        CollectionReference users =
+                            FirebaseFirestore.instance.collection('users');
+                        users
+                            .doc(widget.userData['uid'])
+                            .update({'bio': bio.text.toString()});
                       }
                       if (_image != null) {
-                        String newPhoto = await StorageMethods().updateImage('profilePics', _image!);
-                        CollectionReference users = FirebaseFirestore.instance.collection('users');
-                        users.doc(widget.userData['uid']).update({'photoUrl': newPhoto});
+                        String newPhoto = await StorageMethods()
+                            .updateImage('profilePics', _image!);
+                        CollectionReference users =
+                            FirebaseFirestore.instance.collection('users');
+                        users
+                            .doc(widget.userData['uid'])
+                            .update({'photoUrl': newPhoto});
+                        final posts = await FirebaseFirestore.instance
+                            .collection('posts')
+                            .where('uid', isEqualTo: widget.userData['uid'])
+                            .get();
+                        WriteBatch batch = FirebaseFirestore.instance.batch();
+                        for (final post in posts.docs) {
+                          batch.update(post.reference, {'profImage': newPhoto});
+                        }
+                        await batch.commit();
+
+                        final comments = await FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc()
+                            .collection('comments')
+                            .where('uid', isEqualTo: widget.userData['uid'])
+                            .get();
+                        WriteBatch batch_ = FirebaseFirestore.instance.batch();
+                        for (final comment in comments.docs) {
+                          batch_.update(
+                              comment.reference, {'profilePic': newPhoto});
+                        }
+                        await batch_.commit();
                       }
                       Navigator.pop(context);
                     },

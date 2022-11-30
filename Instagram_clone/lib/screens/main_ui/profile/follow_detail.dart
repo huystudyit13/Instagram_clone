@@ -24,6 +24,7 @@ class _FollowDetailState extends State<FollowDetail> {
       TextEditingController();
   final TextEditingController followingSearchController =
       TextEditingController();
+  late int tab;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -35,6 +36,7 @@ class _FollowDetailState extends State<FollowDetail> {
     // TODO: implement initState
     super.initState();
     getData();
+    tab = widget.tab;
   }
 
   getData() async {
@@ -70,7 +72,7 @@ class _FollowDetailState extends State<FollowDetail> {
           )
         : DefaultTabController(
             length: 2,
-            initialIndex: widget.tab,
+            initialIndex: tab,
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.white,
@@ -151,17 +153,21 @@ class _FollowDetailState extends State<FollowDetail> {
                                             .length,
                                         itemBuilder: (context, index) {
                                           return InkWell(
-                                            onTap: () =>
-                                                Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) => Profile(
-                                                  uid: (snapshot.data!
-                                                          as dynamic)
-                                                      .docs[index]['uid'],
-                                                  isNavigate: false,
-                                                ),
-                                              ),
-                                            ),
+                                            onTap: () => Navigator.of(context)
+                                                .push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Profile(
+                                                      uid: (snapshot.data!
+                                                              as dynamic)
+                                                          .docs[index]['uid'],
+                                                      isNavigate: false,
+                                                    ),
+                                                  ),
+                                                )
+                                                .then((value) => setState(() {
+                                                      getData();
+                                                    })),
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   bottom: 8.0, top: 8.0),
@@ -240,19 +246,24 @@ class _FollowDetailState extends State<FollowDetail> {
                                                       followerSearchController
                                                           .text)
                                               ? InkWell(
-                                                  onTap: () =>
-                                                      Navigator.of(context)
-                                                          .push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Profile(
-                                                        uid: (snapshot.data!
-                                                                as dynamic)
-                                                            .docs[index]['uid'],
-                                                        isNavigate: false,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  onTap: () => Navigator.of(
+                                                          context)
+                                                      .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Profile(
+                                                            uid: (snapshot.data!
+                                                                        as dynamic)
+                                                                    .docs[index]
+                                                                ['uid'],
+                                                            isNavigate: false,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .then((value) =>
+                                                          setState(() {
+                                                            getData();
+                                                          })),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -370,17 +381,22 @@ class _FollowDetailState extends State<FollowDetail> {
                                             .length,
                                         itemBuilder: (context, index) {
                                           return InkWell(
-                                            onTap: () =>
-                                                Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) => Profile(
-                                                  uid: (snapshot.data!
-                                                          as dynamic)
-                                                      .docs[index]['uid'],
-                                                  isNavigate: false,
-                                                ),
-                                              ),
-                                            ),
+                                            onTap: () => Navigator.of(context)
+                                                .push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Profile(
+                                                      uid: (snapshot.data!
+                                                              as dynamic)
+                                                          .docs[index]['uid'],
+                                                      isNavigate: false,
+                                                    ),
+                                                  ),
+                                                )
+                                                .then((value) => setState(() {
+                                                      tab = 1;
+                                                      getData();
+                                                    })),
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   bottom: 8.0, top: 8.0),
@@ -442,19 +458,25 @@ class _FollowDetailState extends State<FollowDetail> {
                                                       followingSearchController
                                                           .text)
                                               ? InkWell(
-                                                  onTap: () =>
-                                                      Navigator.of(context)
-                                                          .push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Profile(
-                                                        uid: (snapshot.data!
-                                                                as dynamic)
-                                                            .docs[index]['uid'],
-                                                        isNavigate: false,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  onTap: () => Navigator.of(
+                                                          context)
+                                                      .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Profile(
+                                                            uid: (snapshot.data!
+                                                                        as dynamic)
+                                                                    .docs[index]
+                                                                ['uid'],
+                                                            isNavigate: false,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .then((value) =>
+                                                          setState(() {
+                                                            tab = 1;
+                                                            getData();
+                                                          })),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
