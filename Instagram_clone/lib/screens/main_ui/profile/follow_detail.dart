@@ -180,36 +180,98 @@ class _FollowDetailState extends State<FollowDetail> {
                                                   ),
                                                   radius: 24,
                                                 ),
-                                                title: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                title: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      (snapshot.data!
-                                                                  as dynamic)
-                                                              .docs[index]
-                                                          ['username'],
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    (snapshot.data! as dynamic)
-                                                            .docs[index]
-                                                                ['followers']
-                                                            .contains(
-                                                                FirebaseAuth
-                                                                    .instance
-                                                                    .currentUser!
-                                                                    .uid)
-                                                        ? Text(
-                                                            translation(context)
-                                                                .following,
-                                                            style:
-                                                                const TextStyle(
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          (snapshot.data!
+                                                                      as dynamic)
+                                                                  .docs[index]
+                                                              ['username'],
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        (snapshot.data! as dynamic)
+                                                                    .docs[index]
+                                                                        ['name']
+                                                                    .length >
+                                                                0
+                                                            ? Text(
+                                                                (snapshot.data!
+                                                                            as dynamic)
+                                                                        .docs[
+                                                                    index]['name'],
+                                                                style: const TextStyle(
                                                                     color: Colors
                                                                         .grey),
-                                                          )
-                                                        : const SizedBox(),
+                                                              )
+                                                            : const SizedBox(),
+                                                        (snapshot.data!
+                                                                    as dynamic)
+                                                                .docs[index][
+                                                                    'followers']
+                                                                .contains(
+                                                                    FirebaseAuth
+                                                                        .instance
+                                                                        .currentUser!
+                                                                        .uid)
+                                                            ? Text(
+                                                                translation(
+                                                                        context)
+                                                                    .following,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .grey),
+                                                              )
+                                                            : const SizedBox(),
+                                                      ],
+                                                    ),
+                                                    FirebaseAuth.instance.currentUser!.uid == widget.uid ?
+                                                    TextButton(
+                                                      onPressed: () {},
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Colors.grey[200],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                        ),
+                                                        alignment:
+                                                            Alignment.center,
+                                                        width: 75,
+                                                        height: 40,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 8.0,
+                                                                  bottom: 8.0),
+                                                          child: Text(
+                                                            translation(context)
+                                                                .remove,
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Color(
+                                                                  0xFF3E3E3E),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ) : const SizedBox(),
                                                   ],
                                                 ),
                                               ),
@@ -240,11 +302,19 @@ class _FollowDetailState extends State<FollowDetail> {
                                             .length,
                                         itemBuilder: (context, index) {
                                           return (snapshot.data! as dynamic)
-                                                  .docs[index]['username']
-                                                  .toString()
-                                                  .contains(
-                                                      followerSearchController
-                                                          .text)
+                                                      .docs[index]['username']
+                                                      .toString()
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          followerSearchController
+                                                              .text) ||
+                                                  (snapshot.data! as dynamic)
+                                                      .docs[index]['name']
+                                                      .toString()
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          followerSearchController
+                                                              .text)
                                               ? InkWell(
                                                   onTap: () => Navigator.of(
                                                           context)
@@ -280,38 +350,106 @@ class _FollowDetailState extends State<FollowDetail> {
                                                         ),
                                                         radius: 24,
                                                       ),
-                                                      title: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                      title: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
-                                                          Text(
-                                                            (snapshot.data!
-                                                                        as dynamic)
-                                                                    .docs[index]
-                                                                ['username'],
-                                                            style: const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                (snapshot.data!
+                                                                            as dynamic)
+                                                                        .docs[index]
+                                                                    [
+                                                                    'username'],
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              (snapshot.data! as dynamic)
+                                                                          .docs[
+                                                                              index]
+                                                                              [
+                                                                              'name']
+                                                                          .length >
+                                                                      0
+                                                                  ? Text(
+                                                                      (snapshot.data!
+                                                                              as dynamic)
+                                                                          .docs[index]['name'],
+                                                                      style: const TextStyle(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                    )
+                                                                  : const SizedBox(),
+                                                              (snapshot.data!
+                                                                          as dynamic)
+                                                                      .docs[
+                                                                          index]
+                                                                          [
+                                                                          'followers']
+                                                                      .contains(FirebaseAuth
+                                                                          .instance
+                                                                          .currentUser!
+                                                                          .uid)
+                                                                  ? Text(
+                                                                      translation(
+                                                                              context)
+                                                                          .following,
+                                                                      style: const TextStyle(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                    )
+                                                                  : const SizedBox(),
+                                                            ],
                                                           ),
-                                                          (snapshot.data!
-                                                                      as dynamic)
-                                                                  .docs[index][
-                                                                      'followers']
-                                                                  .contains(FirebaseAuth
-                                                                      .instance
-                                                                      .currentUser!
-                                                                      .uid)
-                                                              ? Text(
+                                                          FirebaseAuth.instance.currentUser!.uid == widget.uid ?
+                                                          TextButton(
+                                                            onPressed: () {},
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .grey[200],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                              ),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              width: 75,
+                                                              height: 40,
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0,
+                                                                        bottom:
+                                                                            8.0),
+                                                                child: Text(
                                                                   translation(
                                                                           context)
-                                                                      .following,
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .grey),
-                                                                )
-                                                              : const SizedBox(),
+                                                                      .remove,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color: Color(
+                                                                        0xFF3E3E3E),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ) : const SizedBox(),
                                                         ],
                                                       ),
                                                     ),
@@ -422,6 +560,22 @@ class _FollowDetailState extends State<FollowDetail> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
+                                                    (snapshot.data! as dynamic)
+                                                                .docs[index]
+                                                                    ['name']
+                                                                .length >
+                                                            0
+                                                        ? Text(
+                                                            (snapshot.data!
+                                                                        as dynamic)
+                                                                    .docs[index]
+                                                                ['name'],
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .grey),
+                                                          )
+                                                        : const SizedBox(),
                                                   ],
                                                 ),
                                               ),
@@ -452,11 +606,19 @@ class _FollowDetailState extends State<FollowDetail> {
                                             .length,
                                         itemBuilder: (context, index) {
                                           return (snapshot.data! as dynamic)
-                                                  .docs[index]['username']
-                                                  .toString()
-                                                  .contains(
-                                                      followingSearchController
-                                                          .text)
+                                                      .docs[index]['username']
+                                                      .toString()
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          followingSearchController
+                                                              .text) ||
+                                                  (snapshot.data! as dynamic)
+                                                      .docs[index]['name']
+                                                      .toString()
+                                                      .toLowerCase()
+                                                      .contains(
+                                                          followingSearchController
+                                                              .text)
                                               ? InkWell(
                                                   onTap: () => Navigator.of(
                                                           context)
@@ -508,6 +670,23 @@ class _FollowDetailState extends State<FollowDetail> {
                                                                     FontWeight
                                                                         .bold),
                                                           ),
+                                                          (snapshot.data! as dynamic)
+                                                                      .docs[
+                                                                          index]
+                                                                          [
+                                                                          'name']
+                                                                      .length >
+                                                                  0
+                                                              ? Text(
+                                                                  (snapshot.data!
+                                                                              as dynamic)
+                                                                          .docs[
+                                                                      index]['name'],
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .grey),
+                                                                )
+                                                              : const SizedBox(),
                                                         ],
                                                       ),
                                                     ),

@@ -31,7 +31,7 @@ class CommentsScreenState extends State<CommentsScreen> {
     super.initState();
     commentEditingController.addListener(() {
       setState(() {
-        cmtCheck = commentEditingController.text.isNotEmpty;
+        cmtCheck = commentEditingController.text.toString().trim().isNotEmpty;
       });
     });
     data = FirebaseFirestore.instance
@@ -46,7 +46,7 @@ class CommentsScreenState extends State<CommentsScreen> {
     try {
       String res = await CommentMethods().postComment(
         widget.snap['postId'].toString(),
-        commentEditingController.text,
+        commentEditingController.text.toString().trim(),
         uid,
         name,
         profilePic,
@@ -232,9 +232,12 @@ class CommentsScreenState extends State<CommentsScreen> {
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Text(
+                  child: cmtCheck ? Text(
                     translation(context).post,
                     style: const TextStyle(color: Colors.blue),
+                  ) : Text(
+                    translation(context).post,
+                    style: const TextStyle(color: Colors.grey),
                   ),
                 ),
               )

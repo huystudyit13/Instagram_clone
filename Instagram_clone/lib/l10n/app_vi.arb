@@ -85,5 +85,6 @@
   "yes": "Có",
   "no": "Không",
   "explore": "Khám phá",
-  "no_user_found": "Không tìm thấy người dùng nào."
+  "no_user_found": "Không tìm thấy người dùng nào.",
+  "remove": "Xóa"
 }

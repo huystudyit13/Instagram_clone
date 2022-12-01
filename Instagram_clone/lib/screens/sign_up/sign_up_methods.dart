@@ -261,8 +261,8 @@ class _SignUpMethodsState extends State<SignUpMethods>
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => SignUpForm(
-                                              mail: email.value.text,
-                                            )),
+                                                  mail: email.value.text,
+                                                )),
                                       ),
                                     }
                                 }

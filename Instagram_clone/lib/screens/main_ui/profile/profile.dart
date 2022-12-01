@@ -46,8 +46,9 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  addData() async {
-    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+  refreshData() async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     await userProvider.refreshUser();
   }
 
@@ -167,24 +168,8 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  refresh() async {
-    var userSnap = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.uid)
-        .get();
-
-    userData = userSnap.data()!;
-    followers = userSnap.data()!['followers'].length;
-    following = userSnap.data()!['following'].length;
-    // if (!mounted) return;
-    // setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    // getData();
-    //userProvider.refreshUser();
-    // refresh();
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -254,6 +239,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ],
                         ),
+                        userData['name'].length > 0 ?
                         Container(
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(
@@ -265,7 +251,8 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
+                        ) : const SizedBox(),
+                        userData['bio'].length > 0 ?
                         Container(
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(
@@ -274,7 +261,7 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             userData['bio'],
                           ),
-                        ),
+                        ) : const SizedBox(),
                         FirebaseAuth.instance.currentUser!.uid == widget.uid
                             ? TextButton(
                                 onPressed: () {
@@ -286,7 +273,7 @@ class _ProfileState extends State<Profile> {
                                             )),
                                   ).then((value) => setState(() {
                                         getData();
-                                        addData();
+                                        refreshData();
                                       }));
                                 },
                                 child: Container(

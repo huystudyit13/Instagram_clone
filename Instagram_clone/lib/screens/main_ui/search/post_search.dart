@@ -39,7 +39,7 @@ class _PostState extends State<Post> {
     super.initState();
     commentEditingController.addListener(() {
       setState(() {
-        cmtCheck = commentEditingController.text.isNotEmpty;
+        cmtCheck = commentEditingController.text.toString().trim().isNotEmpty;
       });
     });
     data = FirebaseFirestore.instance
@@ -65,7 +65,7 @@ class _PostState extends State<Post> {
     try {
       String res = await CommentMethods().postComment(
         widget.snap['postId'].toString(),
-        commentEditingController.text,
+        commentEditingController.text.toString().trim(),
         uid,
         name,
         profilePic,
@@ -376,9 +376,9 @@ class _PostState extends State<Post> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     children:
-                    snapshot.data!.docs.map((DocumentSnapshot document) {
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data_ =
-                      document.data()! as Map<String, dynamic>;
+                          document.data()! as Map<String, dynamic>;
                       return CommentCard(
                         snap: data_,
                         postSnap: widget.snap,
@@ -438,10 +438,15 @@ class _PostState extends State<Post> {
                   : null,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                child: Text(
-                  translation(context).post,
-                  style: const TextStyle(color: Colors.blue),
-                ),
+                child: cmtCheck
+                    ? Text(
+                        translation(context).post,
+                        style: const TextStyle(color: Colors.blue),
+                      )
+                    : Text(
+                        translation(context).post,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
               ),
             )
           ],

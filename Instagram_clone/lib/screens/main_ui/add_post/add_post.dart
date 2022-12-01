@@ -68,7 +68,7 @@ class _AddPostState extends State<AddPost> {
     try {
       // upload to storage and db
       String res = await PostMethods().uploadPost(
-        _descriptionController.text,
+        _descriptionController.text.toString().trim(),
         _file!,
         uid,
         username,

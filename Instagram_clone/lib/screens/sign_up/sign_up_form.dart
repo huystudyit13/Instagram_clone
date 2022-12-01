@@ -41,11 +41,6 @@ class SignUpFormState extends State<SignUpForm> {
     // TODO: implement initState
     super.initState();
 
-    // _usernameController.addListener(() {
-    //   setState(() {
-    //     userCheck = _usernameController.text.isNotEmpty;
-    //   });
-    // });
     _passwordController.addListener(() {
       setState(() {
         passCheck = _passwordController.text.isNotEmpty;
@@ -265,7 +260,6 @@ class SignUpFormState extends State<SignUpForm> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        // disabledBackgroundColor: Colors.lightBlueAccent,
                         disabledForegroundColor: Colors.white70,
                         backgroundColor: Colors.blue,
                       ),
@@ -309,9 +303,6 @@ class SignUpFormState extends State<SignUpForm> {
                               color: Colors.white,
                             ),
                     )),
-                const SizedBox(
-                  height: 48,
-                ),
               ],
             ),
           ),

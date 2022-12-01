@@ -184,11 +184,19 @@ class _SearchState extends State<Search> {
                             itemCount: (snapshot.data! as dynamic).docs.length,
                             itemBuilder: (context, index) {
                               return (snapshot.data! as dynamic)
-                                      .docs[index]['username']
-                                      .toString()
-                                      .contains(searchController.text)
+                                          .docs[index]['username']
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(searchController.text) ||
+                                      (snapshot.data! as dynamic)
+                                          .docs[index]['name']
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(searchController.text)
                                   ? InkWell(
-                                      onTap: () => Navigator.of(context).push(
+                                      onTap: () {
+                                        FocusScope.of(context).unfocus();
+                                        Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => Profile(
                                             uid: (snapshot.data! as dynamic)
@@ -196,16 +204,17 @@ class _SearchState extends State<Search> {
                                             isNavigate: false,
                                           ),
                                         ),
-                                      ),
+                                      ); },
                                       child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                                        padding: const EdgeInsets.only(
+                                            bottom: 8.0, top: 8.0),
                                         child: ListTile(
                                           leading: CircleAvatar(
                                             backgroundImage: NetworkImage(
                                               (snapshot.data! as dynamic)
                                                   .docs[index]['photoUrl'],
                                             ),
-                                            radius: 24,
+                                            radius: 32,
                                           ),
                                           title: Column(
                                             crossAxisAlignment:
@@ -215,8 +224,21 @@ class _SearchState extends State<Search> {
                                                 (snapshot.data! as dynamic)
                                                     .docs[index]['username'],
                                                 style: const TextStyle(
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
+                                              (snapshot.data! as dynamic)
+                                                          .docs[index]['name']
+                                                          .length >
+                                                      0
+                                                  ? Text(
+                                                      (snapshot.data!
+                                                              as dynamic)
+                                                          .docs[index]['name'],
+                                                      style: const TextStyle(
+                                                          color: Colors.grey),
+                                                    )
+                                                  : const SizedBox(),
                                               (snapshot.data! as dynamic)
                                                       .docs[index]['followers']
                                                       .contains(FirebaseAuth

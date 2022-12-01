@@ -85,5 +85,6 @@
   "yes": "Yes",
   "no": "No",
   "explore": "Explore",
-  "no_user_found": "No users found."
+  "no_user_found": "No users found.",
+  "remove": "Remove"
 }

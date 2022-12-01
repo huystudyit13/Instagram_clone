@@ -44,7 +44,6 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    //userProvider.refreshUser();
     final model.User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       body: PageView(

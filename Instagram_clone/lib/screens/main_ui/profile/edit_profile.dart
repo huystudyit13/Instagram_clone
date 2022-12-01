@@ -150,7 +150,7 @@ class _EditProfileState extends State<EditProfile> {
                             FirebaseFirestore.instance.collection('users');
                         users
                             .doc(widget.userData['uid'])
-                            .update({'bio': bio.text.toString()});
+                            .update({'bio': bio.text.toString().trim()});
                       }
                       if (_image != null) {
                         String newPhoto = await StorageMethods()
