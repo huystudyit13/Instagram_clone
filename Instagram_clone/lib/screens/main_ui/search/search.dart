@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/language_controller.dart';
+import 'package:instagram_clone/resources/search_history.dart';
 import 'package:instagram_clone/screens/main_ui/profile/profile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:instagram_clone/screens/main_ui/search/post_search.dart';
@@ -195,16 +196,28 @@ class _SearchState extends State<Search> {
                                           .contains(searchController.text)
                                   ? InkWell(
                                       onTap: () {
+                                        SearchHistory().addSearchHistory(
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['uid'],
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['username'],
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['name'],
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['photoUrl']);
                                         FocusScope.of(context).unfocus();
                                         Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => Profile(
-                                            uid: (snapshot.data! as dynamic)
-                                                .docs[index]['uid'],
-                                            isNavigate: false,
+                                          MaterialPageRoute(
+                                            builder: (context) => Profile(
+                                              uid: (snapshot.data! as dynamic)
+                                                  .docs[index]['uid'],
+                                              isNavigate: false,
+                                            ),
                                           ),
-                                        ),
-                                      ); },
+                                        );
+                                      },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             bottom: 8.0, top: 8.0),
@@ -262,7 +275,129 @@ class _SearchState extends State<Search> {
                           );
                         },
                       )
-                    : const SizedBox(),
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, left: 16.0, bottom: 8.0),
+                            child: Text(
+                              translation(context).recent,
+                              style: const TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .collection('search')
+                                .orderBy("time", descending: true)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    (snapshot.data! as dynamic).docs.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      SearchHistory().addSearchHistory(
+                                          (snapshot.data! as dynamic)
+                                              .docs[index]['uid'],
+                                          (snapshot.data! as dynamic)
+                                              .docs[index]['username'],
+                                          FirebaseAuth
+                                              .instance.currentUser!.uid,
+                                          (snapshot.data! as dynamic)
+                                              .docs[index]['name'],
+                                          (snapshot.data! as dynamic)
+                                              .docs[index]['profilePic']);
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Profile(
+                                            uid: (snapshot.data! as dynamic)
+                                                .docs[index]['uid'],
+                                            isNavigate: false,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0, top: 8.0),
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            (snapshot.data! as dynamic)
+                                                .docs[index]['profilePic'],
+                                          ),
+                                          radius: 32,
+                                        ),
+                                        title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  (snapshot.data! as dynamic)
+                                                      .docs[index]['username'],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                (snapshot.data! as dynamic)
+                                                            .docs[index]['name']
+                                                            .length >
+                                                        0
+                                                    ? Text(
+                                                        (snapshot.data!
+                                                                    as dynamic)
+                                                                .docs[index]
+                                                            ['name'],
+                                                        style: const TextStyle(
+                                                            color: Colors.grey),
+                                                      )
+                                                    : const SizedBox(),
+                                              ],
+                                            ),
+                                            IconButton(
+                                                onPressed: () {
+                                                  CollectionReference search =
+                                                      FirebaseFirestore.instance
+                                                          .collection('users')
+                                                          .doc(FirebaseAuth
+                                                              .instance
+                                                              .currentUser!
+                                                              .uid)
+                                                          .collection('search');
+                                                  search
+                                                      .doc((snapshot.data!
+                                                              as dynamic)
+                                                          .docs[index]['uid'])
+                                                      .delete();
+                                                },
+                                                icon: const Icon(Icons.clear)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
           ],
         ),
       ),

@@ -183,6 +183,7 @@ class _EditProfileState extends State<EditProfile> {
                         }
                         await batch_.commit();
                       }
+                      if (!mounted) return;
                       Navigator.pop(context);
                     },
                     icon: const Icon(

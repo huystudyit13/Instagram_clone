@@ -132,12 +132,12 @@ class _FollowDetailState extends State<FollowDetail> {
                         ),
                         followers > 0
                             ? followerSearchController.text.isEmpty
-                                ? FutureBuilder(
-                                    future: FirebaseFirestore.instance
+                                ? StreamBuilder(
+                                    stream: FirebaseFirestore.instance
                                         .collection('users')
                                         .where('following',
                                             arrayContains: widget.uid)
-                                        .get(),
+                                        .snapshots(),
                                     builder: (context, snapshot) {
                                       if (!snapshot.hasData) {
                                         return const Center(
@@ -235,43 +235,93 @@ class _FollowDetailState extends State<FollowDetail> {
                                                             : const SizedBox(),
                                                       ],
                                                     ),
-                                                    FirebaseAuth.instance.currentUser!.uid == widget.uid ?
-                                                    TextButton(
-                                                      onPressed: () {},
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Colors.grey[200],
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                        ),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        width: 75,
-                                                        height: 40,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 8.0,
-                                                                  bottom: 8.0),
-                                                          child: Text(
-                                                            translation(context)
-                                                                .remove,
-                                                            style:
-                                                                const TextStyle(
-                                                              color: Color(
-                                                                  0xFF3E3E3E),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
+                                                    FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid ==
+                                                            widget.uid
+                                                        ? TextButton(
+                                                            onPressed: () {
+                                                              CollectionReference
+                                                                  users =
+                                                                  FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'users');
+                                                              users
+                                                                  .doc((snapshot
+                                                                              .data!
+                                                                          as dynamic)
+                                                                      .docs[index]['uid'])
+                                                                  .update({
+                                                                'following':
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                              users
+                                                                  .doc(FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser!
+                                                                      .uid)
+                                                                  .update({
+                                                                'followers':
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  (snapshot.data!
+                                                                              as dynamic)
+                                                                          .docs[
+                                                                      index]['uid']
+                                                                ])
+                                                              });
+                                                              setState(() {
+                                                                followers--;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .grey[200],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                              ),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              width: 75,
+                                                              height: 40,
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0,
+                                                                        bottom:
+                                                                            8.0),
+                                                                child: Text(
+                                                                  translation(
+                                                                          context)
+                                                                      .remove,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color: Color(
+                                                                        0xFF3E3E3E),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ) : const SizedBox(),
+                                                          )
+                                                        : const SizedBox(),
                                                   ],
                                                 ),
                                               ),
@@ -281,12 +331,12 @@ class _FollowDetailState extends State<FollowDetail> {
                                       );
                                     },
                                   )
-                                : FutureBuilder(
-                                    future: FirebaseFirestore.instance
+                                : StreamBuilder(
+                                    stream: FirebaseFirestore.instance
                                         .collection('users')
                                         .where('following',
                                             arrayContains: widget.uid)
-                                        .get(),
+                                        .snapshots(),
                                     builder: (context, snapshot) {
                                       if (!snapshot.hasData) {
                                         return const Center(
@@ -408,48 +458,92 @@ class _FollowDetailState extends State<FollowDetail> {
                                                                   : const SizedBox(),
                                                             ],
                                                           ),
-                                                          FirebaseAuth.instance.currentUser!.uid == widget.uid ?
-                                                          TextButton(
-                                                            onPressed: () {},
-                                                            child: Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .grey[200],
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                              ),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              width: 75,
-                                                              height: 40,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top:
-                                                                            8.0,
-                                                                        bottom:
-                                                                            8.0),
-                                                                child: Text(
-                                                                  translation(
-                                                                          context)
-                                                                      .remove,
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    color: Color(
-                                                                        0xFF3E3E3E),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                          FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser!
+                                                                      .uid ==
+                                                                  widget.uid
+                                                              ? TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    CollectionReference
+                                                                        users =
+                                                                        FirebaseFirestore
+                                                                            .instance
+                                                                            .collection('users');
+                                                                    users
+                                                                        .doc((snapshot.data!
+                                                                                as dynamic)
+                                                                            .docs[index]['uid'])
+                                                                        .update({
+                                                                      'following':
+                                                                          FieldValue
+                                                                              .arrayRemove([
+                                                                        FirebaseAuth
+                                                                            .instance
+                                                                            .currentUser!
+                                                                            .uid
+                                                                      ])
+                                                                    });
+                                                                    users
+                                                                        .doc(FirebaseAuth
+                                                                            .instance
+                                                                            .currentUser!
+                                                                            .uid)
+                                                                        .update({
+                                                                      'followers':
+                                                                          FieldValue
+                                                                              .arrayRemove([
+                                                                        (snapshot.data!
+                                                                                as dynamic)
+                                                                            .docs[index]['uid']
+                                                                      ])
+                                                                    });
+                                                                    setState(
+                                                                        () {
+                                                                      followers--;
+                                                                    });
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          200],
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5),
+                                                                    ),
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    width: 75,
+                                                                    height: 40,
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          top:
+                                                                              8.0,
+                                                                          bottom:
+                                                                              8.0),
+                                                                      child:
+                                                                          Text(
+                                                                        translation(context)
+                                                                            .remove,
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          color:
+                                                                              Color(0xFF3E3E3E),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ) : const SizedBox(),
+                                                                )
+                                                              : const SizedBox(),
                                                         ],
                                                       ),
                                                     ),

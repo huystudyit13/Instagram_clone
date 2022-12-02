@@ -51,6 +51,7 @@ class _MainUiNavigatorState extends State<MainUiNavigator> {
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
         children: [
+          // const Text('notifications'),
           const Feed(),
           const Search(),
           const AddPost(),

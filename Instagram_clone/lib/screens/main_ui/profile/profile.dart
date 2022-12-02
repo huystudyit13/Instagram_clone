@@ -239,29 +239,31 @@ class _ProfileState extends State<Profile> {
                             ),
                           ],
                         ),
-                        userData['name'].length > 0 ?
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(
-                            top: 15,
-                          ),
-                          child: Text(
-                            userData['name'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ) : const SizedBox(),
-                        userData['bio'].length > 0 ?
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(
-                            top: 1,
-                          ),
-                          child: Text(
-                            userData['bio'],
-                          ),
-                        ) : const SizedBox(),
+                        userData['name'].length > 0
+                            ? Container(
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.only(
+                                  top: 15,
+                                ),
+                                child: Text(
+                                  userData['name'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        userData['bio'].length > 0
+                            ? Container(
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.only(
+                                  top: 1,
+                                ),
+                                child: Text(
+                                  userData['bio'],
+                                ),
+                              )
+                            : const SizedBox(),
                         FirebaseAuth.instance.currentUser!.uid == widget.uid
                             ? TextButton(
                                 onPressed: () {
@@ -414,7 +416,9 @@ class _ProfileState extends State<Profile> {
                     uid: widget.uid,
                     tab: tab,
                   )),
-        );
+        ).then((value) => setState(() {
+              getData();
+            }));
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
