@@ -33,6 +33,8 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 
 [Week 10](#week-10)
 
+[Week 11 - 12](#week-11---12)
+
 ## Week 2
 
 * #### Cài đặt Android Studio, Flutter, Dart.
@@ -104,3 +106,8 @@ Link Course: https://www.classcentral.com/course/youtube-complete-flutter-course
 * #### Back end sử dụng Firebase.
 ![image](https://user-images.githubusercontent.com/62604651/201469170-1f522a0f-cf45-4e77-b49a-bffd530e5499.png)
 ![image](https://user-images.githubusercontent.com/62604651/201469182-efd82e91-b298-460e-8e35-8a4847cc4508.png)
+
+## Week 11 - 12
+* #### Thêm các chức năng xem chi tiết danh sách người theo dõi và đang theo dõi; chỉnh sửa thông tin cá nhân; lịch sử tìm kiếm.
+* #### Sửa một số lỗi và cập nhật giao diện.
+
